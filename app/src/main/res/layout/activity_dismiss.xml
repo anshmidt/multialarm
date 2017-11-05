@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dismissLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAllCaps="false"
+    android:background="@color/dismiss_activity_background">
+
+    <Button
+        android:id="@+id/button_dismiss_alarm"
+        android:layout_width="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:background="@color/primary"
+        android:textSize="30sp"
+        android:textAllCaps="false"
+        android:textColor="@color/dismiss_activity_textcolor"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="195dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextClock
+        android:id="@+id/text_clock_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:format12Hour="hh:mm"
+        android:format24Hour="k:mm"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/dismiss_activity_textcolor"
+        android:textSize="100sp"
+        android:layout_margin="20dp"
+        android:fontFamily="sans-serif-thin"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

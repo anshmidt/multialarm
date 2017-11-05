@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        android:showDividers="middle|end"
+        android:divider="?android:listDivider"
+        android:footerDividersEnabled="true"
+        tools:context="com.anshmidt.multialarm.activities.MainActivity"
+        android:weightSum="1"
+        >
+
+
+
+        <RelativeLayout
+            android:id="@+id/layout_main_alarmslist"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/listview_main_alarmslist"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:divider="@null"
+                />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="55dp"
+                />
+
+        </RelativeLayout>
+
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+
+            <!--<TextView-->
+                <!--android:id="@+id/textview_main_timeofalarm_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:text="@string/main_first_alarm_title"-->
+                <!--android:textSize="18sp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_marginStart="18dp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/textview_main_time"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_toEndOf="@+id/textview_main_timeofalarm_title"-->
+                <!--android:text="@string/main_default_first_alarm"-->
+                <!--android:textSize="40sp" />-->
+            <!--&lt;!&ndash;android:fontFamily="sans-serif-thin"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textAppearance="@style/TextAppearance.AppCompat.Display2"&ndash;&gt;-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/textview_main_timeleft"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignEnd="@+id/textview_main_time"-->
+                <!--android:layout_below="@+id/textview_main_time"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:text="@string/main_time_left"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:textSize="18sp" />-->
+
+        <!--</RelativeLayout>-->
+
+        <LinearLayout
+            android:id="@+id/layout_main_firstalarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_main_firstalarm_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/main_textcolor"
+                android:text="@string/main_firstalarm_time"
+                />
+
+            <TextView
+                android:id="@+id/textview_main_timeleft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/all_time_left"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_main_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textview_main_interval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"
+                android:textColor="@color/main_textcolor"
+                android:text="@string/main_interval"
+                android:textSize="18sp" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/textview_main_interval"-->
+            <!--android:layout_width="55dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:padding="10dp"-->
+            <!--android:backgroundTint="@android:color/transparent"-->
+            <!--android:text="@string/main_default_interval"-->
+            <!--android:textSize="24sp"-->
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/textview_main_interval_minutes_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:text="@string/all_minutes"-->
+            <!--android:textSize="18sp" />-->
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_main_numberofalarms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textview_main_numberofalarms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"
+                android:textSize="18sp"
+                android:textColor="@color/main_textcolor"
+                />
+
+            <!--<TextView-->
+                <!--android:id="@+id/textview_main_numberofalarms"-->
+                <!--android:layout_width="55dp"-->
+                <!--android:layout_height="55dp"-->
+                <!--android:backgroundTint="@android:color/transparent"-->
+                <!--android:padding="10dp"-->
+                <!--android:text="@string/main_default_number_of_alarms"-->
+                <!--android:textSize="24sp"-->
+                <!--/>-->
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>

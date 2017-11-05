@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- duration of a ringtone -->
+    <string-array name="preferences_duration_array">
+        <item>One ringtone</item>
+        <item>20 seconds</item>
+        <item>40 seconds</item>
+        <item>60 seconds</item>
+        <item>80 seconds</item>
+        <item>100 seconds</item>
+    </string-array>
+
+    <string-array name="dismiss_button_names_array">
+        <item>Dismiss</item>
+        <item>OK</item>
+        <item>Just 5 minutes more!</item>
+        <item>That\'s it!</item>
+        <item>I\'m already awake</item>
+        <item>Shut up</item>
+        <item>Close</item>
+        <item>No thanks</item>
+        <item>Let me sleep</item>
+        <item>Go away</item>
+        <item>Good morning!</item>
+    </string-array>
+</resources>

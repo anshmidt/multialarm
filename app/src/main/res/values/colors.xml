@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="color_primary">#b62020</color>-->
+    <!--<color name="color_primary_dark">#b62020</color>-->
+    <color name="primary">#b62020</color>
+    <color name="launcher_icon">#f73f38</color>
+    <!--<color name="colorDismissButton">#f73f38</color>-->
+    <!--<color name="colorDismissButton">#b62020</color>-->
+    <!--<color name="colorListDivider">#aaaaaa</color>-->
+    <color name="dismiss_activity_textcolor">#ffffff</color>
+    <color name="dismiss_activity_background">#000000</color>
+    <!--<color name="colorTimepickerTitle">#bfffffff</color>-->
+    <!--<color name="colorTimepickerHeader">#666666</color>-->
+    <color name="main_textcolor">#777777</color>
+    <color name="main_background">#ffffff</color>
+    <color name="main_disabled_textcolor">#aaaaaa</color>
+</resources>

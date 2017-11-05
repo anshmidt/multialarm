@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
+    </style>
+
+    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
+        <!--<item name="android:timePickerStyle">@style/TimePickerStyle</item>-->
+
+
+
+        <!--<item name="showTitle">true</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="colorAccent">@color/white</item>-->
+        <!--<item name="android:headerBackground">#ffee6073</item>-->
+        <!--<item name="android:numbersTextColor">#ff000000</item>-->
+        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
+        <!--<item name="android:numbersBackgroundColor">#ffdddd00</item>-->
+        <!--<item name="android:colorPrimary">#ff2d0073</item>-->
+        <!--<item name="android:colorPrimaryDark">#ff2d60ff</item>-->
+        <!--<item name="android:headerTimeTextAppearance">@style/TimePickerDialogTheme.TimeLabel</item> &lt;!&ndash; TimePicker Time *TextAppearance* &ndash;&gt;-->
+    </style>
+
+    <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+
+        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
+
+        <item name="android:timePickerMode">clock</item>
+        <item name="android:headerBackground">@color/dismiss_activity_textcolor</item>
+        <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
+        <!--<item name="android:numbersTextColor">#ff000000</item>-->
+        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
+        <!--<item name="android:numbersBackgroundColor">#ffdddddd</item>-->
+
+    </style>
+
+    <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
+
+        <item name="android:textColor">@color/primary</item>
+
+    </style>
+
+</resources>

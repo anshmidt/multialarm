@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ListPreference
+        android:key="duration"
+        android:summary="%s"
+        android:title="@string/preferences_duration_title"
+        android:defaultValue="@string/preferences_default_duration"
+        android:entries="@array/preferences_duration_array"
+        android:entryValues="@array/preferences_duration_array">
+    </ListPreference>
+</PreferenceScreen>

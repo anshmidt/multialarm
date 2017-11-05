@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">MultiAlarm</string>
+    <!--<string name="main_first_alarm_title">Time of the first alarm:</string>-->
+    <!--<string name="main_time_left">Time left: %1$s</string>-->
+    <!--<string name="main_default_first_alarm">05:59</string>-->
+    <string name="main_interval">%1$s minutes between alarms</string>
+    <!--<string name="main_default_interval">10</string>-->
+    <!--<string name="main_number_of_alarms">%1$s alarms</string>-->
+    <!--<string name="main_default_number_of_alarms">10</string>-->
+    <string name="interval_dialog_title">Enter interval between alarms:</string>
+    <string name="all_minutes">minutes</string>
+    <string name="number_dialog_title">Enter number of alarms:</string>
+    <string name="preferences_title">Settings</string>
+    <string name="preferences_duration_title">Duration of a ringtone</string>
+    <string name="preferences_default_duration">60 seconds</string>
+    <string name="main_alarm_turned_off_toast">All alarms turned off</string>
+    <string name="main_alarm_turned_on_toast">All alarms turned on</string>
+    <string name="main_alarm_reset_toast">All alarms reset</string>
+    <!--<string name="timepicker_time_left">Time left: %1$s</string>-->
+    <string name="timepicker_dialog_title">Set time of the first alarm:</string>
+    <string name="all_time_left">%1$s hr %2$s min left</string>
+    <string name="notification_icon_title">Alarms turned on</string>
+    <string name="main_firstalarm_time">First alarm time: %1$s</string>
+
+    <plurals name="main_number_of_alarms">
+        <item quantity="one">%1$s alarm</item>
+        <item quantity="other">%1$s alarms</item>
+    </plurals>
+
+</resources>
