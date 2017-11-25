@@ -3,11 +3,11 @@ package com.anshmidt.multialarm;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -49,7 +49,6 @@ public class RingtonePlayer {
 //            return;
 //        }
 
-
         mp = new MediaPlayer();
         mp.setAudioStreamType(AudioManager.STREAM_ALARM);
         if (durationSeconds > 0) {
@@ -64,9 +63,16 @@ public class RingtonePlayer {
             mp.setDataSource(context, getRingtone());
             mp.prepare();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Preparing MediaPlayer failed" + e);
+            Log.e(LOG_TAG, "Preparing MediaPlayer failed: " + e);
+            e.printStackTrace();
+            //if MediaPlayer fails to play ringtone from sharedPreferences, try to play default ringtone
+            try {
+                mp.setDataSource(context, getDefaultRingtone());
+                mp.prepare();
+            } catch (IOException e1) {
+                Log.e(LOG_TAG, "Preparing MediaPlayer with default ringtone failed: " + e1);
+            }
         }
-
 
         mp.start();
         startCountDownTimer(durationSeconds);
@@ -85,7 +91,6 @@ public class RingtonePlayer {
             mp.release();
         }
         setInitialRingerMode();
-//        audioManager.setRingerMode(initialRingerMode);
 
         if (listener != null) {
             listener.onPlayerFinished();
@@ -116,12 +121,20 @@ public class RingtonePlayer {
     }
 
     private Uri getRingtone() {
-        Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (ringtone == null) {  // it could happen if user has never set alarm on a new device
-            ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        String filename = sharPrefHelper.getRingtoneFileName();
+        if (filename.equals("")) {   // if ringtone not chosen yet
+            return getDefaultRingtone();
+        } else {
+            File ringtone = new File(context.getFilesDir(), filename);
+            return Uri.fromFile(ringtone);
         }
-        return ringtone;
+
     }
+
+    private Uri getDefaultRingtone() {
+        return sharPrefHelper.getDefaultRingtoneUri();
+    }
+
 
     private void setNormalRingerMode() {  // in case phone is in "Vibrate" mode
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

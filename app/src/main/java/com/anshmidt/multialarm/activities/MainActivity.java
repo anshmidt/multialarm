@@ -1,9 +1,12 @@
 package com.anshmidt.multialarm.activities;
 
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -20,14 +23,14 @@ import android.widget.Toast;
 
 import com.anshmidt.multialarm.AlarmParams;
 import com.anshmidt.multialarm.AlarmTime;
-import com.anshmidt.multialarm.view_helpers.AlarmsListHelper;
-import com.anshmidt.multialarm.view_helpers.NotificationIconHelper;
-import com.anshmidt.multialarm.TimerManager;
 import com.anshmidt.multialarm.R;
 import com.anshmidt.multialarm.SharedPreferencesHelper;
+import com.anshmidt.multialarm.TimerManager;
 import com.anshmidt.multialarm.dialogs.IntervalDialogFragment;
 import com.anshmidt.multialarm.dialogs.NumberOfAlarmsDialogFragment;
 import com.anshmidt.multialarm.dialogs.TimePickerDialogFragment;
+import com.anshmidt.multialarm.view_helpers.AlarmsListHelper;
+import com.anshmidt.multialarm.view_helpers.NotificationIconHelper;
 
 public class MainActivity extends AppCompatActivity implements
         IntervalDialogFragment.IntervalDialogListener,
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements
     SharedPreferencesHelper sharPrefHelper;
     TimerManager timerManager;
     AlarmParams alarmParams;
+    BroadcastReceiver timeLeftReceiver;
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements
         numberOfAlarmsLayout = (LinearLayout) findViewById(R.id.layout_main_numberofalarms);
 
         sharPrefHelper = new SharedPreferencesHelper(MainActivity.this);
+        sharPrefHelper.printAll();
+
         alarmParams = sharPrefHelper.getParams();
         timerManager = new TimerManager(MainActivity.this);
         nIconHelper = new NotificationIconHelper(MainActivity.this);
@@ -88,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
                     timerManager.startTimer(alarmParams);
                     nIconHelper.showNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_on_toast));
+                    sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
                 } else {
                     timerManager.cancelTimer();
                     nIconHelper.hideNotificationIcon();
@@ -134,6 +141,30 @@ public class MainActivity extends AppCompatActivity implements
                 timePicker.show(getFragmentManager(), "time_picker");
             }
         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showTimeLeft(alarmParams);
+        timeLeftReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context ctx, Intent intent) {
+                if (intent.getAction().compareTo(Intent.ACTION_TIME_TICK) == 0) {  //i.e. every minute
+                    showTimeLeft(alarmParams);
+                }
+            }
+        };
+        registerReceiver(timeLeftReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (timeLeftReceiver != null) {
+            unregisterReceiver(timeLeftReceiver);
+        }
     }
 
     @Override
@@ -145,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.action_settings: {
                 Intent intent = new Intent(this, PrefActivity.class);
@@ -229,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             timeLeftTextView.setTextColor(getColor(R.color.main_disabled_textcolor));
         }
+        Log.d(LOG_TAG, "Time left: "+alarmTime.getHoursLeft() + ":" + alarmTime.getMinutesLeft());
     }
 
 

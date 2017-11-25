@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.TextClock;
 
 import com.anshmidt.multialarm.AlarmParams;
+import com.anshmidt.multialarm.R;
 import com.anshmidt.multialarm.RingtonePlayer;
 import com.anshmidt.multialarm.SharedPreferencesHelper;
 import com.anshmidt.multialarm.TimerManager;
 import com.anshmidt.multialarm.view_helpers.DismissButtonNameGiver;
-import com.anshmidt.multialarm.R;
 
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
@@ -69,9 +69,7 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
             long firstAlarmTimeMillis = alarmParams.firstAlarmTime.toNextDayMillis();
             timerManager.resetTimer(firstAlarmTimeMillis, alarmParams.interval);
         }
-        //TODO: check that it is really reset in 24h and not in 1 min
 
-        // stop ringtone when dismiss button is clicked
         dismissButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -11,4 +11,9 @@
         android:entries="@array/preferences_duration_array"
         android:entryValues="@array/preferences_duration_array">
     </ListPreference>
+    <Preference
+        android:key="@string/key_ringtone_filename"
+        android:title="@string/preferences_ringtone_title"
+        android:defaultValue="@string/preferences_default_ringtone_name">
+    </Preference>
 </PreferenceScreen>

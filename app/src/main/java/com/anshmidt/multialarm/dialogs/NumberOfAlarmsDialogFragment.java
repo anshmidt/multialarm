@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.anshmidt.multialarm.view_helpers.KeyboardHelper;
 import com.anshmidt.multialarm.R;
+import com.anshmidt.multialarm.view_helpers.KeyboardHelper;
 
 /**
  * Created by Ilya Anshmidt on 26.09.2017.

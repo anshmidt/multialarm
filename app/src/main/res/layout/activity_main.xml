@@ -6,7 +6,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,8 +15,7 @@
         android:divider="?android:listDivider"
         android:footerDividersEnabled="true"
         tools:context="com.anshmidt.multialarm.activities.MainActivity"
-        android:weightSum="1"
-        >
+        android:weightSum="1">
 
 
 
@@ -51,50 +49,6 @@
 
         </RelativeLayout>
 
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-
-            <!--<TextView-->
-                <!--android:id="@+id/textview_main_timeofalarm_title"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:text="@string/main_first_alarm_title"-->
-                <!--android:textSize="18sp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="18dp" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/textview_main_time"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_toEndOf="@+id/textview_main_timeofalarm_title"-->
-                <!--android:text="@string/main_default_first_alarm"-->
-                <!--android:textSize="40sp" />-->
-            <!--&lt;!&ndash;android:fontFamily="sans-serif-thin"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:textAppearance="@style/TextAppearance.AppCompat.Display2"&ndash;&gt;-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/textview_main_timeleft"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignEnd="@+id/textview_main_time"-->
-                <!--android:layout_below="@+id/textview_main_time"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:text="@string/main_time_left"-->
-                <!--android:textColor="@color/colorAccent"-->
-                <!--android:textSize="18sp" />-->
-
-        <!--</RelativeLayout>-->
 
         <LinearLayout
             android:id="@+id/layout_main_firstalarm"
@@ -142,26 +96,8 @@
                 android:layout_margin="20dp"
                 android:textColor="@color/main_textcolor"
                 android:text="@string/main_interval"
-                android:textSize="18sp" />
-
-            <!--<TextView-->
-            <!--android:id="@+id/textview_main_interval"-->
-            <!--android:layout_width="55dp"-->
-            <!--android:layout_height="55dp"-->
-            <!--android:padding="10dp"-->
-            <!--android:backgroundTint="@android:color/transparent"-->
-            <!--android:text="@string/main_default_interval"-->
-            <!--android:textSize="24sp"-->
-            <!--/>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textview_main_interval_minutes_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/all_minutes"-->
-            <!--android:textSize="18sp" />-->
+                android:textSize="18sp"
+                />
 
         </LinearLayout>
 
@@ -170,8 +106,7 @@
             android:id="@+id/layout_main_numberofalarms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textview_main_numberofalarms"
@@ -182,16 +117,6 @@
                 android:textSize="18sp"
                 android:textColor="@color/main_textcolor"
                 />
-
-            <!--<TextView-->
-                <!--android:id="@+id/textview_main_numberofalarms"-->
-                <!--android:layout_width="55dp"-->
-                <!--android:layout_height="55dp"-->
-                <!--android:backgroundTint="@android:color/transparent"-->
-                <!--android:padding="10dp"-->
-                <!--android:text="@string/main_default_number_of_alarms"-->
-                <!--android:textSize="24sp"-->
-                <!--/>-->
 
         </LinearLayout>
 

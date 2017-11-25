@@ -23,8 +23,6 @@ public class AlarmsListHelper {
     private final String ATTRIBUTE_NAME_TEXT = "text";
     private SharedPreferencesHelper sharPrefHelper;
     private AlarmParams alarmParams;
-    //private String[] fullAlarmsList;
-    //private String[] displayedAlarmsList;
     private String THREE_DOTS;
     private final int LIST_LENGTH = 6;
 
@@ -36,7 +34,7 @@ public class AlarmsListHelper {
         this.THREE_DOTS = AlarmsListAdapter.THREE_DOTS;
     }
 
-    public void showList(AlarmParams alarmParams) {  //TODO: remove turnedOn
+    public void showList(AlarmParams alarmParams) {
         String[] alarms = getDisplayedAlarmsList();
 
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(alarms.length);
@@ -51,7 +49,6 @@ public class AlarmsListHelper {
         int[] to = { R.id.textview_main_alarmslist };
 
         this.alarmParams = alarmParams;
-        //alarmParams.turnedOn = turnedOn;
 
         AlarmsListAdapter adapter = new AlarmsListAdapter(context, data, R.layout.item_main_alarms_list,
                 from, to, alarmParams);
@@ -67,11 +64,9 @@ public class AlarmsListHelper {
             time = time.addMinutes(alarmParams.interval);
         }
         return fullAlarmsList;
-//        String[] alarmsList = { "06:00", "06:15", "...", "07:45", "08:00" };
-//        return alarmsList;
     }
 
-    private String[] getDisplayedAlarmsList() {
+    private String[] getDisplayedAlarmsList() {  // { "06:00", "06:15", "...", "07:45", "08:00" };
         String[] displayedAlarmsList = new String[LIST_LENGTH];
         String[] fullAlarmsList = getFullAlarmsList();
         if (fullAlarmsList.length <= LIST_LENGTH) {

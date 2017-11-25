@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anshmidt.multialarm">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,27 +18,22 @@
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmBroadcastReceiver">
-        </receiver>
+        <receiver android:name=".AlarmBroadcastReceiver"></receiver>
 
         <activity
             android:name=".activities.DismissAlarmActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppFullScreenTheme"
-            android:screenOrientation="sensorPortrait">
-
-        </activity>
-
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppFullScreenTheme"></activity>
         <activity
             android:name=".activities.PrefActivity"
             android:label="@string/preferences_title"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
-
+            android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

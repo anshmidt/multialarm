@@ -36,9 +36,7 @@ public class TimePickerDialogFragment extends DialogFragment  {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View customTitleView = inflater.inflate(R.layout.partial_timepicker_dialog_title, null);
 
-        //if (getActivity().getResources().getConfiguration().orientation == 1) { //portrait orientation
         timePickerDialog.setCustomTitle(customTitleView);
-        //}
 
         timePickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override

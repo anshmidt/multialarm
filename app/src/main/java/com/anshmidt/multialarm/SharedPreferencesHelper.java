@@ -2,6 +2,8 @@ package com.anshmidt.multialarm;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -17,22 +19,38 @@ public class SharedPreferencesHelper {
     private SharedPreferences preferences;
     private Context context;
     private final String LOG_TAG = SharedPreferencesHelper.class.getSimpleName();
-    private final String FIRST_ALARM_HOUR = "firstAlarmHour";
-    private final String FIRST_ALARM_MINUTE = "firstAlarmMinute";
-    private final String SWITCH_STATE = "switchState";
-    private final String INTERVAL = "interval";
-    private final String NUMBER_OF_ALARMS = "numberOfAlarms";
-    private final String DURATION = "duration";
-    private final String INSTALLATION_DATE = "installationDate";
-    private final String NUMBER_OF_ALREADY_RANG_ALARMS = "numberOfAlreadyRangAlarms";
+    private String FIRST_ALARM_HOUR;
+    private String FIRST_ALARM_MINUTE;
+    private String SWITCH_STATE;
+    private String INTERVAL;
+    private String NUMBER_OF_ALARMS;
+    private String DURATION;
+    private String INSTALLATION_DATE;
+    private String NUMBER_OF_ALREADY_RANG_ALARMS;
+    private String RINGTONE_FILE_NAME;
+
+    private final String DEFAULT_RINGTONE_FILE_NAME = "";
 
     public SharedPreferencesHelper(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
         this.context = context;
+        FIRST_ALARM_HOUR = context.getResources().getString(R.string.key_first_alarm_hour);
+        FIRST_ALARM_MINUTE = context.getResources().getString(R.string.key_first_alarm_minute);
+        SWITCH_STATE = context.getResources().getString(R.string.key_switch_state);
+        INTERVAL = context.getResources().getString(R.string.key_interval);
+        NUMBER_OF_ALARMS = context.getResources().getString(R.string.key_number_of_alarms);
+        DURATION = context.getResources().getString(R.string.key_duration);
+        INSTALLATION_DATE = context.getResources().getString(R.string.key_installation_date);
+        NUMBER_OF_ALREADY_RANG_ALARMS = context.getResources().getString(R.string.key_number_of_already_rang_alarms);
+        RINGTONE_FILE_NAME = context.getResources().getString(R.string.key_ringtone_filename);
+
         if (! preferences.contains(NUMBER_OF_ALREADY_RANG_ALARMS)) {
             setNumberOfAlreadyRangAlarms(0);
         }
-        printAll();  //temp
+
+        if (! preferences.contains(RINGTONE_FILE_NAME)) {
+            setDefaultRingtoneFileName();
+        }
     }
 
     public boolean doPreferencesExist() {
@@ -44,11 +62,11 @@ public class SharedPreferencesHelper {
     }
 
     public int getHour() {
-        return preferences.getInt(FIRST_ALARM_HOUR, 23);
+        return preferences.getInt(FIRST_ALARM_HOUR, 6);
     }
 
     public int getMinute() {
-        return preferences.getInt(FIRST_ALARM_MINUTE, 59);
+        return preferences.getInt(FIRST_ALARM_MINUTE, 0);
     }
 
     public void setTime(AlarmTime time) {
@@ -69,18 +87,8 @@ public class SharedPreferencesHelper {
         return new AlarmTime(getHour(), getMinute());
     }
 
-
-//    public void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-//        preferences.registerOnSharedPreferenceChangeListener(listener);
-//    }
-
     public boolean isAlarmTurnedOn() {
-        if (preferences.contains(SWITCH_STATE)) {
-            return preferences.getBoolean(SWITCH_STATE, false);
-        } else {
-            Log.d(LOG_TAG, "SWITCH_STATE not found");
-            return false;
-        }
+        return preferences.getBoolean(SWITCH_STATE, false);
     }
 
     public void setAlarmState(boolean switchState) {
@@ -90,23 +98,13 @@ public class SharedPreferencesHelper {
     }
 
     public int getInterval() {
-        if (preferences.contains(INTERVAL)) {
-            return preferences.getInt(INTERVAL, 10);
-        } else {
-            Log.d(LOG_TAG, "INTERVAL not found");
-            return 10;
-        }
+        return preferences.getInt(INTERVAL, 9);
     }
 
     public String getIntervalStr() {
         return Integer.toString(getInterval());
     }
 
-//    public void setInterval(int interval) {
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putInt(INTERVAL, interval);
-//        editor.apply();
-//    }
 
     public void setInterval(String intervalStr) {
         int interval = Integer.parseInt(intervalStr);
@@ -117,23 +115,12 @@ public class SharedPreferencesHelper {
 
 
     public int getNumberOfAlarms() {
-        if (preferences.contains(NUMBER_OF_ALARMS)) {
-            return preferences.getInt(NUMBER_OF_ALARMS, 10);
-        } else {
-            Log.d(LOG_TAG, "NUMBER_OF_ALARMS not found");
-            return 10;
-        }
+        return preferences.getInt(NUMBER_OF_ALARMS, 5);
     }
 
     public String getNumberOfAlarmsStr() {
         return Integer.toString(getNumberOfAlarms());
     }
-
-//    public void setNumberOfAlarms(int numberOfAlarms) {
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putInt(NUMBER_OF_ALARMS, numberOfAlarms);
-//        editor.apply();
-//    }
 
     public void setNumberOfAlarms(String numberOfAlarmsStr) {
         int numberOfAlarms = Integer.parseInt(numberOfAlarmsStr);
@@ -143,18 +130,11 @@ public class SharedPreferencesHelper {
     }
 
     public String getDurationStr() {
-    if (preferences.contains(DURATION)) {
-            return preferences.getString(DURATION, context.getString(R.string.preferences_default_duration));
-        } else {
-            Log.d(LOG_TAG, "DURATION not found");
-            return context.getString(R.string.preferences_default_duration);
-        }
+        return preferences.getString(DURATION, context.getString(R.string.preferences_default_duration));
     }
 
     public int getDurationInt() {
         String durationStr = getDurationStr();
-        final String ONE_RINGTONE = context.getResources().getStringArray(R.array.preferences_duration_array)[0];
-        //int durationInt = -1;
         int durationInt = 0;
         if (durationStr.contains("seconds")) {
             String[] durationParts = durationStr.split(" ");
@@ -164,9 +144,6 @@ public class SharedPreferencesHelper {
                 Log.e(LOG_TAG, "Invalid duration value");
             }
         }
-//        else if (durationStr.equals(ONE_RINGTONE)) {
-//            durationInt = 0;
-//        }
         Log.d(LOG_TAG, "DurationInt = "+durationInt);
         return durationInt;
     }
@@ -205,12 +182,32 @@ public class SharedPreferencesHelper {
     }
 
     public int getNumberOfAlreadyRangAlarms() {
-        if (preferences.contains(NUMBER_OF_ALREADY_RANG_ALARMS)) {
-            return preferences.getInt(NUMBER_OF_ALREADY_RANG_ALARMS, 0);
-        } else {
-            Log.d(LOG_TAG, "NUMBER_OF_ALREADY_RANG_ALARMS not found");
-            return 0;
+        return preferences.getInt(NUMBER_OF_ALREADY_RANG_ALARMS, 0);
+    }
+
+
+    public void setDefaultRingtoneFileName() {
+        setRingtoneFileName(DEFAULT_RINGTONE_FILE_NAME);
+    }
+
+    public void setRingtoneFileName(String fileName) {   //example of ringtoneFileName: amelie.mp3
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(RINGTONE_FILE_NAME, fileName);
+        editor.apply();
+        Log.d(LOG_TAG, "ringtoneFileName set to " + fileName);
+    }
+
+    public String getRingtoneFileName() {
+        return preferences.getString(RINGTONE_FILE_NAME, DEFAULT_RINGTONE_FILE_NAME);
+    }
+
+
+    public Uri getDefaultRingtoneUri() {
+        Uri defaultRingtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM); // content://settings/system/alarm_alert
+        if (defaultRingtoneUri == null) {  // it could happen if user has never set alarm on a new device
+            defaultRingtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
+        return defaultRingtoneUri;
     }
 
     public AlarmParams getParams() {
@@ -218,7 +215,7 @@ public class SharedPreferencesHelper {
     }
 
     public void printAll() {
-        Map<String,?> keys = preferences.getAll();
+        Map<String, ?> keys = preferences.getAll();
         Log.d(LOG_TAG, "Printing all shared preferences...");
         if (keys != null) {
             for (Map.Entry<String, ?> entry : keys.entrySet()) {

@@ -28,7 +28,7 @@ public class AlarmTimePickerDialog extends TimePickerDialog {
 
     @Override
     public void setCustomTitle(View customTitleView) {
-        if (getContext().getResources().getConfiguration().orientation == 1) { //title is displayed in portrait orientation only0
+        if (getContext().getResources().getConfiguration().orientation == 1) { //title is displayed in portrait orientation only
             super.setCustomTitle(customTitleView);
         }
     }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
+    <item name="key_first_alarm_hour" type="string">first_alarm_hour</item>
+    <item name="key_first_alarm_minute" type="string">first_alarm_minute</item>
+    <item name="key_switch_state" type="string">switch_state</item>
+    <item name="key_interval" type="string">interval</item>
+    <item name="key_number_of_alarms" type="string">number_of_alarms</item>
+    <item name="key_duration" type="string">duration</item>
+    <item name="key_installation_date" type="string">installation_date</item>
+    <item name="key_number_of_already_rang_alarms" type="string">number_of_already_rang_alarms</item>
+    <item name="key_ringtone_filename" type="string">ringtone_filename</item>
+</resources>

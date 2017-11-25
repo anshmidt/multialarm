@@ -1,8 +1,6 @@
 package com.anshmidt.multialarm;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -89,45 +87,10 @@ public class AlarmTime {
     }
 
     public AlarmTime millisToAlarmTime(long timeInMillis) {
-//        String testTime = String.format("%d:%02d",
-//                TimeUnit.MILLISECONDS.toHours(timeInMillis),
-//                TimeUnit.MILLISECONDS.toMinutes(timeInMillis) -
-//                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeInMillis)));
-        //String testTime = String.format("%1$tH:%1$tM", timeInMillis);
-
-//        int hour = Integer.parseInt(String.format("%1$tH", timeInMillis));
-//        int minute = Integer.parseInt(String.format("%1$tM", timeInMillis));
-
-        //int hour = (int) (TimeUnit.MILLISECONDS.toHours(timeInMillis) % TimeUnit.DAYS.toHours(1) );
-        //int minute = (int) (TimeUnit.MILLISECONDS.toMinutes(timeInMillis) % TimeUnit.HOURS.toMinutes(1));
-
-//        long currentTime = Calendar.getInstance().getTimeInMillis();
-//        long currentTime = System.currentTimeMillis();
-//        long testHour = TimeUnit.MILLISECONDS.toHours(currentTime) % TimeUnit.DAYS.toHours(1);
-//        long testMinute = TimeUnit.MILLISECONDS.toMinutes(currentTime) % TimeUnit.HOURS.toMinutes(1);
-//        String testString = String.format("%d:%02d",testHour, testMinute);
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeInMillis);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-
-
-
-        // New date object from millis
-//        Date date = new Date(currentTime);
-//// formattter
-//        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss");
-//// Pass date object
-//        String formatted = formatter.format(date );
-//
-//
-//
-//        String testHour2 = String.format("%1$tH", currentTime);
-//        String testMinute2 = String.format("%1$tM", currentTime);
-
-        //int hour = (int) TimeUnit.MILLISECONDS.toHours(timeInMillis);
-        //int minute = (int) (TimeUnit.MILLISECONDS.toMinutes(timeInMillis) - TimeUnit.HOURS.toMinutes(hour));
         return new AlarmTime(hour, minute);
     }
 
@@ -159,12 +122,6 @@ public class AlarmTime {
         return hourToDisplay+":"+minuteToDisplay;
     }
 
-//    public AlarmTime add(AlarmTime increment) {
-//        long initialTimeMillis = this.toMillis();
-//        long incrementMillis = increment.toMillis();
-//        long incrementedTimeMillis = initialTimeMillis + incrementMillis;
-//        return millisToAlarmTime(incrementedTimeMillis);
-//    }
 
     public AlarmTime addMinutes(int minutesAdded) {
         long initialTimeMillis = this.toMillis();
