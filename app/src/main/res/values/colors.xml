@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#b62020</color>
+    <color name="primaryDark">#8e0b0b</color>
     <color name="launcher_icon">#f73f38</color>
     <color name="dismiss_activity_textcolor">#ffffff</color>
     <color name="dismiss_activity_background">#000000</color>

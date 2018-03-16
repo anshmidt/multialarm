@@ -39,7 +39,6 @@ public class NumberOfAlarmsDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(subView);
 
-        // Passing data from MainActivity
         String getArgument = getArguments().getString("number_of_alarms");
         numberOfAlarmsEditText.setText(getArgument);
         keyboardHelper.moveCursorToEnd(numberOfAlarmsEditText);

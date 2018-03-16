@@ -39,7 +39,6 @@ public class IntervalDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(subView);
 
-        // Passing data from MainActivity
         String getArgument = getArguments().getString("interval");
         intervalEditText.setText(getArgument);
         keyboardHelper.moveCursorToEnd(intervalEditText);

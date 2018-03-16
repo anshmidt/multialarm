@@ -98,7 +98,7 @@ public class SharedPreferencesHelper {
     }
 
     public int getInterval() {
-        return preferences.getInt(INTERVAL, 9);
+        return preferences.getInt(INTERVAL, 10);
     }
 
     public String getIntervalStr() {

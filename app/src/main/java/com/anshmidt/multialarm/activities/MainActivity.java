@@ -1,10 +1,12 @@
 package com.anshmidt.multialarm.activities;
 
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 alarmParams.turnedOn = isChecked;
                 if (isChecked) {
+                    checkNotificationPolicy();
                     timerManager.startTimer(alarmParams);
                     nIconHelper.showNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_on_toast));
@@ -262,6 +265,18 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(LOG_TAG, "Time left: "+alarmTime.getHoursLeft() + ":" + alarmTime.getMinutesLeft());
     }
 
+    private void checkNotificationPolicy() {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !notificationManager.isNotificationPolicyAccessGranted()) {
+            Intent intent = new Intent(
+                    android.provider.Settings
+                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+    }
 
 
 

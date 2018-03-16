@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <ListPreference
-        android:key="duration"
+        android:key="@string/key_duration"
         android:summary="%s"
         android:title="@string/preferences_duration_title"
         android:defaultValue="@string/preferences_default_duration"

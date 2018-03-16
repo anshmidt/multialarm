@@ -139,7 +139,11 @@ public class RingtonePlayer {
     private void setNormalRingerMode() {  // in case phone is in "Vibrate" mode
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         initialRingerMode = audioManager.getRingerMode();
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+        try {
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+        } catch (SecurityException e) {
+            Log.d(LOG_TAG, "Cannot set RingerMode: " + e);
+        }
     }
 
     private void setInitialRingerMode() {
