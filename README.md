@@ -11,3 +11,4 @@ Permission info: <br/>
 WAKE_LOCK - allows to display “Dismiss” screen if device is locked <br/>
 MODIFY_AUDIO_SETTINGS - allows alarm to ring if device switched to “Vibrate” mode <br/>
 READ_EXTERNAL_STORAGE - is needed to load external ringtones <br/>
+ACCESS_NOTIFICATION_POLICY - alarm can ring in “Not Disturb” mode if user allows that <br/>
