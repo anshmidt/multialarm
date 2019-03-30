@@ -22,59 +22,53 @@ public class RingtonePlayer {
 
     private Context context;
     private SharedPreferencesHelper sharPrefHelper;
-    private MediaPlayer mp;
+    private MediaPlayer mediaPlayer;
     private AudioManager audioManager;
     private int initialRingerMode;
     private CountDownTimer countDownTimer;
     private int durationSeconds;
     private final String LOG_TAG = RingtonePlayer.class.getSimpleName();
-    private OnFinishListener listener;
+    private OnFinishListener onFinishListener;
+    private boolean isReleased = false;
 
     public RingtonePlayer(Context context) {
         sharPrefHelper = new SharedPreferencesHelper(context);
         this.context = context;
-        this.listener = (OnFinishListener) context;
+        this.onFinishListener = (OnFinishListener) context;
     }
 
     public void start() {
         Log.d(LOG_TAG, "Playing started");
         setNormalRingerMode();
-//        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-//        initialRingerMode = audioManager.getRingerMode();
-//        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 
         durationSeconds = sharPrefHelper.getDurationInt();
-//        if (durationSeconds < 0) {
-//            Log.e(LOG_TAG, "Invalid duration = " + durationSeconds);
-//            return;
-//        }
 
-        mp = new MediaPlayer();
-        mp.setAudioStreamType(AudioManager.STREAM_ALARM);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
         if (durationSeconds > 0) {
-            mp.setLooping(true);
+            mediaPlayer.setLooping(true);
         }
 
         if (durationSeconds == 0) {
-            durationSeconds = mp.getDuration();
+            durationSeconds = mediaPlayer.getDuration();
         }
 
         try {
-            mp.setDataSource(context, getRingtone());
-            mp.prepare();
+            mediaPlayer.setDataSource(context, getRingtone());
+            mediaPlayer.prepare();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Preparing MediaPlayer failed: " + e);
-            e.printStackTrace();
+            Log.d(LOG_TAG, "Getting data for mediaplayer failed: " + e);
             //if MediaPlayer fails to play ringtone from sharedPreferences, try to play default ringtone
             try {
-                mp.setDataSource(context, getDefaultRingtone());
-                mp.prepare();
+                Log.d(LOG_TAG, "Using default ringtone");
+                mediaPlayer.setDataSource(context, getDefaultRingtone());
+                mediaPlayer.prepare();
             } catch (IOException e1) {
                 Log.e(LOG_TAG, "Preparing MediaPlayer with default ringtone failed: " + e1);
             }
         }
 
-        mp.start();
+        mediaPlayer.start();
         startCountDownTimer(durationSeconds);
 
         Log.d(LOG_TAG, "MediaPlayer started: duration = "+ durationSeconds);
@@ -82,18 +76,22 @@ public class RingtonePlayer {
 
 
     public void stop() {
+        if (isReleased) {
+            return;
+        }
         stopCountDownTimer();
-        if (mp != null) {
-            if (mp.isPlaying()) {
-                mp.stop();
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
             }
-            mp.reset();
-            mp.release();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            isReleased = true;
         }
         setInitialRingerMode();
 
-        if (listener != null) {
-            listener.onPlayerFinished();
+        if (onFinishListener != null) {
+            onFinishListener.onPlayerFinished();
         }
 
     }

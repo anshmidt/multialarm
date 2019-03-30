@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements
 
         alarmParams = sharPrefHelper.getParams();
         timerManager = new TimerManager(MainActivity.this);
-        nIconHelper = new NotificationIconHelper(MainActivity.this);
+//        nIconHelper = new NotificationIconHelper(MainActivity.this);
         alarmsListHelper = new AlarmsListHelper(MainActivity.this, alarmsListView);
 
         showFirstAlarmTime(alarmParams.firstAlarmTime.toString());
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements
         showInterval(sharPrefHelper.getIntervalStr());
         showNumberOfAlarms(sharPrefHelper.getNumberOfAlarmsStr());
         onOffSwitch.setChecked(sharPrefHelper.isAlarmTurnedOn());
-        nIconHelper.setNotificationIcon(sharPrefHelper.isAlarmTurnedOn());
+//        nIconHelper.setNotificationIcon(sharPrefHelper.isAlarmTurnedOn());
 
         alarmsListHelper.showList(alarmParams);
 
@@ -94,13 +94,14 @@ public class MainActivity extends AppCompatActivity implements
                 alarmParams.turnedOn = isChecked;
                 if (isChecked) {
                     checkNotificationPolicy();
-                    timerManager.startTimer(alarmParams);
-                    nIconHelper.showNotificationIcon();
+//                    timerManager.startTimer(alarmParams);
+                    timerManager.startSingleAlarmTimer(alarmParams.firstAlarmTime.toMillis());
+//                    nIconHelper.showNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_on_toast));
                     sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
                 } else {
                     timerManager.cancelTimer();
-                    nIconHelper.hideNotificationIcon();
+//                    nIconHelper.hideNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_off_toast));
                 }
                 alarmsListHelper.showList(alarmParams);
@@ -148,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         showTimeLeft(alarmParams);
         timeLeftReceiver = new BroadcastReceiver() {
             @Override
@@ -162,13 +163,16 @@ public class MainActivity extends AppCompatActivity implements
         registerReceiver(timeLeftReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
 
+
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         if (timeLeftReceiver != null) {
             unregisterReceiver(timeLeftReceiver);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements
         showFirstAlarmTime(alarmTime.toString());
         alarmsListHelper.showList(alarmParams);
         showTimeLeft(alarmParams);
+        sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
         resetTimerIfTurnedOn();
         sharPrefHelper.setTime(alarmTime);
     }
@@ -225,7 +230,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private void resetTimerIfTurnedOn() {
         if (onOffSwitch.isChecked()) {
-            timerManager.resetTimer(alarmParams);
+//            timerManager.resetTimer(alarmParams);
+            timerManager.resetSingleAlarmTimer(alarmParams.firstAlarmTime.toMillis());
             showToast(getString(R.string.main_alarm_reset_toast));
         }
     }

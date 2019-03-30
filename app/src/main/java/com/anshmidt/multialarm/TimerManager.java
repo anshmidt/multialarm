@@ -33,11 +33,24 @@ public class TimerManager {
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.putExtra(ONE_TIME, Boolean.FALSE);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstAlarmTimeMillis, 1000*60*intervalMin, pi);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstAlarmTimeMillis, 1000*60*intervalMin, pendingIntent);
 
         sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
     }
+
+    public void startSingleAlarmTimer(long alarmTimeMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(alarmTimeMillis);
+        Log.d(LOG_TAG, "single alarm scheduled to: "+ calendar.getTime());
+
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+        intent.putExtra(ONE_TIME, Boolean.FALSE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(alarmTimeMillis, pendingIntent), pendingIntent);
+
+    }
+
 
     public void startTimer(AlarmParams alarmParams) {
         startTimer(alarmParams.firstAlarmTime.toMillis(), alarmParams.interval);
@@ -50,7 +63,7 @@ public class TimerManager {
     }
 
 
-    public void resetTimer(AlarmParams alarmParams) {  //if alarm is turned on and preferences have changed
+    public void resetTimer(AlarmParams alarmParams) { //if alarm is turned on and preferences have changed
         cancelTimer();
         startTimer(alarmParams);
         Log.d(LOG_TAG, "Alarm is reset");
@@ -59,6 +72,12 @@ public class TimerManager {
     public void resetTimer(long firstAlarmTimeMillis, int intervalMin) {
         cancelTimer();
         startTimer(firstAlarmTimeMillis, intervalMin);
+    }
+
+    public void resetSingleAlarmTimer(long alarmTimeMillis) {  //if alarm is turned on and preferences have changed
+        cancelTimer();
+        startSingleAlarmTimer(alarmTimeMillis);
+        Log.d(LOG_TAG, "Alarm is reset");
     }
 
 }

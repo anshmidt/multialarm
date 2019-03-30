@@ -19,16 +19,20 @@ public class SharedPreferencesHelper {
     private SharedPreferences preferences;
     private Context context;
     private final String LOG_TAG = SharedPreferencesHelper.class.getSimpleName();
-    private String FIRST_ALARM_HOUR;
-    private String FIRST_ALARM_MINUTE;
-    private String SWITCH_STATE;
-    private String INTERVAL;
-    private String NUMBER_OF_ALARMS;
-    private String DURATION;
-    private String INSTALLATION_DATE;
-    private String NUMBER_OF_ALREADY_RANG_ALARMS;
-    private String RINGTONE_FILE_NAME;
+    private final String FIRST_ALARM_HOUR;
+    private final String FIRST_ALARM_MINUTE;
+    private final String SWITCH_STATE;
+    private final String INTERVAL;
+    private final String NUMBER_OF_ALARMS;
+    private final String DURATION;
+    private final String INSTALLATION_DATE;
+    private final String NUMBER_OF_ALREADY_RANG_ALARMS;
+    private final String RINGTONE_FILE_NAME;
 
+    private final int DEFAULT_INTERVAL = 10;
+    private final int DEFAULT_FIRST_ALARM_HOUR = 6;
+    private final int DEFAULT_FIRST_ALARM_MINUTE = 0;
+    private final int DEFAULT_NUMBER_OF_ALARMS = 5;
     private final String DEFAULT_RINGTONE_FILE_NAME = "";
 
     public SharedPreferencesHelper(Context context) {
@@ -62,11 +66,11 @@ public class SharedPreferencesHelper {
     }
 
     public int getHour() {
-        return preferences.getInt(FIRST_ALARM_HOUR, 6);
+        return preferences.getInt(FIRST_ALARM_HOUR, DEFAULT_FIRST_ALARM_HOUR);
     }
 
     public int getMinute() {
-        return preferences.getInt(FIRST_ALARM_MINUTE, 0);
+        return preferences.getInt(FIRST_ALARM_MINUTE, DEFAULT_FIRST_ALARM_MINUTE);
     }
 
     public void setTime(AlarmTime time) {
@@ -97,8 +101,8 @@ public class SharedPreferencesHelper {
         editor.apply();
     }
 
-    public int getInterval() {
-        return preferences.getInt(INTERVAL, 10);
+    public int getInterval() {  //minutes
+        return preferences.getInt(INTERVAL, DEFAULT_INTERVAL);
     }
 
     public String getIntervalStr() {
@@ -115,7 +119,7 @@ public class SharedPreferencesHelper {
 
 
     public int getNumberOfAlarms() {
-        return preferences.getInt(NUMBER_OF_ALARMS, 5);
+        return preferences.getInt(NUMBER_OF_ALARMS, DEFAULT_NUMBER_OF_ALARMS);
     }
 
     public String getNumberOfAlarmsStr() {
