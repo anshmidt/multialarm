@@ -3,7 +3,6 @@ package com.anshmidt.multialarm.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextClock;
 
 import com.anshmidt.multialarm.AlarmParams;
+import com.anshmidt.multialarm.NotificationController;
 import com.anshmidt.multialarm.R;
 import com.anshmidt.multialarm.RingtonePlayer;
 import com.anshmidt.multialarm.SharedPreferencesHelper;
@@ -19,6 +19,8 @@ import com.anshmidt.multialarm.TimerManager;
 import com.anshmidt.multialarm.view_helpers.DismissButtonNameGiver;
 
 import java.util.concurrent.TimeUnit;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
@@ -34,6 +36,7 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
     SharedPreferencesHelper sharPrefHelper;
     int numberOfAlreadyRangAlarms;
     TimerManager timerManager;
+    NotificationController notificationController;
     private final String LOG_TAG = DismissAlarmActivity.class.getSimpleName();
 
     @Override
@@ -42,6 +45,8 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
         setContentView(R.layout.activity_dismiss);
         showOnLockedScreen();
 
+        notificationController = new NotificationController(DismissAlarmActivity.this);
+        notificationController.cancelNotification(DismissAlarmActivity.this);
 
         ringtonePlayer = new RingtonePlayer(DismissAlarmActivity.this);
         sharPrefHelper = new SharedPreferencesHelper(DismissAlarmActivity.this);

@@ -56,8 +56,10 @@ public class FileManager {
     public String getFileName(Uri uri) {
         String uriString = uri.toString();
         String name = "";
+        final String CONTENT_PREFIX = "content://";
+        final String FILE_PREFIX = "file://";
 
-        if (uriString.startsWith("content://")) {
+        if (uriString.startsWith(CONTENT_PREFIX)) {
             Cursor cursor = null;
             try {
                 cursor = context.getContentResolver().query(uri, null, null, null, null);
@@ -69,7 +71,7 @@ public class FileManager {
             } finally {
                 cursor.close();
             }
-        } else if (uriString.startsWith("file://")) {
+        } else if (uriString.startsWith(FILE_PREFIX)) {
             File ringtoneFile = new File(uriString);
             name = ringtoneFile.getName();
         }

@@ -80,10 +80,6 @@ public class AlarmTime {
 
     private String millisToString(long timeInMillis) {
         return millisToAlarmTime(timeInMillis).toString();
-//        return String.format("%d:%02d",
-//                TimeUnit.MILLISECONDS.toHours(timeInMillis),
-//                TimeUnit.MILLISECONDS.toMinutes(timeInMillis) -
-//                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeInMillis)));
     }
 
     public AlarmTime millisToAlarmTime(long timeInMillis) {

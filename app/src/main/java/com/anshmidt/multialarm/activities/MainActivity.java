@@ -6,10 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
+import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
@@ -32,7 +32,10 @@ import com.anshmidt.multialarm.dialogs.IntervalDialogFragment;
 import com.anshmidt.multialarm.dialogs.NumberOfAlarmsDialogFragment;
 import com.anshmidt.multialarm.dialogs.TimePickerDialogFragment;
 import com.anshmidt.multialarm.view_helpers.AlarmsListHelper;
-import com.anshmidt.multialarm.view_helpers.NotificationIconHelper;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 public class MainActivity extends AppCompatActivity implements
         IntervalDialogFragment.IntervalDialogListener,
@@ -48,13 +51,14 @@ public class MainActivity extends AppCompatActivity implements
     LinearLayout firstAlarmLayout;
     LinearLayout intervalLayout;
     LinearLayout numberOfAlarmsLayout;
-    NotificationIconHelper nIconHelper;
     AlarmsListHelper alarmsListHelper;
     SharedPreferencesHelper sharPrefHelper;
     TimerManager timerManager;
     AlarmParams alarmParams;
     BroadcastReceiver timeLeftReceiver;
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 45;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements
                 alarmParams.turnedOn = isChecked;
                 if (isChecked) {
                     checkNotificationPolicy();
+                    checkOverlayPermission();
 //                    timerManager.startTimer(alarmParams);
                     timerManager.startSingleAlarmTimer(alarmParams.firstAlarmTime.toMillis());
 //                    nIconHelper.showNotificationIcon();
@@ -230,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements
 
     private void resetTimerIfTurnedOn() {
         if (onOffSwitch.isChecked()) {
-//            timerManager.resetTimer(alarmParams);
             timerManager.resetSingleAlarmTimer(alarmParams.firstAlarmTime.toMillis());
             showToast(getString(R.string.main_alarm_reset_toast));
         }
@@ -284,6 +288,17 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * needed for Android Q: on some devices activity doesn't show from fullScreenNotification without
+     * permission SYSTEM_ALERT_WINDOW
+     */
+    private void checkOverlayPermission() {
+        if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.P) && (!Settings.canDrawOverlays(this))) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + this.getPackageName()));
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+        }
+    }
 
 
 

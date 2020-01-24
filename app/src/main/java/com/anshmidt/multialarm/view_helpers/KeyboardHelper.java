@@ -12,11 +12,11 @@ import android.widget.EditText;
 public class KeyboardHelper {
 
     Context context;
-    InputMethodManager imm;
+    InputMethodManager inputMethodManager;
 
     public KeyboardHelper(Context context) {
         this.context = context;
-        imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public void showKeyboard(EditText editText) {
@@ -24,14 +24,14 @@ public class KeyboardHelper {
             @Override
             public void onFocusChange(View v, boolean isFocused) {
                 if (isFocused) {
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 }
             }
         });
     }
 
     public void hideKeyboard(EditText editText) {
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     public void moveCursorToEnd(EditText editText) {

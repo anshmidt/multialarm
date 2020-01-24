@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import static com.anshmidt.multialarm.AlarmBroadcastReceiver.ONE_TIME;
+import static com.anshmidt.multialarm.AlarmBroadcastReceiver.KEY_IS_ONE_TIME;
 
 /**
  * Created by Ilya Anshmidt on 23.09.2017.
@@ -32,7 +32,7 @@ public class TimerManager {
         Log.d(LOG_TAG, "firstAlarmTime is set to: "+ calendar.getTime());
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
-        intent.putExtra(ONE_TIME, Boolean.FALSE);
+        intent.putExtra(KEY_IS_ONE_TIME, Boolean.FALSE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstAlarmTimeMillis, 1000*60*intervalMin, pendingIntent);
 
@@ -45,7 +45,7 @@ public class TimerManager {
         Log.d(LOG_TAG, "single alarm scheduled to: "+ calendar.getTime());
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
-        intent.putExtra(ONE_TIME, Boolean.FALSE);
+        intent.putExtra(KEY_IS_ONE_TIME, Boolean.FALSE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(alarmTimeMillis, pendingIntent), pendingIntent);
 

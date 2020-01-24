@@ -1,9 +1,10 @@
 package com.anshmidt.multialarm.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.anshmidt.multialarm.dialogs.PrefFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Ilya Anshmidt on 29.09.2017.

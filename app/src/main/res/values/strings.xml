@@ -18,6 +18,10 @@
     <string name="main_firstalarm_time">First alarm time: %1$s</string>
     <string name="chooseringtone_chooser_title">Select a file</string>
 
+    <string name="dismiss_alarm_notification_title">Alarm!</string>
+    <string name="dismiss_alarm_notification_body">You\'ve set alarm to %1$s</string>
+    <string name="dismiss_alarm_notification_dismiss_button_title">Dismiss</string>
+
     <plurals name="main_number_of_alarms">
         <item quantity="one">%1$s alarm</item>
         <item quantity="other">%1$s alarms</item>

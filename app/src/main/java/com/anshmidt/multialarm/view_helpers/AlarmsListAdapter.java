@@ -1,7 +1,6 @@
 package com.anshmidt.multialarm.view_helpers;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +12,8 @@ import com.anshmidt.multialarm.R;
 
 import java.util.List;
 import java.util.Map;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by Ilya Anshmidt on 24.10.2017.
