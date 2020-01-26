@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import static com.anshmidt.multialarm.AlarmBroadcastReceiver.KEY_IS_ONE_TIME;
 
@@ -34,7 +35,7 @@ public class TimerManager {
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.putExtra(KEY_IS_ONE_TIME, Boolean.FALSE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstAlarmTimeMillis, 1000*60*intervalMin, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstAlarmTimeMillis, TimeUnit.MINUTES.toMillis(intervalMin), pendingIntent);
 
         sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
     }

@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.dialogs;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -28,16 +29,16 @@ public class AlarmTimePickerDialog extends TimePickerDialog {
 
     @Override
     public void setCustomTitle(View customTitleView) {
-        if (getContext().getResources().getConfiguration().orientation == 1) { //title is displayed in portrait orientation only
+        if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) { //title is displayed in portrait orientation only
             super.setCustomTitle(customTitleView);
         }
     }
 
     public void showTimeLeft(int hour, int minute) {
-        if (getContext().getResources().getConfiguration().orientation == 1) { //portrait orientation
-            TextView tv = (TextView) this.findViewById(R.id.textview_timepickerdialog_timeleft);
+        if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            TextView textView = (TextView) this.findViewById(R.id.textview_timepickerdialog_timeleft);
             AlarmTime time = new AlarmTime(hour, minute);
-            tv.setText(getContext().getString(R.string.all_time_left, time.getHoursLeft(), time.getMinutesLeft()));
+            textView.setText(getContext().getString(R.string.all_time_left, time.getHoursLeft(), time.getMinutesLeft()));
         }
     }
 }

@@ -8,7 +8,7 @@ import com.anshmidt.multialarm.SharedPreferencesHelper;
 import java.util.Random;
 
 /**
- * Created by Ilya Anshmidt on 19.09.2017.
+ * After some time of using the app, dismiss button is displayed with different names.
  */
 
 public class DismissButtonNameGiver {

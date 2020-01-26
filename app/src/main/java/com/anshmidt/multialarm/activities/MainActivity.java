@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements
     private void showInterval(String interval) {
         String wholeTitle = getString(R.string.main_interval, interval);
         SpannableString wholeTitleSpan = new SpannableString(wholeTitle);
-        wholeTitleSpan.setSpan(new RelativeSizeSpan(2f), wholeTitle.indexOf(interval), interval.length() + 1, 0);
+        wholeTitleSpan.setSpan(new RelativeSizeSpan(DISPLAYED_NUMBERS_SIZE_RELATIVE_TO_TEXT_PROPORTION), wholeTitle.indexOf(interval), interval.length() + 1, 0);
         intervalBetweenAlarmsTextView.setText(wholeTitleSpan);
     }
 
@@ -247,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements
         int numberOfAlarmsInt = Integer.parseInt(numberOfAlarms);
         String wholeTitle = this.getResources().getQuantityString(R.plurals.main_number_of_alarms, numberOfAlarmsInt, numberOfAlarmsInt);
         SpannableString wholeTitleSpan = new SpannableString(wholeTitle);
-        wholeTitleSpan.setSpan(new RelativeSizeSpan(2f), wholeTitle.indexOf(numberOfAlarms),
+        wholeTitleSpan.setSpan(new RelativeSizeSpan(DISPLAYED_NUMBERS_SIZE_RELATIVE_TO_TEXT_PROPORTION),
+                wholeTitle.indexOf(numberOfAlarms),
                 numberOfAlarms.length() + 1, 0);
         numberOfAlarmsTextView.setText(wholeTitleSpan);
     }
@@ -255,7 +256,8 @@ public class MainActivity extends AppCompatActivity implements
     private void showFirstAlarmTime(String firstAlarmTime) {
         String wholeTitle = getString(R.string.main_firstalarm_time, firstAlarmTime);
         SpannableString wholeTitleSpan = new SpannableString(wholeTitle);
-        wholeTitleSpan.setSpan(new RelativeSizeSpan(2f), wholeTitle.indexOf(firstAlarmTime) - 1,
+        wholeTitleSpan.setSpan(new RelativeSizeSpan(DISPLAYED_NUMBERS_SIZE_RELATIVE_TO_TEXT_PROPORTION),
+                wholeTitle.indexOf(firstAlarmTime) - 1,
                 wholeTitle.indexOf(firstAlarmTime) + firstAlarmTime.length(), 0);
         firstAlarmTextView.setText(wholeTitleSpan);
     }

@@ -38,7 +38,7 @@ public class AlarmTime {
         if (timeDifferenceMillis < 0) {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        if (timeDifferenceMillis > 1000*3600*24) {
+        if (timeDifferenceMillis > TimeUnit.DAYS.toMillis(1)) {
             calendar.add(Calendar.DAY_OF_MONTH, -1);
         }
         return calendar.getTimeInMillis();
@@ -58,7 +58,6 @@ public class AlarmTime {
         long currentTimeMillis = Calendar.getInstance().getTimeInMillis();
         long alarmTimeMillis = toMillis();
         long timeDifferenceMillis = alarmTimeMillis - currentTimeMillis;
-        //return millisToString(timeDifferenceMillis);
         return getTimeDifference(timeDifferenceMillis).toString();
     }
 
@@ -121,7 +120,7 @@ public class AlarmTime {
 
     public AlarmTime addMinutes(int minutesAdded) {
         long initialTimeMillis = this.toMillis();
-        long incrementMillis = minutesAdded*60*1000;
+        long incrementMillis = TimeUnit.MINUTES.toMillis(minutesAdded);
         long incrementedTimeMillis = initialTimeMillis + incrementMillis;
         return millisToAlarmTime(incrementedTimeMillis);
     }
