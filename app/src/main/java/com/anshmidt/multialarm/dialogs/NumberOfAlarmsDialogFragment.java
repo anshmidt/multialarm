@@ -28,6 +28,8 @@ public class NumberOfAlarmsDialogFragment extends DialogFragment {
     EditText numberOfAlarmsEditText;
     KeyboardHelper keyboardHelper;
     boolean numberValid = true;
+    public static final String FRAGMENT_TAG = "numberOfAlarmsDialog";
+    public static final String BUNDLE_KEY_NUMBER_OF_ALARMS = "number_of_alarms";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class NumberOfAlarmsDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(subView);
 
-        String getArgument = getArguments().getString("number_of_alarms");
+        String getArgument = getArguments().getString(BUNDLE_KEY_NUMBER_OF_ALARMS);
         numberOfAlarmsEditText.setText(getArgument);
         keyboardHelper.moveCursorToEnd(numberOfAlarmsEditText);
         keyboardHelper.showKeyboard(numberOfAlarmsEditText);

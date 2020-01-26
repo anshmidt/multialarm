@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 45;
+    final float DISPLAYED_NUMBERS_SIZE_RELATIVE_TO_TEXT_PROPORTION = 2f;  // number of alarms, first alarm, interval values text size is larger than text around them
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements
 
         alarmParams = sharPrefHelper.getParams();
         timerManager = new TimerManager(MainActivity.this);
-//        nIconHelper = new NotificationIconHelper(MainActivity.this);
         alarmsListHelper = new AlarmsListHelper(MainActivity.this, alarmsListView);
 
         showFirstAlarmTime(alarmParams.firstAlarmTime.toString());
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements
         showInterval(sharPrefHelper.getIntervalStr());
         showNumberOfAlarms(sharPrefHelper.getNumberOfAlarmsStr());
         onOffSwitch.setChecked(sharPrefHelper.isAlarmTurnedOn());
-//        nIconHelper.setNotificationIcon(sharPrefHelper.isAlarmTurnedOn());
 
         alarmsListHelper.showList(alarmParams);
 
@@ -99,14 +98,11 @@ public class MainActivity extends AppCompatActivity implements
                 if (isChecked) {
                     checkNotificationPolicy();
                     checkOverlayPermission();
-//                    timerManager.startTimer(alarmParams);
                     timerManager.startSingleAlarmTimer(alarmParams.firstAlarmTime.toMillis());
-//                    nIconHelper.showNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_on_toast));
                     sharPrefHelper.setNumberOfAlreadyRangAlarms(0);
                 } else {
                     timerManager.cancelTimer();
-//                    nIconHelper.hideNotificationIcon();
                     showToast(getString(R.string.main_alarm_turned_off_toast));
                 }
                 alarmsListHelper.showList(alarmParams);
@@ -120,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 IntervalDialogFragment dialog = new IntervalDialogFragment();
                 Bundle intervalBundle = new Bundle();
-                intervalBundle.putString("interval", sharPrefHelper.getIntervalStr());
+                intervalBundle.putString(IntervalDialogFragment.BUNDLE_KEY_INTERVAL, sharPrefHelper.getIntervalStr());
                 dialog.setArguments(intervalBundle);
-                dialog.show(getFragmentManager(), "intervalDialog");
+                dialog.show(getFragmentManager(), IntervalDialogFragment.FRAGMENT_TAG);
             }
         });
 
@@ -131,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 NumberOfAlarmsDialogFragment dialog = new NumberOfAlarmsDialogFragment();
                 Bundle numberOfAlarmsBundle = new Bundle();
-                numberOfAlarmsBundle.putString("number_of_alarms", sharPrefHelper.getNumberOfAlarmsStr());
+                numberOfAlarmsBundle.putString(NumberOfAlarmsDialogFragment.BUNDLE_KEY_NUMBER_OF_ALARMS, sharPrefHelper.getNumberOfAlarmsStr());
                 dialog.setArguments(numberOfAlarmsBundle);
-                dialog.show(getFragmentManager(), "numberOfAlarmsDialog");
+                dialog.show(getFragmentManager(), NumberOfAlarmsDialogFragment.FRAGMENT_TAG);
             }
         });
 
@@ -141,13 +137,13 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 Bundle timePickerBundle = new Bundle();
-                timePickerBundle.putInt("alarm_hour", sharPrefHelper.getHour());
-                timePickerBundle.putInt("alarm_minute", sharPrefHelper.getMinute());
+                timePickerBundle.putInt(TimePickerDialogFragment.BUNDLE_KEY_ALARM_HOUR, sharPrefHelper.getHour());
+                timePickerBundle.putInt(TimePickerDialogFragment.BUNDLE_KEY_ALARM_MINUTE, sharPrefHelper.getMinute());
 
                 TimePickerDialogFragment timePicker = new TimePickerDialogFragment();
 
                 timePicker.setArguments(timePickerBundle);
-                timePicker.show(getFragmentManager(), "time_picker");
+                timePicker.show(getFragmentManager(), TimePickerDialogFragment.FRAGMENT_TAG);
             }
         });
 

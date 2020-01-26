@@ -20,6 +20,11 @@ public class TimePickerDialogFragment extends DialogFragment  {
     private int minute;
     private TimePickerDialog.OnTimeSetListener listener;
 
+    public static final String FRAGMENT_TAG = "time_picker";
+    public static final String BUNDLE_KEY_ALARM_HOUR = "alarm_hour";
+    public static final String BUNDLE_KEY_ALARM_MINUTE = "alarm_minute";
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -28,9 +33,9 @@ public class TimePickerDialogFragment extends DialogFragment  {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Bundle b = getArguments();
-        hour = b.getInt("alarm_hour");
-        minute = b.getInt("alarm_minute");
+        Bundle bundle = getArguments();
+        hour = bundle.getInt(BUNDLE_KEY_ALARM_HOUR);
+        minute = bundle.getInt(BUNDLE_KEY_ALARM_MINUTE);
         final AlarmTimePickerDialog timePickerDialog = new AlarmTimePickerDialog(getActivity(), listener, hour, minute, true);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());

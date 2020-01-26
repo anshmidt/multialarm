@@ -28,6 +28,8 @@ public class IntervalDialogFragment extends DialogFragment {
     EditText intervalEditText;
     KeyboardHelper keyboardHelper;
     boolean intervalValid = true;
+    public static final String FRAGMENT_TAG = "intervalDialog";
+    public static final String BUNDLE_KEY_INTERVAL = "interval";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class IntervalDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(subView);
 
-        String getArgument = getArguments().getString("interval");
+        String getArgument = getArguments().getString(BUNDLE_KEY_INTERVAL);
         intervalEditText.setText(getArgument);
         keyboardHelper.moveCursorToEnd(intervalEditText);
         keyboardHelper.showKeyboard(intervalEditText);

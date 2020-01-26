@@ -1,8 +1,6 @@
 package com.anshmidt.multialarm.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -11,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextClock;
 
 import com.anshmidt.multialarm.AlarmParams;
-import com.anshmidt.multialarm.NotificationController;
+import com.anshmidt.multialarm.DismissAlarmNotificationController;
 import com.anshmidt.multialarm.R;
 import com.anshmidt.multialarm.RingtonePlayer;
 import com.anshmidt.multialarm.SharedPreferencesHelper;
@@ -36,7 +34,7 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
     SharedPreferencesHelper sharPrefHelper;
     int numberOfAlreadyRangAlarms;
     TimerManager timerManager;
-    NotificationController notificationController;
+    DismissAlarmNotificationController dismissAlarmNotificationController;
     private final String LOG_TAG = DismissAlarmActivity.class.getSimpleName();
 
     @Override
@@ -45,8 +43,8 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
         setContentView(R.layout.activity_dismiss);
         showOnLockedScreen();
 
-        notificationController = new NotificationController(DismissAlarmActivity.this);
-        notificationController.cancelNotification(DismissAlarmActivity.this);
+        dismissAlarmNotificationController = new DismissAlarmNotificationController(DismissAlarmActivity.this);
+        dismissAlarmNotificationController.cancelNotification();
 
         ringtonePlayer = new RingtonePlayer(DismissAlarmActivity.this);
         sharPrefHelper = new SharedPreferencesHelper(DismissAlarmActivity.this);
@@ -66,11 +64,7 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
         DismissButtonNameGiver dismissButtonNameGiver = new DismissButtonNameGiver(DismissAlarmActivity.this);
         dismissButton.setText(dismissButtonNameGiver.getName());
 
-        //schedule next alarm
-        long intervalBetweenRepeatingAlarmsMillis = TimeUnit.MINUTES.toMillis(sharPrefHelper.getInterval());
-        long currentTimeMillis = System.currentTimeMillis();
-        timerManager.resetSingleAlarmTimer(currentTimeMillis + intervalBetweenRepeatingAlarmsMillis);
-
+        scheduleNextAlarm();
 
         numberOfAlreadyRangAlarms = sharPrefHelper.getNumberOfAlreadyRangAlarms() + 1;
         Log.d(LOG_TAG, "numberOfAlreadyRangAlarms (including current one) = " + numberOfAlreadyRangAlarms);
@@ -83,7 +77,6 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
         if (numberOfAlreadyRangAlarms >= alarmParams.numberOfAlarms) {
             Log.d(LOG_TAG, "Alarms have already rung " + numberOfAlreadyRangAlarms + " times and will be reset to tomorrow");
             long firstAlarmTimeMillis = alarmParams.firstAlarmTime.toNextDayMillis();
-//            timerManager.resetTimer(firstAlarmTimeMillis, alarmParams.interval);
             timerManager.resetSingleAlarmTimer(firstAlarmTimeMillis);
         }
 
@@ -113,10 +106,16 @@ public class DismissAlarmActivity extends AppCompatActivity implements RingtoneP
 
     private void showOnLockedScreen() {
 
-        final Window win = getWindow();
-        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        win.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        win.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        final Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+    }
+
+    private void scheduleNextAlarm() {
+        long intervalBetweenRepeatingAlarmsMillis = TimeUnit.MINUTES.toMillis(sharPrefHelper.getInterval());
+        long currentTimeMillis = System.currentTimeMillis();
+        timerManager.resetSingleAlarmTimer(currentTimeMillis + intervalBetweenRepeatingAlarmsMillis);
     }
 }
