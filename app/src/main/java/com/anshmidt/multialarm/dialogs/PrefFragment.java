@@ -108,8 +108,9 @@ public class PrefFragment extends PreferenceFragment {
     }
 
     public void openFileChooser() {
+        final String AUDIO_FILE_TYPE = "audio/*";
         Intent intent = new Intent()
-                .setType("audio/*")
+                .setType(AUDIO_FILE_TYPE)
                 .setAction(Intent.ACTION_GET_CONTENT);
 
         String chooserTitle = getString(R.string.chooseringtone_chooser_title);

@@ -22,6 +22,12 @@
     <string name="dismiss_alarm_notification_body">You\'ve set an alarm to %1$s</string>
     <string name="dismiss_alarm_notification_dismiss_button_title">Dismiss</string>
 
+    <string name="interval_dialog_ok_button_name">OK</string>
+    <string name="interval_dialog_cancel_button_name">Cancel</string>
+    <string name="number_of_alarms_dialog_ok_button_name">OK</string>
+    <string name="number_of_alarms_dialog_cancel_button_name">Cancel</string>
+
+
     <plurals name="main_number_of_alarms">
         <item quantity="one">%1$s alarm</item>
         <item quantity="other">%1$s alarms</item>

@@ -47,7 +47,7 @@ public class NumberOfAlarmsDialogFragment extends DialogFragment {
         keyboardHelper.showKeyboard(numberOfAlarmsEditText);
 
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.number_of_alarms_dialog_ok_button_name), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String numberStr = numberOfAlarmsEditText.getText().toString();
@@ -63,7 +63,7 @@ public class NumberOfAlarmsDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.number_of_alarms_dialog_cancel_button_name), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 keyboardHelper.hideKeyboard(numberOfAlarmsEditText);

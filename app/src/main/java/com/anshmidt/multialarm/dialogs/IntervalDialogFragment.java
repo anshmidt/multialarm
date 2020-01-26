@@ -46,7 +46,7 @@ public class IntervalDialogFragment extends DialogFragment {
         keyboardHelper.moveCursorToEnd(intervalEditText);
         keyboardHelper.showKeyboard(intervalEditText);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.interval_dialog_ok_button_name), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String intervalStr = intervalEditText.getText().toString();
@@ -58,7 +58,7 @@ public class IntervalDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.interval_dialog_cancel_button_name), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 keyboardHelper.hideKeyboard(intervalEditText);
@@ -93,6 +93,7 @@ public class IntervalDialogFragment extends DialogFragment {
 
 
     private boolean isValid(String intervalStr) {
+        final int MIN_ALLOWED_INTERVAL = 2;
         if (TextUtils.isEmpty(intervalStr)) {
             return false;
         }
@@ -103,7 +104,7 @@ public class IntervalDialogFragment extends DialogFragment {
         } catch (NumberFormatException e) {
             return false;
         }
-        if (interval < 2) {
+        if (interval < MIN_ALLOWED_INTERVAL) {
             return false;
         }
         return true;
