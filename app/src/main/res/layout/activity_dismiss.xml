@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAllCaps="false"
-    android:background="@color/dismiss_activity_background">
+    android:background="@color/dismissActivityBackground">
 
     <Button
         android:id="@+id/button_dismiss_alarm"
@@ -15,7 +15,7 @@
         android:background="@color/primary"
         android:textSize="30sp"
         android:textAllCaps="false"
-        android:textColor="@color/dismiss_activity_textcolor"
+        android:textColor="@color/dismissActivityTextcolor"
         android:layout_height="0dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -35,7 +35,7 @@
         android:format12Hour="hh:mm"
         android:format24Hour="k:mm"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/dismiss_activity_textcolor"
+        android:textColor="@color/dismissActivityTextcolor"
         android:textSize="100sp"
         android:layout_margin="20dp"
         android:fontFamily="sans-serif-thin"

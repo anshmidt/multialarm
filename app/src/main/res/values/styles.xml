@@ -14,22 +14,15 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="MainScreenDividerTheme" parent="AppTheme">
+        <item name="android:layout_margin">@dimen/margin_main_activity</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
     <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
-        <!--<item name="android:timePickerStyle">@style/TimePickerStyle</item>-->
-
-
-
-        <!--<item name="showTitle">true</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--<item name="colorAccent">@color/white</item>-->
-        <!--<item name="android:headerBackground">#ffee6073</item>-->
-        <!--<item name="android:numbersTextColor">#ff000000</item>-->
-        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
-        <!--<item name="android:numbersBackgroundColor">#ffdddd00</item>-->
-        <!--<item name="android:colorPrimary">#ff2d0073</item>-->
-        <!--<item name="android:colorPrimaryDark">#ff2d60ff</item>-->
-        <!--<item name="android:headerTimeTextAppearance">@style/TimePickerDialogTheme.TimeLabel</item> &lt;!&ndash; TimePicker Time *TextAppearance* &ndash;&gt;-->
     </style>
 
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
@@ -37,11 +30,8 @@
         <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
 
         <item name="android:timePickerMode">clock</item>
-        <item name="android:headerBackground">@color/dismiss_activity_textcolor</item>
+        <item name="android:headerBackground">@color/dismissActivityTextcolor</item>
         <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
-        <!--<item name="android:numbersTextColor">#ff000000</item>-->
-        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
-        <!--<item name="android:numbersBackgroundColor">#ffdddddd</item>-->
 
     </style>
 

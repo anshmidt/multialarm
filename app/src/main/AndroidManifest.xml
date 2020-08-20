@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.anshmidt.multialarm">
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -10,46 +11,24 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
+        tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".view.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmBroadcastReceiver">
-        </receiver>
 
-        <receiver android:name=".BootCompletedIntentReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        
-        <receiver android:name=".DismissNotificationReceiver">
-            <intent-filter android:priority="999" >
-                <action android:name="com.anshmidt.multialarm.dismissNotification" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name=".activities.DismissAlarmActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppFullScreenTheme"></activity>
-        <activity
-            android:name=".activities.PrefActivity"
-            android:label="@string/preferences_title"
-            android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

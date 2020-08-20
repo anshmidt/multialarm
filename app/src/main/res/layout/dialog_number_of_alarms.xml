@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
-        android:textColor="@color/main_textcolor"
+        android:textColor="@color/mainTextcolor"
         />
 
     <EditText
@@ -34,7 +34,7 @@
         android:inputType="number"
         android:maxLength="4"
         android:textSize="40sp"
-        android:textColor="@color/main_textcolor"
+        android:textColor="@color/mainTextcolor"
         android:layout_margin="10dp"
         style="@style/Widget.AppCompat.EditText"
         tools:layout_constraintTop_creator="1"

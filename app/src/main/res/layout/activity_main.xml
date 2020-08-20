@@ -1,127 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true"
-        android:showDividers="middle|end"
+        android:layout_height="wrap_content"
         android:divider="?android:listDivider"
+        android:focusableInTouchMode="true"
         android:footerDividersEnabled="true"
-        tools:context="com.anshmidt.multialarm.activities.MainActivity"
-        android:weightSum="1">
+        android:showDividers="middle|end"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_main_firstalarm_time"
+        app:layout_constraintTop_toBottomOf="@+id/textview_main_firstalarm_time"
+        tools:context="com.anshmidt.multialarm.activities.MainActivity">
 
-
-
-        <RelativeLayout
-            android:id="@+id/layout_main_alarmslist"
+        <!--Nested ConstraintLayouts are used in order to make parts of the screen clickable-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_switch_main"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ListView
-                android:id="@+id/listview_main_alarmslist"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_main_alarmslist"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin_main_activity"
                 android:divider="@null"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="51dp"
+                android:layout_marginEnd="54dp"
+                android:layout_marginBottom="52dp"
                 android:elevation="0dp"
                 android:scaleX="2"
                 android:scaleY="2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="55dp"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/divider_1"
+            style="@style/MainScreenDividerTheme"
+            app:layout_constraintTop_toBottomOf="@id/layout_switch_main"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-        <LinearLayout
-            android:id="@+id/layout_main_firstalarm"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_first_alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:layout_constraintTop_toBottomOf="@id/divider_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/textview_main_firstalarm_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/main_textcolor"
+                android:layout_margin="@dimen/margin_main_activity"
                 android:text="@string/main_firstalarm_time"
-                />
+                android:textColor="@color/mainTextcolor"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/textview_main_timeleft"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_main_activity"
                 android:text="@string/all_time_left"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
                 android:textColor="@color/primary"
                 android:textSize="18sp"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_main_firstalarm_time"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/divider_2"
+            style="@style/MainScreenDividerTheme"
+            app:layout_constraintTop_toBottomOf="@id/layout_first_alarm"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-        <LinearLayout
-            android:id="@+id/layout_main_interval"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_interval"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toBottomOf="@id/divider_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/textview_main_interval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="20dp"
-                android:textColor="@color/main_textcolor"
+                android:layout_margin="@dimen/margin_main_activity"
                 android:text="@string/main_interval"
+                android:textColor="@color/mainTextcolor"
                 android:textSize="18sp"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/divider_3"
+            style="@style/MainScreenDividerTheme"
+            app:layout_constraintTop_toBottomOf="@id/layout_interval"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/layout_main_numberofalarms"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_numberofalarms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toBottomOf="@id/divider_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/textview_main_numberofalarms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/margin_main_activity"
+                android:textColor="@color/mainTextcolor"
                 android:textSize="18sp"
-                android:textColor="@color/main_textcolor"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
