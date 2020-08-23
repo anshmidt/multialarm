@@ -18,6 +18,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
 
         switch_main.setOnCheckedChangeListener { _, isChecked ->
+            // ignore cases when isChecked value is changed programmatically
+            if (!switch_main.isPressed) {
+                return@setOnCheckedChangeListener
+            }
+
             when (isChecked) {
                 true -> mainViewModel.onAlarmSwitchTurnedOn()
                 false -> mainViewModel.onAlarmSwitchTurnedOff()

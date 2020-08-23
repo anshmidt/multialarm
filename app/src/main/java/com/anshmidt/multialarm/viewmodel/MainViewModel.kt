@@ -1,7 +1,9 @@
 package com.anshmidt.multialarm.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 
@@ -13,16 +15,17 @@ class MainViewModel(
         MutableLiveData<Boolean>()
     }
 
+
     override fun onViewCreated() {
-        repository.alarmSwitchState
+        alarmSwitchState.setValue(repository.alarmSwitchState)
     }
 
     override fun onAlarmSwitchTurnedOn() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        repository.alarmSwitchState = true
     }
 
     override fun onAlarmSwitchTurnedOff() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        repository.alarmSwitchState = false
     }
 
     override fun onFirstAlarmTimeClicked() {
