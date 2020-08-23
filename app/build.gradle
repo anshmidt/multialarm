@@ -41,6 +41,10 @@ dependencies {
 
     //ViewModel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    //Dependency injection
+    implementation "org.koin:koin-android:1.0.2"
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
 }
 repositories {
     mavenCentral()

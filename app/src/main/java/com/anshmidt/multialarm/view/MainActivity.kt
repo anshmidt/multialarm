@@ -1,45 +1,48 @@
 package com.anshmidt.multialarm.view
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), MainView {
 
-    private lateinit var viewModel: MainViewModel
+    val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         switch_main.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
-                true -> viewModel.onAlarmSwitchTurnedOn()
-                false -> viewModel.onAlarmSwitchTurnedOff()
+                true -> mainViewModel.onAlarmSwitchTurnedOn()
+                false -> mainViewModel.onAlarmSwitchTurnedOff()
             }
         }
 
         layout_first_alarm.setOnClickListener {
-            viewModel.onFirstAlarmTimeClicked()
+            mainViewModel.onFirstAlarmTimeClicked()
         }
 
         layout_interval.setOnClickListener {
-            viewModel.onIntervalBetweenAlarmsClicked()
+            mainViewModel.onIntervalBetweenAlarmsClicked()
         }
 
         layout_numberofalarms.setOnClickListener {
-            viewModel.onNumberOfAlarmsClicked()
+            mainViewModel.onNumberOfAlarmsClicked()
         }
 
+        val alarmSwitchStateObserver = Observer<Boolean> { alarmSwitchState ->
+            displayAlarmSwitchState(alarmSwitchState)
+        }
+
+        mainViewModel.alarmSwitchState.observe(this, alarmSwitchStateObserver)
+
+        mainViewModel.onViewCreated()
     }
 
     override fun displayAlarmSwitchState(switchState: Boolean) {
