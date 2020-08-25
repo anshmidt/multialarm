@@ -7,13 +7,14 @@ import androidx.lifecycle.liveData
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 
-class MainViewModel(
+open class MainViewModel(
     val repository: AlarmSettingsRepository
 ) : ViewModel(), IMainViewModel {
 
     val alarmSwitchState: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+
 
 
     override fun onViewCreated() {
