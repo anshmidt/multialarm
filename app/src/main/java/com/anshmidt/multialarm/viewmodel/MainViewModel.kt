@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,11 @@ open class MainViewModel(
         alarmSwitchState.setValue(repository.alarmSwitchState)
     }
 
+
+    override fun onAlarmSwitchStateChanged(isTurnedOn: Boolean) {
+        Log.d("viewmodel", "switch state: $isTurnedOn")
+    }
+
     override fun onAlarmSwitchTurnedOn() {
         repository.alarmSwitchState = true
     }
@@ -28,6 +34,8 @@ open class MainViewModel(
     override fun onAlarmSwitchTurnedOff() {
         repository.alarmSwitchState = false
     }
+
+
 
     override fun onFirstAlarmTimeClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

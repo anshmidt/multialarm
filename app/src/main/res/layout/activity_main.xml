@@ -1,152 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="mainViewModel"
+            type="com.anshmidt.multialarm.viewmodel.MainViewModel" />
+    </data>
 
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_main"
+    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="?android:listDivider"
-        android:focusableInTouchMode="true"
-        android:footerDividersEnabled="true"
-        android:showDividers="middle|end"
-        android:weightSum="1"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_main_firstalarm_time"
-        app:layout_constraintTop_toBottomOf="@+id/textview_main_firstalarm_time"
-        tools:context="com.anshmidt.multialarm.activities.MainActivity">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!--Nested ConstraintLayouts are used in order to make parts of the screen clickable-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_switch_main"
+            android:id="@+id/layout_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:divider="?android:listDivider"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_main_firstalarm_time"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_firstalarm_time"
+            tools:context="com.anshmidt.multialarm.activities.MainActivity">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_main_alarmslist"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/margin_main_activity"
-                android:divider="@null"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_main"
-                android:layout_width="wrap_content"
+            <!--Nested ConstraintLayouts are used in order to make parts of the screen clickable-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_switch_main"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="51dp"
-                android:layout_marginEnd="54dp"
-                android:layout_marginBottom="52dp"
-                android:elevation="0dp"
-                android:scaleX="2"
-                android:scaleY="2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_main_alarmslist"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_main_activity"
+                    android:divider="@null"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <View
-            android:id="@+id/divider_1"
-            style="@style/MainScreenDividerTheme"
-            app:layout_constraintTop_toBottomOf="@id/layout_switch_main"
-            app:layout_constraintStart_toStartOf="parent"/>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="51dp"
+                    android:layout_marginEnd="54dp"
+                    android:layout_marginBottom="52dp"
+                    android:elevation="0dp"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:onCheckedChanged="@{(switch, checked) -> mainViewModel.onAlarmSwitchStateChanged(checked)}"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_first_alarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textview_main_firstalarm_time"
-                android:layout_width="wrap_content"
+            <View
+                android:id="@+id/divider_1"
+                style="@style/MainScreenDividerTheme"
+                app:layout_constraintTop_toBottomOf="@id/layout_switch_main"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_first_alarm"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_main_activity"
-                android:text="@string/main_firstalarm_time"
-                android:textColor="@color/mainTextcolor"
-                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/divider_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/textview_main_timeleft"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textview_main_firstalarm_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_main_activity"
+                    android:text="@string/main_firstalarm_time"
+                    android:textColor="@color/mainTextcolor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textview_main_timeleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_main_activity"
+                    android:text="@string/all_time_left"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textview_main_firstalarm_time"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider_2"
+                style="@style/MainScreenDividerTheme"
+                app:layout_constraintTop_toBottomOf="@id/layout_first_alarm"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_interval"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_main_activity"
-                android:text="@string/all_time_left"
-                android:textColor="@color/primary"
-                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/divider_2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_main_firstalarm_time"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textview_main_interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_main_activity"
+                    android:text="@string/main_interval"
+                    android:textColor="@color/mainTextcolor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/divider_2"
-            style="@style/MainScreenDividerTheme"
-            app:layout_constraintTop_toBottomOf="@id/layout_first_alarm"
-            app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_interval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider_2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:id="@+id/textview_main_interval"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_main_activity"
-                android:text="@string/main_interval"
-                android:textColor="@color/mainTextcolor"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/divider_3"
-            style="@style/MainScreenDividerTheme"
-            app:layout_constraintTop_toBottomOf="@id/layout_interval"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_numberofalarms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider_3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:id="@+id/textview_main_numberofalarms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_main_activity"
-                android:textColor="@color/mainTextcolor"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent"
+            <View
+                android:id="@+id/divider_3"
+                style="@style/MainScreenDividerTheme"
+                app:layout_constraintTop_toBottomOf="@id/layout_interval"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_numberofalarms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider_3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/textview_main_numberofalarms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_main_activity"
+                    android:textColor="@color/mainTextcolor"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>
