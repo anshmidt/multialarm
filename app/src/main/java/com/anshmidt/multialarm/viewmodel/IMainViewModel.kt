@@ -5,10 +5,6 @@ import com.anshmidt.multialarm.data.AlarmSettings
 interface IMainViewModel {
     fun onViewCreated()
 
-    fun onAlarmSwitchTurnedOn()
-    fun onAlarmSwitchTurnedOff()
-
-    fun onAlarmSwitchStateChanged(isTurnedOn: Boolean)
 
     fun onFirstAlarmTimeClicked()
 

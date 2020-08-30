@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), MainView {
 
     val mainViewModel: MainViewModel by viewModel()
 
-//    private lateinit var binding: ActivityMainBinding
 
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -25,55 +24,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.mainViewModel = mainViewModel
-
-//        setContentView(R.layout.activity_main)
-
-
-//        switch_main.setOnCheckedChangeListener { _, isChecked ->
-//            // ignore cases when isChecked value is changed programmatically
-//            if (!switch_main.isPressed) {
-//                return@setOnCheckedChangeListener
-//            }
-//
-//            when (isChecked) {
-//                true -> mainViewModel.onAlarmSwitchTurnedOn()
-//                false -> mainViewModel.onAlarmSwitchTurnedOff()
-//            }
-//        }
-//
-//        layout_first_alarm.setOnClickListener {
-//            mainViewModel.onFirstAlarmTimeClicked()
-//        }
-//
-//        layout_interval.setOnClickListener {
-//            mainViewModel.onIntervalBetweenAlarmsClicked()
-//        }
-//
-//        layout_numberofalarms.setOnClickListener {
-//            mainViewModel.onNumberOfAlarmsClicked()
-//        }
-//
-//        val alarmSwitchStateObserver = Observer<Boolean> { alarmSwitchState ->
-//            displayAlarmSwitchState(alarmSwitchState)
-//        }
-//
-//        mainViewModel.alarmSwitchState.observe(this, alarmSwitchStateObserver)
-
         mainViewModel.onViewCreated()
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-//        binding.mainViewModel = mainViewModel
-        return super.onCreateView(name, context, attrs)
-    }
 
-
-
-    override fun displayAlarmSwitchState(switchState: Boolean) {
-//        switch_main.isChecked = switchState
-    }
 
     override fun displayFirstAlarmTime(firstAlarmTime: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

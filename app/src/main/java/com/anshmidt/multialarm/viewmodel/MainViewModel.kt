@@ -1,6 +1,9 @@
 package com.anshmidt.multialarm.viewmodel
 
 import android.util.Log
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,30 +15,29 @@ open class MainViewModel(
     val repository: AlarmSettingsRepository
 ) : ViewModel(), IMainViewModel {
 
-//    val alarmSwitchState: MutableLiveData<Boolean> by lazy {
-//        MutableLiveData<Boolean>()
-//    }
+
+    companion object {
+        private val TAG = MainViewModel::class.java.simpleName
+
+    }
+
+    val DEFAULT_ALARM_SWITCH_STATE = repository.alarmSwitchState
+
+    var alarmSwitchState: Boolean = DEFAULT_ALARM_SWITCH_STATE
+        get() {
+            field = repository.alarmSwitchState
+            return field
+        }
+        set(value) {
+            repository.alarmSwitchState = value
+            field = value
+        }
 
 
 
     override fun onViewCreated() {
-//        alarmSwitchState.setValue(repository.alarmSwitchState)
+
     }
-
-
-    override fun onAlarmSwitchStateChanged(isTurnedOn: Boolean) {
-        Log.d("viewmodel", "switch state: $isTurnedOn")
-        repository.alarmSwitchState = isTurnedOn
-    }
-
-    override fun onAlarmSwitchTurnedOn() {
-        repository.alarmSwitchState = true
-    }
-
-    override fun onAlarmSwitchTurnedOff() {
-        repository.alarmSwitchState = false
-    }
-
 
 
     override fun onFirstAlarmTimeClicked() {
