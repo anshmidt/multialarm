@@ -12,19 +12,20 @@ open class MainViewModel(
     val repository: AlarmSettingsRepository
 ) : ViewModel(), IMainViewModel {
 
-    val alarmSwitchState: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
+//    val alarmSwitchState: MutableLiveData<Boolean> by lazy {
+//        MutableLiveData<Boolean>()
+//    }
 
 
 
     override fun onViewCreated() {
-        alarmSwitchState.setValue(repository.alarmSwitchState)
+//        alarmSwitchState.setValue(repository.alarmSwitchState)
     }
 
 
     override fun onAlarmSwitchStateChanged(isTurnedOn: Boolean) {
         Log.d("viewmodel", "switch state: $isTurnedOn")
+        repository.alarmSwitchState = isTurnedOn
     }
 
     override fun onAlarmSwitchTurnedOn() {

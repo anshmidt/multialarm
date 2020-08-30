@@ -17,15 +17,15 @@ class MainActivity : AppCompatActivity(), MainView {
 
     val mainViewModel: MainViewModel by viewModel()
 
-    private lateinit var binding: ActivityMainBinding
+//    private lateinit var binding: ActivityMainBinding
 
-//    private val binding: ActivityMainBinding by lazy {
-//        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-//    }
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+//        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.mainViewModel = mainViewModel
 
 //        setContentView(R.layout.activity_main)
