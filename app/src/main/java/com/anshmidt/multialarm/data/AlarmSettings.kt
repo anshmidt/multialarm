@@ -6,6 +6,6 @@ import java.util.*
 data class AlarmSettings (
         var alarmSwitchState: Boolean,
         var firstAlarmTime: LocalTime,
-        val intervalBetweenAlarmsMinutes: Int,
+        val minutesBetweenAlarms: Int,
         val numberOfAlarms: Int
 )

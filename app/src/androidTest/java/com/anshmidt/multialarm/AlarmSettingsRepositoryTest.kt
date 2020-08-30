@@ -15,26 +15,34 @@ class AlarmSettingsRepositoryTest {
 
     @Before
     fun executeBefore() {
-
+        repository.clearAll()
     }
 
     @Test
     fun initialValue_switchState() {
-        repository.clearAll()
         Assert.assertEquals(false, repository.alarmSwitchState)
     }
 
     @Test
     fun initialValue_firstAlarmTime() {
-        repository.clearAll()
         val expectedFirstAlarmTime = LocalTime.of(6, 0)
         Assert.assertEquals(expectedFirstAlarmTime, repository.firstAlarmTime)
     }
 
     @Test
-    fun saveSwitchState_ifPreferencesEmpty() {
-        repository.clearAll()
+    fun initialValue_intervalBetweenAlarms() {
+        val expectedInterval = 10
+        Assert.assertEquals(expectedInterval, repository.minutesBetweenAlarms)
+    }
 
+    @Test
+    fun initialValue_numberOfAlarms() {
+        val expectedValue = 5
+        Assert.assertEquals(expectedValue, repository.numberOfAlarms)
+    }
+
+    @Test
+    fun saveSwitchState_ifPreferencesEmpty() {
         val newSwitchState = true
         repository.alarmSwitchState = newSwitchState
         val actualSwitchStateFromRepository = repository.alarmSwitchState
@@ -43,7 +51,6 @@ class AlarmSettingsRepositoryTest {
 
     @Test
     fun saveSwitchState_ifPreferencesNotEmpty() {
-        repository.clearAll()
         repository.alarmSwitchState = true
 
         val newSwitchState = false
@@ -54,12 +61,29 @@ class AlarmSettingsRepositoryTest {
 
     @Test
     fun saveFirstAlarmTime() {
-        repository.clearAll()
         repository.firstAlarmTime = LocalTime.NOON
 
         val newFirstAlarmTime = LocalTime.of(7, 23)
         repository.firstAlarmTime = newFirstAlarmTime
         val actualValueFromRepository = repository.firstAlarmTime
         Assert.assertEquals(newFirstAlarmTime, actualValueFromRepository)
+    }
+
+    @Test
+    fun saveMinutesBetweenAlarms() {
+        repository.minutesBetweenAlarms = 66
+
+        val newValue = 3
+        repository.minutesBetweenAlarms = newValue
+        val actualValueFromRepository = repository.minutesBetweenAlarms
+        Assert.assertEquals(newValue, actualValueFromRepository)
+    }
+
+    @Test
+    fun saveNumberOfAlarms() {
+        val newValue = 555
+        repository.numberOfAlarms = newValue
+        val actualValueFromRepository = repository.numberOfAlarms
+        Assert.assertEquals(newValue, actualValueFromRepository)
     }
 }

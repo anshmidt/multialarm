@@ -3,11 +3,7 @@ package com.anshmidt.multialarm.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.anshmidt.multialarm.data.AlarmSettings
-import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalTime
-import java.util.concurrent.TimeUnit
 
 class AlarmSettingsRepository(private val context: Context) {
 
@@ -17,23 +13,29 @@ class AlarmSettingsRepository(private val context: Context) {
         private const val ALARM_SWITCH_STATE_KEY = "alarmSwitchState"
         private const val FIRST_ALARM_HOURS_KEY = "firstAlarmHours"
         private const val FIRST_ALARM_MINUTES_KEY = "firstAlarmMinutes"
+        private const val MINUTES_BETWEEN_ALARMS_KEY = "minutesBetweenAlarms"
+        private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
 
-        private const val DEFAULT_ALARM_SWITCH_STATE = false
-        private val DEFAULT_FIRST_ALARM_TIME = LocalTime.of(6, 0)
+        private val DEFAULT_SETTINGS = AlarmSettings(
+                alarmSwitchState = false,
+                firstAlarmTime = LocalTime.of(6, 0),
+                minutesBetweenAlarms = 10,
+                numberOfAlarms = 5
+        )
     }
 
     private val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     var alarmSwitchState: Boolean
-        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_ALARM_SWITCH_STATE)
+        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.alarmSwitchState)
         set(alarmState) {
             preferences.edit().putBoolean(ALARM_SWITCH_STATE_KEY, alarmState).apply()
         }
 
     var firstAlarmTime: LocalTime
         get() {
-            val hours = preferences.getInt(FIRST_ALARM_HOURS_KEY, DEFAULT_FIRST_ALARM_TIME.hour)
-            val minutes = preferences.getInt(FIRST_ALARM_MINUTES_KEY, DEFAULT_FIRST_ALARM_TIME.minute)
+            val hours = preferences.getInt(FIRST_ALARM_HOURS_KEY, DEFAULT_SETTINGS.firstAlarmTime.hour)
+            val minutes = preferences.getInt(FIRST_ALARM_MINUTES_KEY, DEFAULT_SETTINGS.firstAlarmTime.minute)
             return LocalTime.of(hours, minutes)
         }
         set(value) {
@@ -41,6 +43,17 @@ class AlarmSettingsRepository(private val context: Context) {
             preferences.edit().putInt(FIRST_ALARM_MINUTES_KEY, value.minute).apply()
         }
 
+    var minutesBetweenAlarms: Int
+        get() = preferences.getInt(MINUTES_BETWEEN_ALARMS_KEY, DEFAULT_SETTINGS.minutesBetweenAlarms)
+        set(value) {
+            preferences.edit().putInt(MINUTES_BETWEEN_ALARMS_KEY, value).apply()
+        }
+
+    var numberOfAlarms: Int
+        get() = preferences.getInt(NUMBER_OF_ALARMS_KEY, DEFAULT_SETTINGS.numberOfAlarms)
+        set(value) {
+            preferences.edit().putInt(NUMBER_OF_ALARMS_KEY, value).apply()
+        }
 
 
     /**
