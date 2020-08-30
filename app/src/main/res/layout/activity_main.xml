@@ -78,13 +78,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_main_activity"
-                    android:text="@string/main_firstalarm_time"
                     android:textColor="@color/mainTextcolor"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{String.format(@string/main_firstalarm_time,mainViewModel.getFirstAlarmTimeDisplayable())}"
-                    app:importantPartOfText="@{mainViewModel.getFirstAlarmTimeDisplayable()}"/>
+                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.getFirstAlarmTimeDisplayable())}"
+                    app:partOfTextToResize="@{mainViewModel.getFirstAlarmTimeDisplayable()}"/>
 
                 <TextView
                     android:id="@+id/textview_main_timeleft"
@@ -118,11 +117,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_main_activity"
-                    android:text="@string/main_interval"
                     android:textColor="@color/mainTextcolor"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:fullText="@{String.format(@string/main_interval, Integer.toString(mainViewModel.minutesBetweenAlarms))}"
+                    app:partOfTextToResize="@{Integer.toString(mainViewModel.minutesBetweenAlarms)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,7 +148,9 @@
                     android:textColor="@color/mainTextcolor"
                     android:textSize="18sp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:fullText="@{@plurals/main_number_of_alarms(mainViewModel.numberOfAlarms,mainViewModel.numberOfAlarms)}"
+                    app:partOfTextToResize="@{Integer.toString(mainViewModel.numberOfAlarms)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

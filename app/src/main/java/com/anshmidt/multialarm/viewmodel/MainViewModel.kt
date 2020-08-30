@@ -60,7 +60,7 @@ open class MainViewModel(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onIntervalBetweenAlarmsClicked() {
+    override fun onMinutesBetweenAlarmsClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

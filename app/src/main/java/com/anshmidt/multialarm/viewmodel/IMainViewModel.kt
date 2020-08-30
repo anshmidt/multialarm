@@ -9,7 +9,7 @@ interface IMainViewModel {
 
     fun onFirstAlarmTimeClicked()
 
-    fun onIntervalBetweenAlarmsClicked()
+    fun onMinutesBetweenAlarmsClicked()
 
     fun onNumberOfAlarmsClicked()
 

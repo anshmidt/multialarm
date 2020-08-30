@@ -28,17 +28,4 @@ class MainActivity : AppCompatActivity(), MainView {
         mainViewModel.onViewCreated()
     }
 
-
-
-    override fun displayFirstAlarmTime(firstAlarmTime: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun displayIntervalBetweenAlarms(intervalBetweenAlarmsMinutes: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun displayNumberOfAlarms(numberOfAlarms: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
