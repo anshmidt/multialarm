@@ -12,7 +12,7 @@ import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 
 open class MainViewModel(
-    val repository: AlarmSettingsRepository
+    private val repository: AlarmSettingsRepository
 ) : ViewModel(), IMainViewModel {
 
 
@@ -21,16 +21,10 @@ open class MainViewModel(
 
     }
 
-    val DEFAULT_ALARM_SWITCH_STATE = repository.alarmSwitchState
-
-    var alarmSwitchState: Boolean = DEFAULT_ALARM_SWITCH_STATE
-        get() {
-            field = repository.alarmSwitchState
-            return field
-        }
+    var alarmSwitchState: Boolean
+        get() = repository.alarmSwitchState
         set(value) {
             repository.alarmSwitchState = value
-            field = value
         }
 
 

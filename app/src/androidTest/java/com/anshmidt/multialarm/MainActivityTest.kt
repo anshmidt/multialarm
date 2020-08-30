@@ -2,7 +2,9 @@ package com.anshmidt.multialarm
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.rule.ActivityTestRule
 import com.anshmidt.multialarm.di.appModule
@@ -20,8 +22,7 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
-import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -39,5 +40,35 @@ class MainActivityTest : KoinTest {
     var mainActivityRule: ActivityTestRule<MainActivity>
             = ActivityTestRule(MainActivity::class.java)
 
+    private fun turnAlarmSwitchOn() {
+        onView(withId(R.id.switch_main)).perform(ViewActions.swipeRight())
+        onView(withId(R.id.switch_main)).check(matches(isChecked()))
+    }
+
+    private fun turnAlarmSwitchOff() {
+        onView(withId(R.id.switch_main)).perform(ViewActions.swipeLeft())
+        onView(withId(R.id.switch_main)).check(matches(isNotChecked()))
+    }
+
+    private fun restartApp() {
+        with(mainActivityRule) {
+            finishActivity()
+            launchActivity(null)
+        }
+    }
+
+    @Test
+    fun saveSwitchStateOff_whenAppRestarted() {
+        turnAlarmSwitchOff()
+        restartApp()
+        onView(withId(R.id.switch_main)).check(matches(isNotChecked()))
+    }
+
+    @Test
+    fun saveSwitchStateOn_whenAppRestarted() {
+        turnAlarmSwitchOn()
+        restartApp()
+        onView(withId(R.id.switch_main)).check(matches(isChecked()))
+    }
 
 }
