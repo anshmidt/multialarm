@@ -82,6 +82,12 @@ dependencies {
 
     //Data binding
     kapt "com.android.databinding:compiler:$gradle_version"
+
+    //LocalDateTime
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+
+    //Json
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 repositories {
     mavenCentral()

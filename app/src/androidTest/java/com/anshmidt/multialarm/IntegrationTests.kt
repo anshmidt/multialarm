@@ -33,7 +33,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class MainActivityTest : KoinTest {
+class IntegrationTests : KoinTest {
 
 
     @get:Rule
