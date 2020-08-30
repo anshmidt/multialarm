@@ -39,6 +39,7 @@ android {
 
 dependencies {
     def koin_version = "1.0.2"
+    def mockito_version = "2.21.0"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -76,18 +77,16 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    testImplementation "org.mockito:mockito-inline:2.21.0"
-    testImplementation 'org.mockito:mockito-core:2.21.0'
-    androidTestImplementation 'org.mockito:mockito-android:2.21.0'
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
     //Data binding
     kapt "com.android.databinding:compiler:$gradle_version"
 
-    //LocalDateTime
+    //LocalDateTime for API < 26
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
 
-    //Json
-    implementation 'com.google.code.gson:gson:2.8.5'
 }
 repositories {
     mavenCentral()

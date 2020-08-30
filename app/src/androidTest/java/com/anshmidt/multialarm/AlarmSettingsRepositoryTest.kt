@@ -14,7 +14,7 @@ class AlarmSettingsRepositoryTest {
     val repository = AlarmSettingsRepository(appContext)
 
     @Before
-    fun executeBefore() {
+    fun setUp() {
         repository.clearAll()
     }
 

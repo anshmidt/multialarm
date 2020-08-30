@@ -5,6 +5,7 @@ import com.anshmidt.multialarm.data.AlarmSettings
 interface IMainViewModel {
     fun onViewCreated()
 
+    fun getFirstAlarmTimeDisplayable(): String
 
     fun onFirstAlarmTimeClicked()
 
@@ -12,5 +13,4 @@ interface IMainViewModel {
 
     fun onNumberOfAlarmsClicked()
 
-    fun getAlarmSettingsFromModel(): AlarmSettings
 }

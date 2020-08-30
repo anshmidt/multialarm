@@ -9,7 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.anshmidt.multialarm.data.AlarmSettings
+import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
+import org.threeten.bp.LocalTime
 
 open class MainViewModel(
     private val repository: AlarmSettingsRepository
@@ -27,12 +29,32 @@ open class MainViewModel(
             repository.alarmSwitchState = value
         }
 
+    var firstAlarmTime: LocalTime
+        get() = repository.firstAlarmTime
+        set(value) {
+            repository.firstAlarmTime = value
+        }
+
+    var minutesBetweenAlarms: Int
+        get() = repository.minutesBetweenAlarms
+        set(value) {
+            repository.minutesBetweenAlarms = value
+        }
+
+    var numberOfAlarms: Int
+        get() = repository.numberOfAlarms
+        set(value) {
+            repository.numberOfAlarms = value
+        }
 
 
     override fun onViewCreated() {
 
     }
 
+    override fun getFirstAlarmTimeDisplayable(): String {
+        return TimeFormatter.getDisplayableTime(firstAlarmTime)
+    }
 
     override fun onFirstAlarmTimeClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -46,9 +68,6 @@ open class MainViewModel(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getAlarmSettingsFromModel(): AlarmSettings {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
 
 }

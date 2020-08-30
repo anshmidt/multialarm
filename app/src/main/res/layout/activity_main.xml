@@ -82,7 +82,9 @@
                     android:textColor="@color/mainTextcolor"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:fullText="@{String.format(@string/main_firstalarm_time,mainViewModel.getFirstAlarmTimeDisplayable())}"
+                    app:importantPartOfText="@{mainViewModel.getFirstAlarmTimeDisplayable()}"/>
 
                 <TextView
                     android:id="@+id/textview_main_timeleft"
