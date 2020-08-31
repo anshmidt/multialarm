@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.helpers
 
 import android.text.Spannable
 import android.text.SpannableString

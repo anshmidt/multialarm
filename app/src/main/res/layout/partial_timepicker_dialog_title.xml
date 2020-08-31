@@ -14,7 +14,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="18sp"
-        android:textColor="@color/mainTextcolor"
+        android:textColor="@color/mainTextColor"
         android:gravity="left"
         android:text="@string/timepicker_dialog_title"
         />

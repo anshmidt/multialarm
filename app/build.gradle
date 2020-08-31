@@ -26,6 +26,13 @@ android {
     }
     productFlavors {
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     packagingOptions {
         pickFirst 'mockito-extensions/org.mockito.plugins.MockMaker'
     }
@@ -86,6 +93,9 @@ dependencies {
 
     //LocalDateTime for API < 26
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+
+    //Fragments
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 
 }
 repositories {

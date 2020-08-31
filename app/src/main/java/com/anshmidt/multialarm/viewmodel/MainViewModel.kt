@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
@@ -20,7 +21,6 @@ open class MainViewModel(
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
-
     }
 
     var alarmSwitchState: Boolean
@@ -47,17 +47,18 @@ open class MainViewModel(
             repository.numberOfAlarms = value
         }
 
+    private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
 
-    override fun onViewCreated() {
+    val openFirstAlarmTimeDialog: LiveData<Any>
+        get() = _openFirstAlarmTimeDialog
 
-    }
 
     override fun getFirstAlarmTimeDisplayable(): String {
         return TimeFormatter.getDisplayableTime(firstAlarmTime)
     }
 
     override fun onFirstAlarmTimeClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        _openFirstAlarmTimeDialog.call()
     }
 
     override fun onMinutesBetweenAlarmsClicked() {

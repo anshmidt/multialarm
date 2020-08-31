@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
-        android:textColor="@color/mainTextcolor"
+        android:textColor="@color/mainTextColor"
         />
 
     <EditText
@@ -34,7 +34,7 @@
         android:inputType="number"
         android:maxLength="4"
         android:textSize="40sp"
-        android:textColor="@color/mainTextcolor"
+        android:textColor="@color/mainTextColor"
         android:layout_margin="10dp"
         style="@style/Widget.AppCompat.EditText"
         tools:layout_constraintTop_creator="1"
@@ -54,7 +54,7 @@
         android:layout_margin="10dp"
         android:text="@string/all_minutes"
         android:textSize="20sp"
-        android:textColor="@color/mainTextcolor"
+        android:textColor="@color/mainTextColor"
         android:layout_marginStart="25dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/edittext_intervaldialog"
         tools:layout_constraintBaseline_creator="1"

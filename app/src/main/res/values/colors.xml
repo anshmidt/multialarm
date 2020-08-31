@@ -5,8 +5,8 @@
     <color name="launcherIcon">#f73f38</color>
     <color name="dismissActivityTextcolor">#ffffff</color>
     <color name="dismissActivityBackground">#000000</color>
-    <color name="mainTextcolor">#777777</color>
+    <color name="mainTextColor">#777777</color>
     <color name="mainBackground">#ffffff</color>
     <color name="mainDisabledTextcolor">#aaaaaa</color>
-    <color name="divider">@color/mainTextcolor</color>
+    <color name="divider">@color/mainTextColor</color>
 </resources>
