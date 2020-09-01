@@ -52,6 +52,8 @@ open class MainViewModel(
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
 
+    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
+
 
 
     override fun getFirstAlarmTimeDisplayable(): String {
@@ -71,7 +73,7 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-
+        firstAlarmTime = firstAlarmTimeSelectedOnPicker
     }
 
     override fun onCancelButtonClickInFirstAlarmDialog() {
@@ -79,6 +81,6 @@ open class MainViewModel(
     }
 
     override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
-        Log.d(TAG, "first alarm time selected: $hour : $minute")
+        firstAlarmTimeSelectedOnPicker = LocalTime.of(hour, minute)
     }
 }
