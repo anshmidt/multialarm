@@ -12,4 +12,9 @@ interface IMainViewModel {
 
     fun onNumberOfAlarmsClicked()
 
+    fun onOkButtonClickInFirstAlarmDialog()
+    fun onCancelButtonClickInFirstAlarmDialog()
+
+    fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int)
+
 }

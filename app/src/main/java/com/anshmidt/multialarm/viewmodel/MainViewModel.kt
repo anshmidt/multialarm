@@ -53,6 +53,7 @@ open class MainViewModel(
         get() = _openFirstAlarmTimeDialog
 
 
+
     override fun getFirstAlarmTimeDisplayable(): String {
         return TimeFormatter.getDisplayableTime(firstAlarmTime)
     }
@@ -69,6 +70,15 @@ open class MainViewModel(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onOkButtonClickInFirstAlarmDialog() {
 
+    }
 
+    override fun onCancelButtonClickInFirstAlarmDialog() {
+        //close dialog without saving selected time
+    }
+
+    override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
+        Log.d(TAG, "first alarm time selected: $hour : $minute")
+    }
 }

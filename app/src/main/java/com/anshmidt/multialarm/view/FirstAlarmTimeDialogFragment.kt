@@ -3,16 +3,17 @@ package com.anshmidt.multialarm.view
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogFirstAlarmTimeBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
+import org.threeten.bp.LocalTime
 
 class FirstAlarmTimeDialogFragment : DialogFragment() {
 
@@ -20,26 +21,20 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
         val FRAGMENT_TAG = FirstAlarmTimeDialogFragment::class.java.simpleName
     }
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-////        val binding = DialogFirstAlarmTimeBinding.inflate(inflater, container, false)
-////        binding.mainViewModel = viewModel
-////        return binding.root
-//        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(inflater, R.layout.dialog_first_alarm_time, container, false)
-//        binding.mainViewModel = viewModel
-//        val dialogView = binding.root
-//
-//        return dialogView
-//    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(requireActivity().layoutInflater, R.layout.dialog_first_alarm_time, null, false)
-        binding.mainViewModel = viewModel
+        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(
+                requireActivity().layoutInflater,
+                R.layout.dialog_first_alarm_time,
+                null,
+                false
+        )
+        binding.mainViewModel = mainViewModel
         val dialogView = binding.root
 
-//        val dialogView = requireActivity().layoutInflater.inflate(R.layout.dialog_first_alarm_time, null)
         val dialogBuilder = AlertDialog.Builder(requireContext())
         dialogBuilder.setView(dialogView)
 
@@ -51,16 +46,21 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
             dialog, which -> onCancelButtonClick()
         }
 
-        Log.d(FRAGMENT_TAG, "number of alarms: ${viewModel.numberOfAlarms}")
+        val timePicker: TimePicker = dialogView.findViewById(R.id.timepicker_firstalarmdialog)
+        timePicker.setIs24HourView(true)
+
+        Log.d(FRAGMENT_TAG, "number of alarms: ${mainViewModel.numberOfAlarms}")
 
         return dialogBuilder.create()
     }
 
-    fun onOkButtonClick() {
 
+
+    fun onOkButtonClick() {
+        mainViewModel.onOkButtonClickInFirstAlarmDialog()
     }
 
     fun onCancelButtonClick() {
-
+        mainViewModel.onCancelButtonClickInFirstAlarmDialog()
     }
 }

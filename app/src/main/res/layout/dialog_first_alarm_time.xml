@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_title_firstalarmdialog"
-            android:text="@{mainViewModel.firstAlarmTime.toString()}"
             tools:text="21:17"/>
 
         <TimePicker
@@ -35,7 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_timeleft_firstalarmdialog"/>
+            app:layout_constraintTop_toBottomOf="@id/textview_timeleft_firstalarmdialog"
+            android:hour="@{mainViewModel.firstAlarmTime.hour}"
+            android:minute="@{mainViewModel.firstAlarmTime.minute}"
+            android:onTimeChanged="@{(view, hour, minute) -> mainViewModel.onFirstAlarmTimeSelectedOnPicker(hour, minute)}"/>
 
 
 
