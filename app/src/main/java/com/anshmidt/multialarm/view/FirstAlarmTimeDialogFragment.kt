@@ -22,35 +22,39 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val binding = DialogFirstAlarmTimeBinding.inflate(inflater, container, false)
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+////        val binding = DialogFirstAlarmTimeBinding.inflate(inflater, container, false)
+////        binding.mainViewModel = viewModel
+////        return binding.root
+//        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(inflater, R.layout.dialog_first_alarm_time, container, false)
 //        binding.mainViewModel = viewModel
-//        return binding.root
-        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(inflater, R.layout.dialog_first_alarm_time, container, false)
+//        val dialogView = binding.root
+//
+//        return dialogView
+//    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(requireActivity().layoutInflater, R.layout.dialog_first_alarm_time, null, false)
         binding.mainViewModel = viewModel
         val dialogView = binding.root
 
-        return dialogView
-    }
-
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//
 //        val dialogView = requireActivity().layoutInflater.inflate(R.layout.dialog_first_alarm_time, null)
-//        val dialogBuilder = AlertDialog.Builder(requireContext())
-//        dialogBuilder.setView(dialogView)
-//
-//        dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
-//            dialog, which -> onOkButtonClick()
-//        }
-//
-//        dialogBuilder.setNegativeButton(R.string.dialog_cancel_button_name) {
-//            dialog, which -> onCancelButtonClick()
-//        }
-//
-//        Log.d(FRAGMENT_TAG, "number of alarms: ${viewModel.numberOfAlarms}")
-//
-//        return dialogBuilder.create()
-//    }
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder.setView(dialogView)
+
+        dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
+            dialog, which -> onOkButtonClick()
+        }
+
+        dialogBuilder.setNegativeButton(R.string.dialog_cancel_button_name) {
+            dialog, which -> onCancelButtonClick()
+        }
+
+        Log.d(FRAGMENT_TAG, "number of alarms: ${viewModel.numberOfAlarms}")
+
+        return dialogBuilder.create()
+    }
 
     fun onOkButtonClick() {
 
