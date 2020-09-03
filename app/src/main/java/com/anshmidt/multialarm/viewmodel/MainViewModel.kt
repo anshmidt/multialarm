@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
@@ -24,7 +25,11 @@ open class MainViewModel(
         }
 
 
-    var firstAlarmTime = MutableLiveData<LocalTime>()
+    var _firstAlarmTime = MutableLiveData<LocalTime>()
+    val firstAlarmTime: LiveData<LocalTime> = _firstAlarmTime
+    var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
+        TimeFormatter.getDisplayableTime(localTime)
+    }
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
@@ -48,7 +53,7 @@ open class MainViewModel(
 
 
     fun onActivityCreated() {
-        firstAlarmTime.value = repository.firstAlarmTime
+        _firstAlarmTime.value = repository.firstAlarmTime
     }
 
     override fun getFirstAlarmTimeDisplayable(): String {
@@ -68,7 +73,7 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-        firstAlarmTime.value = firstAlarmTimeSelectedOnPicker
+        _firstAlarmTime.value = firstAlarmTimeSelectedOnPicker
         repository.firstAlarmTime = firstAlarmTimeSelectedOnPicker
     }
 

@@ -86,8 +86,8 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.firstAlarmTime.toString())}"
-                    app:partOfTextToResize="@{mainViewModel.firstAlarmTime.toString()}"/>
+                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.firstAlarmTimeDisplayable)}"
+                    app:partOfTextToResize="@{mainViewModel.firstAlarmTimeDisplayable}"/>
 
                 <TextView
                     android:id="@+id/textview_main_timeleft"
