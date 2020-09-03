@@ -86,8 +86,8 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.getFirstAlarmTimeDisplayable())}"
-                    app:partOfTextToResize="@{mainViewModel.getFirstAlarmTimeDisplayable()}"/>
+                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.firstAlarmTimeLiveData.toString())}"
+                    app:partOfTextToResize="@{mainViewModel.firstAlarmTimeLiveData.toString()}"/>
 
                 <TextView
                     android:id="@+id/textview_main_timeleft"
@@ -128,7 +128,7 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{String.format(@string/main_interval, Integer.toString(mainViewModel.minutesBetweenAlarms))}"
+                    app:fullText="@{@string/main_interval(mainViewModel.minutesBetweenAlarms)}"
                     app:partOfTextToResize="@{Integer.toString(mainViewModel.minutesBetweenAlarms)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

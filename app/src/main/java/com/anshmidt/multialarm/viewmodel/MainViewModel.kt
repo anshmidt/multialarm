@@ -35,6 +35,9 @@ open class MainViewModel(
             repository.firstAlarmTime = value
         }
 
+    var firstAlarmTimeLiveData = MutableLiveData<LocalTime>()
+
+
     var minutesBetweenAlarms: Int
         get() = repository.minutesBetweenAlarms
         set(value) {
@@ -54,10 +57,13 @@ open class MainViewModel(
 
     private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
 
-
+    fun onActivityCreated() {
+        firstAlarmTimeLiveData.value = repository.firstAlarmTime
+    }
 
     override fun getFirstAlarmTimeDisplayable(): String {
-        return TimeFormatter.getDisplayableTime(firstAlarmTime)
+//        return TimeFormatter.getDisplayableTime(firstAlarmTime)
+        return TimeFormatter.getDisplayableTime(firstAlarmTimeLiveData.value!!)
     }
 
     override fun onFirstAlarmTimeClicked() {
@@ -73,7 +79,8 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-        firstAlarmTime = firstAlarmTimeSelectedOnPicker
+        firstAlarmTimeLiveData.value = firstAlarmTimeSelectedOnPicker
+        repository.firstAlarmTime = firstAlarmTimeSelectedOnPicker
     }
 
     override fun onCancelButtonClickInFirstAlarmDialog() {

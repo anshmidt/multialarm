@@ -26,11 +26,14 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
 
         mainViewModel.openFirstAlarmTimeDialog.observe(this, Observer {
             openFirstAlarmTimeDialog()
         })
+
+        mainViewModel.onActivityCreated()
     }
 
     private fun openFirstAlarmTimeDialog() {
