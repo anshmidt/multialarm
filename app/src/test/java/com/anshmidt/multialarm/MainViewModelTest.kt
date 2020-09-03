@@ -1,14 +1,17 @@
 package com.anshmidt.multialarm
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.threeten.bp.LocalTime
+
 
 class MainViewModelTest {
 
@@ -16,6 +19,10 @@ class MainViewModelTest {
     private lateinit var alarmSettingsRepository: AlarmSettingsRepository
 
     private lateinit var viewModel: MainViewModel
+
+    // Allows to set livedata
+    @get:Rule
+    var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
@@ -31,7 +38,7 @@ class MainViewModelTest {
 
         val expectedDisplayableTime = "01:09"
 
-        viewModel.firstAlarmTime = firstAlarmTime
+        viewModel.firstAlarmTime.value = firstAlarmTime
         val actualDisplayableTime = viewModel.getFirstAlarmTimeDisplayable()
         Assert.assertEquals(expectedDisplayableTime, actualDisplayableTime)
     }

@@ -1,15 +1,9 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import com.anshmidt.multialarm.SingleLiveEvent
-import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import org.threeten.bp.LocalTime
@@ -29,13 +23,14 @@ open class MainViewModel(
             repository.alarmSwitchState = value
         }
 
-    var firstAlarmTime: LocalTime
-        get() = repository.firstAlarmTime
-        set(value) {
-            repository.firstAlarmTime = value
-        }
 
-    var firstAlarmTimeLiveData = MutableLiveData<LocalTime>()
+    var firstAlarmTime = MutableLiveData<LocalTime>()
+
+    private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
+    val openFirstAlarmTimeDialog: LiveData<Any>
+        get() = _openFirstAlarmTimeDialog
+
+    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
 
 
     var minutesBetweenAlarms: Int
@@ -50,20 +45,14 @@ open class MainViewModel(
             repository.numberOfAlarms = value
         }
 
-    private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
 
-    val openFirstAlarmTimeDialog: LiveData<Any>
-        get() = _openFirstAlarmTimeDialog
-
-    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
 
     fun onActivityCreated() {
-        firstAlarmTimeLiveData.value = repository.firstAlarmTime
+        firstAlarmTime.value = repository.firstAlarmTime
     }
 
     override fun getFirstAlarmTimeDisplayable(): String {
-//        return TimeFormatter.getDisplayableTime(firstAlarmTime)
-        return TimeFormatter.getDisplayableTime(firstAlarmTimeLiveData.value!!)
+        return TimeFormatter.getDisplayableTime(firstAlarmTime.value!!)
     }
 
     override fun onFirstAlarmTimeClicked() {
@@ -79,7 +68,7 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-        firstAlarmTimeLiveData.value = firstAlarmTimeSelectedOnPicker
+        firstAlarmTime.value = firstAlarmTimeSelectedOnPicker
         repository.firstAlarmTime = firstAlarmTimeSelectedOnPicker
     }
 

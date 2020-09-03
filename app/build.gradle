@@ -87,6 +87,7 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+    testImplementation "android.arch.core:core-testing:1.1.1"
 
     //Data binding
     kapt "com.android.databinding:compiler:$gradle_version"
