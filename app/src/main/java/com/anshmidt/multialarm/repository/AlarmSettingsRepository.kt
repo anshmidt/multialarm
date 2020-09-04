@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.anshmidt.multialarm.data.AlarmSettings
 import org.threeten.bp.LocalTime
 
-class AlarmSettingsRepository(private val context: Context) {
+open class AlarmSettingsRepository(private val context: Context) : IAlarmSettingsRepository {
 
     companion object {
         private const val PREFERENCES_NAME = "alarmPreferences"
@@ -26,13 +26,13 @@ class AlarmSettingsRepository(private val context: Context) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    var alarmSwitchState: Boolean
+    override var alarmSwitchState: Boolean
         get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.alarmSwitchState)
         set(alarmState) {
             preferences.edit().putBoolean(ALARM_SWITCH_STATE_KEY, alarmState).apply()
         }
 
-    var firstAlarmTime: LocalTime
+    override var firstAlarmTime: LocalTime
         get() {
             val hours = preferences.getInt(FIRST_ALARM_HOURS_KEY, DEFAULT_SETTINGS.firstAlarmTime.hour)
             val minutes = preferences.getInt(FIRST_ALARM_MINUTES_KEY, DEFAULT_SETTINGS.firstAlarmTime.minute)
@@ -43,13 +43,13 @@ class AlarmSettingsRepository(private val context: Context) {
             preferences.edit().putInt(FIRST_ALARM_MINUTES_KEY, value.minute).apply()
         }
 
-    var minutesBetweenAlarms: Int
+    override var minutesBetweenAlarms: Int
         get() = preferences.getInt(MINUTES_BETWEEN_ALARMS_KEY, DEFAULT_SETTINGS.minutesBetweenAlarms)
         set(value) {
             preferences.edit().putInt(MINUTES_BETWEEN_ALARMS_KEY, value).apply()
         }
 
-    var numberOfAlarms: Int
+    override var numberOfAlarms: Int
         get() = preferences.getInt(NUMBER_OF_ALARMS_KEY, DEFAULT_SETTINGS.numberOfAlarms)
         set(value) {
             preferences.edit().putInt(NUMBER_OF_ALARMS_KEY, value).apply()
@@ -59,7 +59,7 @@ class AlarmSettingsRepository(private val context: Context) {
     /**
      * Method created for testing purposes. That's why it uses the main thread.
      */
-    fun clearAll() {
+    override fun clearAll() {
         preferences.edit().clear().commit()
     }
 }

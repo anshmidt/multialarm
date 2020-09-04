@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
+import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import org.threeten.bp.LocalTime
 
 open class MainViewModel(
-    private val repository: AlarmSettingsRepository
+    private val repository: IAlarmSettingsRepository
 ) : ViewModel(), IMainViewModel {
 
 
