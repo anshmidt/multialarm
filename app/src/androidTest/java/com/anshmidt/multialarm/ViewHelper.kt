@@ -34,22 +34,23 @@ object ViewHelper {
         return text
     }
 
-    fun setValueOnTimePicker(hour: Int, minute: Int): ViewAction {
-        return object : ViewAction {
+    fun setTimeOnTimePicker(hour: Int, minute: Int, matcher: ViewInteraction) {
+        matcher.perform(object : ViewAction {
+
+            override fun getConstraints(): org.hamcrest.Matcher<View> {
+                return isAssignableFrom(TimePicker::class.java)
+            }
+
             override fun getDescription(): String {
-                return "Set the passed time into the TimePicker"
+                return "Text of the view"
             }
 
-            override fun getConstraints(): Matcher<View> {
-                return ViewMatchers.isAssignableFrom(TimePicker::class.java)
+            override fun perform(uiController: UiController, view: View) {
+                val timePicker = view as TimePicker
+                timePicker.hour = hour
+                timePicker.minute = minute
             }
-
-            override fun perform(uiController: UiController?, view: View?) {
-                val tp: TimePicker = view as TimePicker
-                tp.setCurrentHour(hour)
-                tp.setCurrentMinute(minute)
-            }
-        }
+        })
     }
 
     fun getTimeFromTimePicker(matcher: ViewInteraction): LocalTime {
