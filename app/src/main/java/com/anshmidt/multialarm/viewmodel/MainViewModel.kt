@@ -8,6 +8,7 @@ import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
 
 open class MainViewModel(
@@ -31,12 +32,17 @@ open class MainViewModel(
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)
     }
+    var timeLeftBeforeFirstAlarm: LiveData<Duration> = Transformations.map(firstAlarmTime) { alarmTime ->
+        TimeFormatter.getTimeLeft(alarmTime)
+    }
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
 
     private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
+
+    private var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
 
 
     var minutesBetweenAlarms: Int
