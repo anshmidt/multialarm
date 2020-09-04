@@ -32,7 +32,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_title_firstalarmdialog"
-            android:text="@{mainViewModel.firstAlarmTimeSelectedOnPickerLiveData.toString()}"
+            android:text="@{mainViewModel.timeLeftBeforeFirstAlarm.toString()}"
             tools:text="21 h 17 min left"/>
 
         <TimePicker

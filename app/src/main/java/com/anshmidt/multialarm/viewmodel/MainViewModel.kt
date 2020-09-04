@@ -34,8 +34,8 @@ open class MainViewModel(
     }
     private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
     var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
-    var timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTime) { alarmTime ->
-        alarmTime.toString()
+    var timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeSelectedOnPickerLiveData) { alarmTime ->
+        TimeFormatter.getTimeLeft(alarmTime)
     }
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
