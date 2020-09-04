@@ -32,17 +32,17 @@ open class MainViewModel(
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)
     }
-    var timeLeftBeforeFirstAlarm: LiveData<Duration> = Transformations.map(firstAlarmTime) { alarmTime ->
-        TimeFormatter.getTimeLeft(alarmTime)
+    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
+    var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
+    var timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTime) { alarmTime ->
+        alarmTime.toString()
     }
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
 
-    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
 
-    private var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
 
 
     var minutesBetweenAlarms: Int
@@ -80,8 +80,8 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-        _firstAlarmTime.value = firstAlarmTimeSelectedOnPicker
-        repository.firstAlarmTime = firstAlarmTimeSelectedOnPicker
+        _firstAlarmTime.value = firstAlarmTimeSelectedOnPickerLiveData.value
+        repository.firstAlarmTime = firstAlarmTimeSelectedOnPickerLiveData.value!!
     }
 
     override fun onCancelButtonClickInFirstAlarmDialog() {
@@ -89,6 +89,7 @@ open class MainViewModel(
     }
 
     override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
-        firstAlarmTimeSelectedOnPicker = LocalTime.of(hour, minute)
+        firstAlarmTimeSelectedOnPickerLiveData.value = LocalTime.of(hour, minute)
+        val temp = firstAlarmTimeSelectedOnPickerLiveData.value
     }
 }

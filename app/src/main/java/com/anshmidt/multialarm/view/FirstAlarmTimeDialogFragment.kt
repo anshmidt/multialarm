@@ -2,18 +2,15 @@ package com.anshmidt.multialarm.view
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogFirstAlarmTimeBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
-import org.threeten.bp.LocalTime
 
 class FirstAlarmTimeDialogFragment : DialogFragment() {
 
@@ -32,10 +29,27 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
                 null,
                 false
         )
-        binding.mainViewModel = mainViewModel
+
+        initBinding(binding)
+
         val dialogView = binding.root
 
+        return buildDialog(dialogView)
+    }
+
+    private fun initBinding(binding: DialogFirstAlarmTimeBinding) {
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
+    }
+
+    private fun configureTimePicker(dialogView: View) {
+        val timePicker: TimePicker = dialogView.findViewById(R.id.timepicker_firstalarmdialog)
+        timePicker.setIs24HourView(true)
+    }
+
+    private fun buildDialog(dialogView: View): AlertDialog {
         val dialogBuilder = AlertDialog.Builder(requireContext())
+
         dialogBuilder.setView(dialogView)
 
         dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
@@ -46,10 +60,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
             dialog, which -> onCancelButtonClick()
         }
 
-        val timePicker: TimePicker = dialogView.findViewById(R.id.timepicker_firstalarmdialog)
-        timePicker.setIs24HourView(true)
-
-        Log.d(FRAGMENT_TAG, "number of alarms: ${mainViewModel.numberOfAlarms}")
+        configureTimePicker(dialogView)
 
         return dialogBuilder.create()
     }
