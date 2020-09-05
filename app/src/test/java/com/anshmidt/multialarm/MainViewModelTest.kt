@@ -1,7 +1,6 @@
 package com.anshmidt.multialarm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import org.junit.Assert
@@ -42,7 +41,7 @@ class MainViewModelTest {
         viewModel.firstAlarmTimeDisplayable.observeForever { } //needed to be called in order to read livedata value
 
         // when
-        viewModel.onActivityCreated()
+        viewModel.onViewCreated()
 
         val actualDisplayableTime = viewModel.firstAlarmTimeDisplayable.value
 
@@ -57,7 +56,7 @@ class MainViewModelTest {
         `when`(alarmSettingsRepository.firstAlarmTime).thenReturn(firstAlarmTime)
 
         // when
-        viewModel.onActivityCreated()
+        viewModel.onViewCreated()
         val actualTimeLeftMillis = viewModel.timeLeftBeforeFirstAlarm.value!!.toMillis()
 
         // then

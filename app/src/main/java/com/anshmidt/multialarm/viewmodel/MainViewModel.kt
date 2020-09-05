@@ -7,6 +7,10 @@ import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
+import java.util.*
+import java.util.concurrent.TimeUnit
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 
 open class MainViewModel(
     private val repository: IAlarmSettingsRepository
@@ -16,6 +20,8 @@ open class MainViewModel(
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
     }
+
+    var subscriptions = CompositeDisposable()
 
     var alarmSwitchState: Boolean
         get() = repository.alarmSwitchState
@@ -33,6 +39,8 @@ open class MainViewModel(
 
 
     lateinit var timeLeftBeforeFirstAlarm: LiveData<Duration>
+
+    var currentTime = MutableLiveData<LocalTime>()
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
@@ -54,9 +62,13 @@ open class MainViewModel(
 
 
 
-    fun onActivityCreated() {
+    fun onViewCreated() {
         _firstAlarmTime.value = repository.firstAlarmTime
         assignTimeLeft()
+    }
+
+    fun onViewResumed() {
+        startTimer()
     }
 
     private fun assignTimeLeft() {
@@ -104,4 +116,25 @@ open class MainViewModel(
     override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         firstAlarmTimeSelectedOnPickerLiveData.value = LocalTime.of(hour, minute)
     }
+
+    private fun startTimer() {
+        val disposable = Observable.interval(0,1, TimeUnit.SECONDS)
+                .subscribe({
+                    currentTime.postValue(LocalTime.now())
+                }, Throwable::printStackTrace)
+        subscriptions.add(disposable)
+    }
+
+    fun onViewPaused() {
+        if (!subscriptions.isDisposed) {
+            subscriptions.clear()
+        }
+    }
+
+    fun onViewDestroyed() {
+        if (!subscriptions.isDisposed) {
+            subscriptions.dispose()
+        }
+    }
+
 }

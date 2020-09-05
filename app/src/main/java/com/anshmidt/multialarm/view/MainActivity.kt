@@ -1,19 +1,13 @@
 package com.anshmidt.multialarm.view
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -32,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainView {
             openFirstAlarmTimeDialog()
         })
 
-        mainViewModel.onActivityCreated()
+        mainViewModel.onViewCreated()
     }
 
     private fun initBinding() {
@@ -43,6 +37,21 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun openFirstAlarmTimeDialog() {
         val dialog = FirstAlarmTimeDialogFragment()
         dialog.show(supportFragmentManager, FirstAlarmTimeDialogFragment.FRAGMENT_TAG)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.onViewResumed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainViewModel.onViewPaused()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.onViewDestroyed()
     }
 
 }
