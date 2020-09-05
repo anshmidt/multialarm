@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.viewmodel
 
 import androidx.lifecycle.*
 import com.anshmidt.multialarm.SingleLiveEvent
+import com.anshmidt.multialarm.data.LiveDataUtil
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import org.threeten.bp.Duration
@@ -17,7 +18,7 @@ open class MainViewModel(
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
-        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 1
+        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
     }
 
     var subscriptions = CompositeDisposable()
@@ -34,12 +35,11 @@ open class MainViewModel(
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)
     }
-    private var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
-
+    private var firstAlarmTimeSelectedOnPicker = MutableLiveData<LocalTime>()
 
     lateinit var timeLeftBeforeFirstAlarm: LiveData<Duration>
 
-    var currentTime = MutableLiveData<LocalTime>()
+    private var currentTime = MutableLiveData<LocalTime>()
 
     lateinit var timeLeftHours: LiveData<Int>
     lateinit var timeLeftMinutesPart: LiveData<Int>
@@ -75,15 +75,12 @@ open class MainViewModel(
 
     private fun assignTimeLeft() {
         val firstAlarmTimeFromRepository = firstAlarmTime
-        val firstAlarmTimeFromPicker = firstAlarmTimeSelectedOnPickerLiveData
+        val firstAlarmTimeFromPicker = firstAlarmTimeSelectedOnPicker
 
-        val firstAlarmTimeFromPickerAndRepository = MediatorLiveData<LocalTime>()
-        firstAlarmTimeFromPickerAndRepository.addSource(firstAlarmTimeFromRepository, {
-            firstAlarmTimeFromPickerAndRepository.value = it
-        })
-        firstAlarmTimeFromPickerAndRepository.addSource(firstAlarmTimeFromPicker, {
-            firstAlarmTimeFromPickerAndRepository.value = it
-        })
+        val firstAlarmTimeFromPickerAndRepository = LiveDataUtil.combineLiveDataFromDifferentSources(
+                firstAlarmTimeFromRepository,
+                firstAlarmTimeFromPicker
+        )
 
         timeLeftBeforeFirstAlarm = Transformations.switchMap(currentTime) {
             TimeFormatter.getTimeLeft(firstAlarmTimeFromPickerAndRepository, it)
@@ -92,6 +89,8 @@ open class MainViewModel(
         timeLeftHours = TimeFormatter.getHours(timeLeftBeforeFirstAlarm)
         timeLeftMinutesPart = TimeFormatter.getMinutesPart(timeLeftBeforeFirstAlarm)
     }
+
+
 
     override fun getFirstAlarmTimeDisplayable(): String {
         return TimeFormatter.getDisplayableTime(firstAlarmTime.value!!)
@@ -110,8 +109,8 @@ open class MainViewModel(
     }
 
     override fun onOkButtonClickInFirstAlarmDialog() {
-        _firstAlarmTime.value = firstAlarmTimeSelectedOnPickerLiveData.value
-        repository.firstAlarmTime = firstAlarmTimeSelectedOnPickerLiveData.value!!
+        _firstAlarmTime.value = firstAlarmTimeSelectedOnPicker.value
+        repository.firstAlarmTime = firstAlarmTimeSelectedOnPicker.value!!
     }
 
     override fun onCancelButtonClickInFirstAlarmDialog() {
@@ -119,7 +118,7 @@ open class MainViewModel(
     }
 
     override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
-        firstAlarmTimeSelectedOnPickerLiveData.value = LocalTime.of(hour, minute)
+        firstAlarmTimeSelectedOnPicker.value = LocalTime.of(hour, minute)
     }
 
     private fun startToObserveCurrentTime(intervalSeconds: Int) {
