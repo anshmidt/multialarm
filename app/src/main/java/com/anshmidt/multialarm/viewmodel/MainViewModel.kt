@@ -83,8 +83,12 @@ open class MainViewModel(
             firstAlarmTimeFromPickerAndRepository.value = it
         })
 
-        timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeFromPickerAndRepository) {
-            TimeFormatter.getTimeLeft(it)
+//        timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeFromPickerAndRepository) {
+//            TimeFormatter.getTimeLeft(it)
+//        }
+
+        timeLeftBeforeFirstAlarm = Transformations.switchMap(currentTime) {
+            TimeFormatter.getTimeLeft(firstAlarmTimeFromPickerAndRepository, it)
         }
     }
 
