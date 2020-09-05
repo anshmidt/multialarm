@@ -50,4 +50,18 @@ class MainViewModelTest {
         Assert.assertEquals(expectedDisplayableTime, actualDisplayableTime)
     }
 
+    @Test
+    fun firstAlarmTimeLeftCalculation() {
+        // given
+        val firstAlarmTime = LocalTime.of(1, 9)
+        `when`(alarmSettingsRepository.firstAlarmTime).thenReturn(firstAlarmTime)
+
+        // when
+        viewModel.onActivityCreated()
+        val actualTimeLeftMillis = viewModel.timeLeftBeforeFirstAlarm.value!!.toMillis()
+
+        // then
+        //TODO
+    }
+
 }

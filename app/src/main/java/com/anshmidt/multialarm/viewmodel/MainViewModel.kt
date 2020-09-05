@@ -1,9 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
@@ -32,16 +29,14 @@ open class MainViewModel(
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)
     }
-    private lateinit var firstAlarmTimeSelectedOnPicker: LocalTime
-    var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
-    var timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeSelectedOnPickerLiveData) { alarmTime ->
-        TimeFormatter.getTimeLeft(alarmTime)
-    }
+    private var firstAlarmTimeSelectedOnPickerLiveData = MutableLiveData<LocalTime>()
+
+
+    lateinit var timeLeftBeforeFirstAlarm: LiveData<Duration>
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
-
 
 
 
@@ -61,6 +56,24 @@ open class MainViewModel(
 
     fun onActivityCreated() {
         _firstAlarmTime.value = repository.firstAlarmTime
+        assignTimeLeft()
+    }
+
+    private fun assignTimeLeft() {
+        val firstAlarmTimeFromRepository = firstAlarmTime
+        val firstAlarmTimeFromPicker = firstAlarmTimeSelectedOnPickerLiveData
+
+        val firstAlarmTimeFromPickerAndRepository = MediatorLiveData<LocalTime>()
+        firstAlarmTimeFromPickerAndRepository.addSource(firstAlarmTimeFromRepository, {
+            firstAlarmTimeFromPickerAndRepository.value = it
+        })
+        firstAlarmTimeFromPickerAndRepository.addSource(firstAlarmTimeFromPicker, {
+            firstAlarmTimeFromPickerAndRepository.value = it
+        })
+
+        timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeFromPickerAndRepository) {
+            TimeFormatter.getTimeLeft(it)
+        }
     }
 
     override fun getFirstAlarmTimeDisplayable(): String {
@@ -90,6 +103,5 @@ open class MainViewModel(
 
     override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         firstAlarmTimeSelectedOnPickerLiveData.value = LocalTime.of(hour, minute)
-        val temp = firstAlarmTimeSelectedOnPickerLiveData.value
     }
 }
