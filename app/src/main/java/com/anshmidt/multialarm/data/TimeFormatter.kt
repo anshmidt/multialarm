@@ -33,4 +33,18 @@ object TimeFormatter {
         }
     }
 
+    fun getHours(duration: LiveData<Duration>): LiveData<Int> {
+        return Transformations.map(duration) {
+            it.toHours().toInt()
+        }
+    }
+
+    fun getMinutesPart(duration: LiveData<Duration>): LiveData<Int> {
+        return Transformations.map(duration) {
+            val allDurationInMinutes = it.toMinutes()
+            val minutesPart = allDurationInMinutes % 60
+            minutesPart.toInt()
+        }
+    }
+
 }

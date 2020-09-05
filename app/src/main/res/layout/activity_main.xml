@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_main_activity"
-                    android:text="@{mainViewModel.timeLeftBeforeFirstAlarm.toString()}"
+                    android:text="@{@string/all_time_left(mainViewModel.timeLeftHours, mainViewModel.timeLeftMinutesPart)}"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"

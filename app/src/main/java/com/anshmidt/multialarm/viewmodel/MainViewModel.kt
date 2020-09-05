@@ -3,11 +3,9 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.*
 import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
-import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
-import java.util.*
 import java.util.concurrent.TimeUnit
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -19,6 +17,7 @@ open class MainViewModel(
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
+        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 1
     }
 
     var subscriptions = CompositeDisposable()
@@ -41,6 +40,9 @@ open class MainViewModel(
     lateinit var timeLeftBeforeFirstAlarm: LiveData<Duration>
 
     var currentTime = MutableLiveData<LocalTime>()
+
+    lateinit var timeLeftHours: LiveData<Int>
+    lateinit var timeLeftMinutesPart: LiveData<Int>
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
@@ -68,7 +70,7 @@ open class MainViewModel(
     }
 
     fun onViewResumed() {
-        startTimer()
+        startToObserveCurrentTime(TIME_LEFT_REFRESH_INTERVAL_SECONDS)
     }
 
     private fun assignTimeLeft() {
@@ -83,13 +85,12 @@ open class MainViewModel(
             firstAlarmTimeFromPickerAndRepository.value = it
         })
 
-//        timeLeftBeforeFirstAlarm = Transformations.map(firstAlarmTimeFromPickerAndRepository) {
-//            TimeFormatter.getTimeLeft(it)
-//        }
-
         timeLeftBeforeFirstAlarm = Transformations.switchMap(currentTime) {
             TimeFormatter.getTimeLeft(firstAlarmTimeFromPickerAndRepository, it)
         }
+
+        timeLeftHours = TimeFormatter.getHours(timeLeftBeforeFirstAlarm)
+        timeLeftMinutesPart = TimeFormatter.getMinutesPart(timeLeftBeforeFirstAlarm)
     }
 
     override fun getFirstAlarmTimeDisplayable(): String {
@@ -121,8 +122,8 @@ open class MainViewModel(
         firstAlarmTimeSelectedOnPickerLiveData.value = LocalTime.of(hour, minute)
     }
 
-    private fun startTimer() {
-        val disposable = Observable.interval(0,1, TimeUnit.SECONDS)
+    private fun startToObserveCurrentTime(intervalSeconds: Int) {
+        val disposable = Observable.interval(0, intervalSeconds.toLong(), TimeUnit.SECONDS)
                 .subscribe({
                     currentTime.postValue(LocalTime.now())
                 }, Throwable::printStackTrace)
