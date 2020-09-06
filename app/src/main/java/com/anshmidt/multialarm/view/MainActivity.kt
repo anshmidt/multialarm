@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity(), MainView {
             openFirstAlarmTimeDialog()
         })
 
+        mainViewModel.openMinutesBetweenAlarmsDialog.observe(this, Observer {
+            openMinutesBetweenAlarmsDialog()
+        })
+
         mainViewModel.onViewCreated()
     }
 
@@ -37,6 +41,11 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun openFirstAlarmTimeDialog() {
         val dialog = FirstAlarmTimeDialogFragment()
         dialog.show(supportFragmentManager, FirstAlarmTimeDialogFragment.FRAGMENT_TAG)
+    }
+
+    private fun openMinutesBetweenAlarmsDialog() {
+        val dialog = MinutesBetweenAlarmsDialogFragment()
+        dialog.show(supportFragmentManager, MinutesBetweenAlarmsDialogFragment.FRAGMENT_TAG)
     }
 
     override fun onResume() {

@@ -115,6 +115,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> mainViewModel.onMinutesBetweenAlarmsClicked()}"
                 app:layout_constraintTop_toBottomOf="@id/divider_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -128,8 +129,8 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{@string/main_interval(mainViewModel.minutesBetweenAlarms)}"
-                    app:partOfTextToResize="@{Integer.toString(mainViewModel.minutesBetweenAlarms)}"/>
+                    app:fullText="@{@string/main_interval(mainViewModel.minutesBetweenAlarmsLiveData)}"
+                    app:partOfTextToResize="@{Integer.toString(mainViewModel.minutesBetweenAlarmsLiveData)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
