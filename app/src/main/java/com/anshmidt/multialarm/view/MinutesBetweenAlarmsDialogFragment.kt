@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogIntervalBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
+import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 
 class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
 
@@ -18,7 +19,9 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
         val FRAGMENT_TAG = MinutesBetweenAlarmsDialogFragment::class.java.simpleName
     }
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+//    private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val minutesBetweenAlarmsViewModel: MinutesBetweenAlarmsViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -35,22 +38,20 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
 
         initNumberPicker(dialogView)
 
-        mainViewModel.onMinutesBetweenAlarmsDialogCreated()
-
         return buildDialog(dialogView)
     }
 
     private fun initBinding(binding: DialogIntervalBinding) {
         binding.lifecycleOwner = this
-        binding.mainViewModel = mainViewModel
+        binding.minutesBetweenAlarmsViewModel = minutesBetweenAlarmsViewModel
     }
 
     private fun initNumberPicker(dialogView: View) {
         val numberPicker = dialogView.findViewById<NumberPicker>(R.id.numberpicker_intervaldialog)
         numberPicker.wrapSelectorWheel = false
         numberPicker.minValue = 0
-        numberPicker.maxValue = mainViewModel.minutesBetweenAlarmsAllAvailableVariants.size - 1
-        numberPicker.displayedValues = mainViewModel.minutesBetweenAlarmsAllAvailableVariants.map { it.toString() }.toTypedArray()
+        numberPicker.maxValue = minutesBetweenAlarmsViewModel.minutesBetweenAlarmsAllAvailableVariants.size - 1
+        numberPicker.displayedValues = minutesBetweenAlarmsViewModel.minutesBetweenAlarmsAllAvailableVariants.map { it.toString() }.toTypedArray()
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {
@@ -59,11 +60,11 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
         dialogBuilder.setView(dialogView)
 
         dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
-            dialog, which -> mainViewModel.onOkButtonClickInMinutesBetweenAlarmsDialog()
+            dialog, which -> minutesBetweenAlarmsViewModel.onOkButtonClickInMinutesBetweenAlarmsDialog()
         }
 
         dialogBuilder.setNegativeButton(R.string.dialog_cancel_button_name) {
-            dialog, which -> mainViewModel.onCancelButtonClickInMinutesBetweenAlarmsDialog()
+            dialog, which -> minutesBetweenAlarmsViewModel.onCancelButtonClickInMinutesBetweenAlarmsDialog()
         }
 
         return dialogBuilder.create()

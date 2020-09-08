@@ -7,11 +7,13 @@ import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
+import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), MainView {
 
     private val mainViewModel: MainViewModel by viewModel()
+    private val minutesBetweenAlarmsViewModel: MinutesBetweenAlarmsViewModel by viewModel()
 
 
     private val binding: ActivityMainBinding by lazy {
@@ -26,16 +28,18 @@ class MainActivity : AppCompatActivity(), MainView {
             openFirstAlarmTimeDialog()
         })
 
-        mainViewModel.openMinutesBetweenAlarmsDialog.observe(this, Observer {
+        minutesBetweenAlarmsViewModel.openMinutesBetweenAlarmsDialog.observe(this, Observer {
             openMinutesBetweenAlarmsDialog()
         })
 
         mainViewModel.onViewCreated()
+        minutesBetweenAlarmsViewModel.onViewCreated()
     }
 
     private fun initBinding() {
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
+        binding.minutesBetweenAlarmsViewModel = minutesBetweenAlarmsViewModel
     }
 
     private fun openFirstAlarmTimeDialog() {

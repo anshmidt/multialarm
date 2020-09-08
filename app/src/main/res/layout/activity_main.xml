@@ -4,6 +4,9 @@
         <variable
             name="mainViewModel"
             type="com.anshmidt.multialarm.viewmodel.MainViewModel" />
+        <variable
+            name="minutesBetweenAlarmsViewModel"
+            type="com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel" />
     </data>
 
     <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -115,7 +118,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{() -> mainViewModel.onMinutesBetweenAlarmsClicked()}"
+                android:onClick="@{() -> minutesBetweenAlarmsViewModel.onMinutesBetweenAlarmsClicked()}"
                 app:layout_constraintTop_toBottomOf="@id/divider_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -129,8 +132,8 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{@string/main_interval(mainViewModel.minutesBetweenAlarmsLiveData)}"
-                    app:partOfTextToResize="@{Integer.toString(mainViewModel.minutesBetweenAlarmsLiveData)}"/>
+                    app:fullText="@{@string/main_interval(minutesBetweenAlarmsViewModel.minutesBetweenAlarmsLiveData)}"
+                    app:partOfTextToResize="@{Integer.toString(minutesBetweenAlarmsViewModel.minutesBetweenAlarmsLiveData)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

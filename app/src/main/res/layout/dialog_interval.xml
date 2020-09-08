@@ -4,6 +4,9 @@
         <variable
             name="mainViewModel"
             type="com.anshmidt.multialarm.viewmodel.MainViewModel" />
+        <variable
+            name="minutesBetweenAlarmsViewModel"
+            type="com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -75,8 +78,8 @@
             app:layout_constraintTop_toBottomOf="@id/textview_numberdialog_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:value="@{mainViewModel.minutesBetweenAlarmsVariantIndex}"
-            android:onValueChange="@{(picker, oldValueIndex, newValueIndex) -> mainViewModel.onMinutesBetweenAlarmsChangedByUser(newValueIndex)}"/>
+            android:value="@{minutesBetweenAlarmsViewModel.minutesBetweenAlarmsVariantIndex}"
+            android:onValueChange="@{(picker, oldValueIndex, newValueIndex) -> minutesBetweenAlarmsViewModel.onMinutesBetweenAlarmsChangedByUser(newValueIndex)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
