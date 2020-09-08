@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 open class MainViewModel(
     private val repository: IAlarmSettingsRepository
-) : ViewModel(), IMainViewModel {
+) : ViewModel() {
 
 
     companion object {
@@ -97,28 +97,28 @@ open class MainViewModel(
 
 
 
-    override fun getFirstAlarmTimeDisplayable(): String {
+    fun getFirstAlarmTimeDisplayable(): String {
         return TimeFormatter.getDisplayableTime(firstAlarmTime.value!!)
     }
 
-    override fun onFirstAlarmTimeClicked() {
+    fun onFirstAlarmTimeClicked() {
         _openFirstAlarmTimeDialog.call()
     }
 
-    override fun onMinutesBetweenAlarmsClicked() {
+    fun onMinutesBetweenAlarmsClicked() {
         _openMinutesBetweenAlarmsDialog.call()
     }
 
-    override fun onNumberOfAlarmsClicked() {
+    fun onNumberOfAlarmsClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onOkButtonClickInFirstAlarmDialog() {
+    fun onOkButtonClickInFirstAlarmDialog() {
         _firstAlarmTime.value = firstAlarmTimeChangedByUser.value
         repository.firstAlarmTime = firstAlarmTimeChangedByUser.value!!
     }
 
-    override fun onCancelButtonClickInFirstAlarmDialog() {
+    fun onCancelButtonClickInFirstAlarmDialog() {
         //close dialog without saving selected value
     }
 
@@ -138,7 +138,7 @@ open class MainViewModel(
         //close dialog without saving selected value
     }
 
-    override fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
+    fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         firstAlarmTimeChangedByUser.value = LocalTime.of(hour, minute)
     }
 
