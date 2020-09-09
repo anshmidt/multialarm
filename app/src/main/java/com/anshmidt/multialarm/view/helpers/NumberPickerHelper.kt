@@ -1,12 +1,17 @@
 package com.anshmidt.multialarm.view.helpers
 
 class NumberPickerHelper {
-    /**
-     * in dialog xml:
-     * value=mainViewModel.index
-     * onValueChanged= -> mainViewModel.onMinutesBetweenAlarmsChangedByUser(newValueIndex)
-     *
-     * in viewmodel:
-     *
-     */
+
+    fun getNumberPickerData(numbers: List<Int>): NumberPickerData {
+        val firstIndex = 0
+        val lastIndex = numbers.size - 1
+        val displayedValues = numbers.map { it.toString() }.toTypedArray()
+
+        return NumberPickerData(
+            minValue = firstIndex,
+            maxValue = lastIndex,
+            displayedValues = displayedValues
+        )
+    }
+
 }

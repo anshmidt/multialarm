@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogIntervalBinding
+import com.anshmidt.multialarm.view.helpers.NumberPickerHelper
 import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 
 class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
@@ -17,8 +18,6 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
     companion object {
         val FRAGMENT_TAG = MinutesBetweenAlarmsDialogFragment::class.java.simpleName
     }
-
-//    private val mainViewModel: MainViewModel by activityViewModels()
 
     private val minutesBetweenAlarmsViewModel: MinutesBetweenAlarmsViewModel by activityViewModels()
 
@@ -47,10 +46,12 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
 
     private fun initNumberPicker(dialogView: View) {
         val numberPicker = dialogView.findViewById<NumberPicker>(R.id.numberpicker_intervaldialog)
+        val numberPickerHelper = NumberPickerHelper()
+        val numberPickerData = numberPickerHelper.getNumberPickerData(minutesBetweenAlarmsViewModel.allAvailableVariants)
         numberPicker.wrapSelectorWheel = false
-        numberPicker.minValue = 0
-        numberPicker.maxValue = minutesBetweenAlarmsViewModel.allAvailableVariants.size - 1
-        numberPicker.displayedValues = minutesBetweenAlarmsViewModel.allAvailableVariants.map { it.toString() }.toTypedArray()
+        numberPicker.minValue = numberPickerData.minValue
+        numberPicker.maxValue = numberPickerData.maxValue
+        numberPicker.displayedValues = numberPickerData.displayedValues
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {
