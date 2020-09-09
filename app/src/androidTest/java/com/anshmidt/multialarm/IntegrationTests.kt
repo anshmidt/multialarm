@@ -83,16 +83,15 @@ class IntegrationTests : KoinTest {
     @Test
     fun passFirstAlarmTime_toDialog() {
         val timeOnMainScreenString = getFirstAlarmTimeFromMainScreen()
-        onView(withId(R.id.layout_first_alarm)).perform(ViewActions.click())
+        onView(withId(R.id.fragment_first_alarm_time)).perform(ViewActions.click())
         val timeOnDialog: LocalTime = ViewHelper.getTimeFromTimePicker(onView(withId(R.id.timepicker_firstalarmdialog)))
         Assert.assertEquals(timeOnMainScreenString, localTimeToString(timeOnDialog))
     }
 
     @Test
     fun passFirstAlarmTime_fromDialog() {
-        onView(withId(R.id.layout_first_alarm)).perform(ViewActions.click())
+        onView(withId(R.id.fragment_first_alarm_time)).perform(ViewActions.click())
         ViewHelper.setTimeOnTimePicker(1, 1, onView(withId(R.id.timepicker_firstalarmdialog)))
-        Thread.sleep(5000)
         clickPositiveButtonOnDialog()
         val timeOnMainScreenString = getFirstAlarmTimeFromMainScreen()
         Assert.assertEquals("01:01", timeOnMainScreenString)

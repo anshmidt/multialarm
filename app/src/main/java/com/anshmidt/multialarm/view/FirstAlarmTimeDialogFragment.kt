@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogFirstAlarmTimeBinding
+import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 
 class FirstAlarmTimeDialogFragment : DialogFragment() {
@@ -18,7 +19,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
         val FRAGMENT_TAG = FirstAlarmTimeDialogFragment::class.java.simpleName
     }
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val firstAlarmTimeViewModel: FirstAlarmTimeViewModel by activityViewModels()
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -39,7 +40,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
 
     private fun initBinding(binding: DialogFirstAlarmTimeBinding) {
         binding.lifecycleOwner = this
-        binding.mainViewModel = mainViewModel
+        binding.firstAlarmTimeViewModel = firstAlarmTimeViewModel
     }
 
     private fun configureTimePicker(dialogView: View) {
@@ -53,11 +54,11 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
         dialogBuilder.setView(dialogView)
 
         dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
-            dialog, which -> mainViewModel.onOkButtonClickInFirstAlarmDialog()
+            dialog, which -> firstAlarmTimeViewModel.onOkButtonClickInFirstAlarmDialog()
         }
 
         dialogBuilder.setNegativeButton(R.string.dialog_cancel_button_name) {
-            dialog, which -> mainViewModel.onCancelButtonClickInFirstAlarmDialog()
+            dialog, which -> firstAlarmTimeViewModel.onCancelButtonClickInFirstAlarmDialog()
         }
 
         configureTimePicker(dialogView)

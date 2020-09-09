@@ -68,47 +68,20 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_switch_main"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_first_alarm"
+            <fragment
+                android:id="@+id/fragment_first_alarm_time"
+                android:name="com.anshmidt.multialarm.view.FirstAlarmTimeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{() -> mainViewModel.onFirstAlarmTimeClicked()}"
                 app:layout_constraintTop_toBottomOf="@id/divider_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-                <TextView
-                    android:id="@+id/textview_main_firstalarm_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_main_activity"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:fullText="@{String.format(@string/main_firstalarm_time, mainViewModel.firstAlarmTimeDisplayable)}"
-                    app:partOfTextToResize="@{mainViewModel.firstAlarmTimeDisplayable}"/>
-
-                <TextView
-                    android:id="@+id/textview_main_timeleft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_main_activity"
-                    android:text="@{@string/all_time_left(mainViewModel.timeLeftHours, mainViewModel.timeLeftMinutesPart)}"
-                    android:textColor="@color/primary"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textview_main_firstalarm_time"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/divider_2"
                 style="@style/MainScreenDividerTheme"
-                app:layout_constraintTop_toBottomOf="@id/layout_first_alarm"
+                app:layout_constraintTop_toBottomOf="@id/fragment_first_alarm_time"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <fragment

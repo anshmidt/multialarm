@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         initBinding()
 
-        observeViewModel()
-
-        mainViewModel.onViewCreated()
     }
 
     private fun initBinding() {
@@ -32,30 +29,5 @@ class MainActivity : AppCompatActivity(), MainView {
         binding.mainViewModel = mainViewModel
     }
 
-    private fun observeViewModel() {
-        mainViewModel.openFirstAlarmTimeDialog.observe(this, Observer {
-            openFirstAlarmTimeDialog()
-        })
-    }
-
-    private fun openFirstAlarmTimeDialog() {
-        val dialog = FirstAlarmTimeDialogFragment()
-        dialog.show(supportFragmentManager, FirstAlarmTimeDialogFragment.FRAGMENT_TAG)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.onViewResumed()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mainViewModel.onViewPaused()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mainViewModel.onViewDestroyed()
-    }
 
 }

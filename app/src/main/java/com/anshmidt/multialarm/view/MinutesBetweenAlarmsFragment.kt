@@ -44,7 +44,7 @@ class MinutesBetweenAlarmsFragment : Fragment() {
 
     private fun openMinutesBetweenAlarmsDialog() {
         val dialog = MinutesBetweenAlarmsDialogFragment()
-        dialog.show(activity!!.supportFragmentManager, MinutesBetweenAlarmsDialogFragment.FRAGMENT_TAG)
+        dialog.show(requireActivity().supportFragmentManager, MinutesBetweenAlarmsDialogFragment.FRAGMENT_TAG)
     }
 
 
