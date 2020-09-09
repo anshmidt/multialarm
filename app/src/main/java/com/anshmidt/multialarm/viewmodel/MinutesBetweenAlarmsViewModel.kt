@@ -14,19 +14,19 @@ class MinutesBetweenAlarmsViewModel(
         get() = _openMinutesBetweenAlarmsDialog
 
 
-    var _minutesBetweenAlarms = MutableLiveData<Int>()
-    val minutesBetweenAlarmsLiveData: LiveData<Int> = _minutesBetweenAlarms
-    val minutesBetweenAlarmsVariantIndex = MutableLiveData<Int>()
-    val minutesBetweenAlarmsAllAvailableVariants = listOf(2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 60, 90, 120)
+    private var _minutesBetweenAlarms = MutableLiveData<Int>()
+    val minutesBetweenAlarms: LiveData<Int> = _minutesBetweenAlarms
+    val selectedVariantIndex = MutableLiveData<Int>()
+    val allAvailableVariants = listOf(2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 60, 90, 120)
 
 
     fun onViewCreated() {
         _minutesBetweenAlarms.value = repository.minutesBetweenAlarms
-        minutesBetweenAlarmsVariantIndex.value = minutesBetweenAlarmsAllAvailableVariants.indexOf(_minutesBetweenAlarms.value!!)
+        selectedVariantIndex.value = allAvailableVariants.indexOf(_minutesBetweenAlarms.value!!)
     }
 
     fun onMinutesBetweenAlarmsChangedByUser(newValueIndex: Int) {
-        minutesBetweenAlarmsVariantIndex.value = newValueIndex
+        selectedVariantIndex.value = newValueIndex
     }
 
     fun onMinutesBetweenAlarmsClicked() {
@@ -34,11 +34,11 @@ class MinutesBetweenAlarmsViewModel(
     }
 
     fun onOkButtonClickInMinutesBetweenAlarmsDialog() {
-        if (minutesBetweenAlarmsVariantIndex.value == null) {
+        if (selectedVariantIndex.value == null) {
             return
         }
-        _minutesBetweenAlarms.value = minutesBetweenAlarmsAllAvailableVariants[minutesBetweenAlarmsVariantIndex.value!!]
-        repository.minutesBetweenAlarms = minutesBetweenAlarmsAllAvailableVariants[minutesBetweenAlarmsVariantIndex.value!!]
+        _minutesBetweenAlarms.value = allAvailableVariants[selectedVariantIndex.value!!]
+        repository.minutesBetweenAlarms = allAvailableVariants[selectedVariantIndex.value!!]
     }
 
     fun onCancelButtonClickInMinutesBetweenAlarmsDialog() {

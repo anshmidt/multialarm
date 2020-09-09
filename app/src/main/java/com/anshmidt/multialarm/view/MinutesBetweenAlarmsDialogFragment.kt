@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogIntervalBinding
-import com.anshmidt.multialarm.viewmodel.MainViewModel
 import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 
 class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
@@ -50,8 +49,8 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
         val numberPicker = dialogView.findViewById<NumberPicker>(R.id.numberpicker_intervaldialog)
         numberPicker.wrapSelectorWheel = false
         numberPicker.minValue = 0
-        numberPicker.maxValue = minutesBetweenAlarmsViewModel.minutesBetweenAlarmsAllAvailableVariants.size - 1
-        numberPicker.displayedValues = minutesBetweenAlarmsViewModel.minutesBetweenAlarmsAllAvailableVariants.map { it.toString() }.toTypedArray()
+        numberPicker.maxValue = minutesBetweenAlarmsViewModel.allAvailableVariants.size - 1
+        numberPicker.displayedValues = minutesBetweenAlarmsViewModel.allAvailableVariants.map { it.toString() }.toTypedArray()
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {

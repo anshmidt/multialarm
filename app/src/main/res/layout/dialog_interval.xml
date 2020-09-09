@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@id/textview_numberdialog_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:value="@{minutesBetweenAlarmsViewModel.minutesBetweenAlarmsVariantIndex}"
+            android:value="@{minutesBetweenAlarmsViewModel.selectedVariantIndex}"
             android:onValueChange="@{(picker, oldValueIndex, newValueIndex) -> minutesBetweenAlarmsViewModel.onMinutesBetweenAlarmsChangedByUser(newValueIndex)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

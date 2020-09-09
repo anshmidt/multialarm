@@ -27,8 +27,8 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:fullText="@{@string/main_interval(minutesBetweenAlarmsViewModel.minutesBetweenAlarmsLiveData)}"
-            app:partOfTextToResize="@{Integer.toString(minutesBetweenAlarmsViewModel.minutesBetweenAlarmsLiveData)}"/>
+            app:fullText="@{@string/main_interval(minutesBetweenAlarmsViewModel.minutesBetweenAlarms)}"
+            app:partOfTextToResize="@{Integer.toString(minutesBetweenAlarmsViewModel.minutesBetweenAlarms)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

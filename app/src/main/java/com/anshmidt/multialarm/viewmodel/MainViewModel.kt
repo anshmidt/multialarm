@@ -49,16 +49,6 @@ open class MainViewModel(
         get() = _openFirstAlarmTimeDialog
 
 
-//    private val _openMinutesBetweenAlarmsDialog = SingleLiveEvent<Any>()
-//    val openMinutesBetweenAlarmsDialog: LiveData<Any>
-//        get() = _openMinutesBetweenAlarmsDialog
-//
-//
-//    var _minutesBetweenAlarms = MutableLiveData<Int>()
-//    val minutesBetweenAlarmsLiveData: LiveData<Int> = _minutesBetweenAlarms
-//    val minutesBetweenAlarmsVariantIndex = MutableLiveData<Int>()
-//    val minutesBetweenAlarmsAllAvailableVariants = listOf(2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 60, 90, 120)
-
     var numberOfAlarms: Int
         get() = repository.numberOfAlarms
         set(value) {
@@ -69,8 +59,6 @@ open class MainViewModel(
 
     fun onViewCreated() {
         _firstAlarmTime.value = repository.firstAlarmTime
-//        _minutesBetweenAlarms.value = repository.minutesBetweenAlarms
-//        minutesBetweenAlarmsVariantIndex.value = minutesBetweenAlarmsAllAvailableVariants.indexOf(_minutesBetweenAlarms.value!!)
         assignTimeLeft()
     }
 
@@ -100,9 +88,6 @@ open class MainViewModel(
         _openFirstAlarmTimeDialog.call()
     }
 
-//    fun onMinutesBetweenAlarmsClicked() {
-//        _openMinutesBetweenAlarmsDialog.call()
-//    }
 
     fun onNumberOfAlarmsClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -118,18 +103,6 @@ open class MainViewModel(
     }
 
 
-//    fun onOkButtonClickInMinutesBetweenAlarmsDialog() {
-//        if (minutesBetweenAlarmsVariantIndex.value == null) {
-//            return
-//        }
-//        _minutesBetweenAlarms.value = minutesBetweenAlarmsAllAvailableVariants[minutesBetweenAlarmsVariantIndex.value!!]
-//        repository.minutesBetweenAlarms = minutesBetweenAlarmsAllAvailableVariants[minutesBetweenAlarmsVariantIndex.value!!]
-//    }
-//
-//    fun onCancelButtonClickInMinutesBetweenAlarmsDialog() {
-//        //close dialog without saving selected value
-//    }
-
     fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         firstAlarmTimeChangedByUser.value = LocalTime.of(hour, minute)
     }
@@ -141,10 +114,7 @@ open class MainViewModel(
                 }, Throwable::printStackTrace)
         subscriptions.add(disposable)
     }
-
-//    fun onMinutesBetweenAlarmsChangedByUser(newValueIndex: Int) {
-//        minutesBetweenAlarmsVariantIndex.value = newValueIndex
-//    }
+    
 
     fun onViewPaused() {
         if (!subscriptions.isDisposed) {
