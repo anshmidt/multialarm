@@ -90,7 +90,14 @@ object ViewHelper {
 
             override fun perform(uiController: UiController?, view: View?) {
                 val numberPicker = view as NumberPicker
-                numberPicker.value = value
+                //simply setting value of numberPicker doesn't call onValueChange method
+                val setValueMethod = NumberPicker::class.java.getDeclaredMethod(
+                        "setValueInternal",
+                        Int::class.java,
+                        Boolean::class.java
+                )
+                setValueMethod.isAccessible = true
+                setValueMethod.invoke(numberPicker, value, true)
             }
         })
     }

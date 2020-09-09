@@ -92,6 +92,7 @@ class IntegrationTests : KoinTest {
     fun passFirstAlarmTime_fromDialog() {
         onView(withId(R.id.layout_first_alarm)).perform(ViewActions.click())
         ViewHelper.setTimeOnTimePicker(1, 1, onView(withId(R.id.timepicker_firstalarmdialog)))
+        Thread.sleep(5000)
         clickPositiveButtonOnDialog()
         val timeOnMainScreenString = getFirstAlarmTimeFromMainScreen()
         Assert.assertEquals("01:01", timeOnMainScreenString)
@@ -100,10 +101,8 @@ class IntegrationTests : KoinTest {
     @Test
     fun setMinutesBetweenAlarms_firstValue() {
         onView(withId(R.id.fragment_interval)).perform(click())
-        ViewHelper.setValueOnNumberPicker(1, onView(withId(R.id.numberpicker_intervaldialog)))
-        Thread.sleep(5000)
+        ViewHelper.setValueOnNumberPicker(0, onView(withId(R.id.numberpicker_intervaldialog)))
         clickPositiveButtonOnDialog()
-        Thread.sleep(5000)
         val actualValue = getMinutesBetweenAlarmsFromMainScreen()
         Assert.assertEquals(2, actualValue)
     }
@@ -112,9 +111,7 @@ class IntegrationTests : KoinTest {
     fun setMinutesBetweenAlarms_lastValue() {
         onView(withId(R.id.fragment_interval)).perform(click())
         ViewHelper.setValueOnNumberPicker(14, onView(withId(R.id.numberpicker_intervaldialog)))
-        Thread.sleep(5000)
         clickPositiveButtonOnDialog()
-        Thread.sleep(5000)
         val actualValue = getMinutesBetweenAlarmsFromMainScreen()
         Assert.assertEquals(120, actualValue)
     }
