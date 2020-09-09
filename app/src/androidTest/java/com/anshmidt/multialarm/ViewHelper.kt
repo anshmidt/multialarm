@@ -1,6 +1,7 @@
 package com.anshmidt.multialarm
 
 import android.view.View
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.test.espresso.UiController
@@ -10,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import org.hamcrest.Matcher
 import org.threeten.bp.LocalTime
+import java.lang.RuntimeException
 
 object ViewHelper {
 
@@ -74,6 +76,43 @@ object ViewHelper {
         })
 
         return time
+    }
+
+    fun setValueOnNumberPicker(value: Int, matcher: ViewInteraction) {
+        matcher.perform(object : ViewAction {
+            override fun getDescription(): String {
+                return "Text of the view"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(NumberPicker::class.java)
+            }
+
+            override fun perform(uiController: UiController?, view: View?) {
+                val numberPicker = view as NumberPicker
+                numberPicker.value = value
+            }
+        })
+    }
+
+    fun getValueFromNumberPicker(matcher: ViewInteraction): Int {
+        var value: Int? = null
+        matcher.perform(object : ViewAction {
+            override fun getDescription(): String {
+                return "Text of the view"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(NumberPicker::class.java)
+            }
+
+            override fun perform(uiController: UiController?, view: View?) {
+                val numberPicker = view as NumberPicker
+                value = numberPicker.value
+            }
+        })
+
+        return value ?: throw RuntimeException("Cannot get value from NumberPicker")
     }
 
 }

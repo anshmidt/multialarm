@@ -57,6 +57,15 @@ class IntegrationTests : KoinTest {
         return timeOnMainScreenFullString.split(" ").last()
     }
 
+    private fun getMinutesBetweenAlarmsFromMainScreen(): Int {
+        val fullText = ViewHelper.getTextFromTextView(onView(withId(R.id.textview_main_interval)))
+        return fullText.split(" ").first().toInt()
+    }
+
+    private fun clickPositiveButtonOnDialog() {
+        onView(withId(android.R.id.button1)).perform(click())
+    }
+
     @Test
     fun saveSwitchStateOff_whenAppRestarted() {
         turnAlarmSwitchOff()
@@ -83,9 +92,31 @@ class IntegrationTests : KoinTest {
     fun passFirstAlarmTime_fromDialog() {
         onView(withId(R.id.layout_first_alarm)).perform(ViewActions.click())
         ViewHelper.setTimeOnTimePicker(1, 1, onView(withId(R.id.timepicker_firstalarmdialog)))
-        onView(withId(android.R.id.button1)).perform(click())
+        clickPositiveButtonOnDialog()
         val timeOnMainScreenString = getFirstAlarmTimeFromMainScreen()
         Assert.assertEquals("01:01", timeOnMainScreenString)
+    }
+
+    @Test
+    fun setMinutesBetweenAlarms_firstValue() {
+        onView(withId(R.id.fragment_interval)).perform(click())
+        ViewHelper.setValueOnNumberPicker(1, onView(withId(R.id.numberpicker_intervaldialog)))
+        Thread.sleep(5000)
+        clickPositiveButtonOnDialog()
+        Thread.sleep(5000)
+        val actualValue = getMinutesBetweenAlarmsFromMainScreen()
+        Assert.assertEquals(2, actualValue)
+    }
+
+    @Test
+    fun setMinutesBetweenAlarms_lastValue() {
+        onView(withId(R.id.fragment_interval)).perform(click())
+        ViewHelper.setValueOnNumberPicker(14, onView(withId(R.id.numberpicker_intervaldialog)))
+        Thread.sleep(5000)
+        clickPositiveButtonOnDialog()
+        Thread.sleep(5000)
+        val actualValue = getMinutesBetweenAlarmsFromMainScreen()
+        Assert.assertEquals(120, actualValue)
     }
 
 }
