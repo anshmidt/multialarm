@@ -26,7 +26,7 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:fullText="@{@string/temp_number_of_alarms(numberOfAlarmsViewModel.numberOfAlarms)}"
+            app:fullText="@{@plurals/main_number_of_alarms(numberOfAlarmsViewModel.numberOfAlarms, numberOfAlarmsViewModel.numberOfAlarms)}"
             app:partOfTextToResize="@{Integer.toString(numberOfAlarmsViewModel.numberOfAlarms)}"/>
 
 
