@@ -100,31 +100,14 @@
                 app:layout_constraintTop_toBottomOf="@id/fragment_interval"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_numberofalarms"
+            <fragment
+                android:id="@+id/fragment_numberofalarms"
+                android:name="com.anshmidt.multialarm.view.NumberOfAlarmsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
                 app:layout_constraintTop_toBottomOf="@id/divider_3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:id="@+id/textview_main_numberofalarms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_main_activity"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:fullText="@{@plurals/main_number_of_alarms(mainViewModel.numberOfAlarms,mainViewModel.numberOfAlarms)}"
-                    app:partOfTextToResize="@{Integer.toString(mainViewModel.numberOfAlarms)}"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

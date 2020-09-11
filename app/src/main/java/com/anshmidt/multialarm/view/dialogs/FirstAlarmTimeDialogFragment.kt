@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.DialogFirstAlarmTimeBinding
 import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
-import com.anshmidt.multialarm.viewmodel.MainViewModel
 
 class FirstAlarmTimeDialogFragment : DialogFragment() {
 

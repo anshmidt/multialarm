@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

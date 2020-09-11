@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.FragmentMinutesBetweenAlarmsBinding
-import com.anshmidt.multialarm.viewmodel.MainViewModel
+import com.anshmidt.multialarm.view.dialogs.MinutesBetweenAlarmsDialogFragment
 import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -46,7 +45,5 @@ class MinutesBetweenAlarmsFragment : Fragment() {
         val dialog = MinutesBetweenAlarmsDialogFragment()
         dialog.show(requireActivity().supportFragmentManager, MinutesBetweenAlarmsDialogFragment.FRAGMENT_TAG)
     }
-
-
 
 }

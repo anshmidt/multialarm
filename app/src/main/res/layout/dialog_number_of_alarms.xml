@@ -2,10 +2,9 @@
 <layout>
     <data>
         <variable
-            name="mainViewModel"
-            type="com.anshmidt.multialarm.viewmodel.MainViewModel" />
+            name="numberOfAlarmsViewModel"
+            type="com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,38 +19,27 @@
             android:layout_height="wrap_content"
             android:text="@string/number_dialog_title"
             android:layout_margin="10dp"
-            tools:layout_constraintTop_creator="1"
-            tools:layout_constraintRight_creator="1"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="27dp"
-            tools:layout_constraintLeft_creator="1"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
             android:textColor="@color/mainTextColor"
             />
 
-        <EditText
-            android:id="@+id/edittext_numberdialog"
+        <NumberPicker
+            android:id="@+id/numberpicker_numberdialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="4"
-            android:textSize="40sp"
-            android:textColor="@color/mainTextColor"
-            android:layout_margin="10dp"
-            style="@style/Widget.AppCompat.EditText"
-            tools:layout_constraintTop_creator="1"
-            tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textview_numberdialog_title"
-            tools:layout_constraintLeft_creator="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:imeOptions="flagNoExtractUi"
-            android:text="test"
-            />
+            android:layout_margin="20dp"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintTop_toBottomOf="@id/textview_numberdialog_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:value="@{numberOfAlarmsViewModel.selectedVariantIndex}"
+            android:onValueChange="@{(picker, oldValueIndex, newValueIndex) -> numberOfAlarmsViewModel.onNumberOfAlarmsChangedByUser(newValueIndex)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

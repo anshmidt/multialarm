@@ -30,20 +30,4 @@ open class MainViewModel(
 
 
 
-
-
-    var numberOfAlarms: Int
-        get() = repository.numberOfAlarms
-        set(value) {
-            repository.numberOfAlarms = value
-        }
-
-
-
-    fun onNumberOfAlarmsClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-
 }

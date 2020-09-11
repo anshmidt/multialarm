@@ -62,6 +62,11 @@ class IntegrationTests : KoinTest {
         return fullText.split(" ").first().toInt()
     }
 
+    private fun getNumberOfAlarmsFromMainScreen(): Int {
+        val fullText = ViewHelper.getTextFromTextView(onView(withId(R.id.textview_main_numberofalarms)))
+        return fullText.split(" ").first().toInt()
+    }
+
     private fun clickPositiveButtonOnDialog() {
         onView(withId(android.R.id.button1)).perform(click())
     }
@@ -113,6 +118,24 @@ class IntegrationTests : KoinTest {
         clickPositiveButtonOnDialog()
         val actualValue = getMinutesBetweenAlarmsFromMainScreen()
         Assert.assertEquals(120, actualValue)
+    }
+
+    @Test
+    fun setNumberOfAlarms_firstValue() {
+        onView(withId(R.id.fragment_numberofalarms)).perform(click())
+        ViewHelper.setValueOnNumberPicker(0, onView(withId(R.id.numberpicker_numberdialog)))
+        clickPositiveButtonOnDialog()
+        val actualValue = getNumberOfAlarmsFromMainScreen()
+        Assert.assertEquals(1, actualValue)
+    }
+
+    @Test
+    fun setNumberOfAlarms_lastValue() {
+        onView(withId(R.id.fragment_numberofalarms)).perform(click())
+        ViewHelper.setValueOnNumberPicker(199, onView(withId(R.id.numberpicker_numberdialog)))
+        clickPositiveButtonOnDialog()
+        val actualValue = getNumberOfAlarmsFromMainScreen()
+        Assert.assertEquals(200, actualValue)
     }
 
 }

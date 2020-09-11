@@ -5,6 +5,7 @@ import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
+import com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -14,4 +15,5 @@ val appModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { MinutesBetweenAlarmsViewModel(get()) }
     viewModel { FirstAlarmTimeViewModel(get()) }
+    viewModel { NumberOfAlarmsViewModel(get()) }
 }

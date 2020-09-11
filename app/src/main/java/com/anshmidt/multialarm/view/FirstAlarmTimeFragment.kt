@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.FragmentFirstAlarmTimeBinding
-import com.anshmidt.multialarm.databinding.FragmentMinutesBetweenAlarmsBinding
+import com.anshmidt.multialarm.view.dialogs.FirstAlarmTimeDialogFragment
 import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
