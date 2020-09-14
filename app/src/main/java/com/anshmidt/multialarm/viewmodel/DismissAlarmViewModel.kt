@@ -42,4 +42,8 @@ class DismissAlarmViewModel (
         countDownTimer.start()
     }
 
+    fun onViewPaused() {
+        musicPlayer.stop()
+    }
+
 }

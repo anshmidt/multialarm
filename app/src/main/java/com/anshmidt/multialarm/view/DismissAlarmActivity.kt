@@ -35,5 +35,10 @@ class DismissAlarmActivity : AppCompatActivity() {
         binding.dismissAlarmViewModel = dismissAlarmViewModel
     }
 
+    override fun onPause() {
+        super.onPause()
+        dismissAlarmViewModel.onViewPaused()
+    }
+
 
 }

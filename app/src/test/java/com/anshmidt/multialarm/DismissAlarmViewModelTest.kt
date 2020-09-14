@@ -21,17 +21,20 @@ class DismissAlarmViewModelTest {
     @Mock
     private lateinit var musicPlayer: IMusicPlayer
 
+    @Mock
+    private lateinit var countDownTimer: ICountDownTimer
+
     private lateinit var dismissAlarmViewModel: DismissAlarmViewModel
 
-//    // Allows to set livedata
-//    @get:Rule
-//    var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+    // Allows to set livedata
+    @get:Rule
+    var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        dismissAlarmViewModel = DismissAlarmViewModel(alarmSettingsRepository, musicPlayer)
+        dismissAlarmViewModel = DismissAlarmViewModel(alarmSettingsRepository, musicPlayer, countDownTimer)
     }
 
     @Test
@@ -46,11 +49,22 @@ class DismissAlarmViewModelTest {
 
     @Test
     fun playerStopsOnViewDestroyed() {
+        //when
+        dismissAlarmViewModel.onViewPaused()
 
+        //then
+        verify(musicPlayer, times(1)).stop()
     }
 
     @Test
     fun playerStopsOnButtonClicked() {
+        //gived
+        dismissAlarmViewModel.onViewCreated()
 
+        //when
+        dismissAlarmViewModel.onDismissButtonClicked()
+
+        //then
+        verify(musicPlayer, times(1)).stop()
     }
 }
