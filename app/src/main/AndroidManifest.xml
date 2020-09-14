@@ -30,6 +30,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.DismissAlarmActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppFullScreenTheme">
+        </activity>
+
 
     </application>
 
