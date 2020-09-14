@@ -3,6 +3,7 @@ package com.anshmidt.multialarm.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityDismissBinding
 import com.anshmidt.multialarm.databinding.ActivityMainBinding
@@ -21,6 +22,11 @@ class DismissAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
+
+        dismissAlarmViewModel.finishView.observe(this, Observer {
+            finish()
+        })
+
         dismissAlarmViewModel.onViewCreated()
     }
 
