@@ -21,6 +21,7 @@ class DismissAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
+        dismissAlarmViewModel.onViewCreated()
     }
 
     private fun initBinding() {
