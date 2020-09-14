@@ -7,5 +7,6 @@ interface IAlarmSettingsRepository {
     var firstAlarmTime: LocalTime
     var minutesBetweenAlarms: Int
     var numberOfAlarms: Int
+    var songDurationSeconds: Int
     fun clearAll()
 }

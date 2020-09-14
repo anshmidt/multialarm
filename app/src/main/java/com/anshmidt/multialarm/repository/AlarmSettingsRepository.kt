@@ -15,12 +15,14 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
         private const val FIRST_ALARM_MINUTES_KEY = "firstAlarmMinutes"
         private const val MINUTES_BETWEEN_ALARMS_KEY = "minutesBetweenAlarms"
         private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
+        private const val SONG_DURATION_SECONDS_KEY = "songDurationSeconds"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
                 alarmSwitchState = false,
                 firstAlarmTime = LocalTime.of(6, 0),
                 minutesBetweenAlarms = 10,
-                numberOfAlarms = 5
+                numberOfAlarms = 5,
+                songDurationSeconds = 90
         )
     }
 
@@ -53,6 +55,12 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
         get() = preferences.getInt(NUMBER_OF_ALARMS_KEY, DEFAULT_SETTINGS.numberOfAlarms)
         set(value) {
             preferences.edit().putInt(NUMBER_OF_ALARMS_KEY, value).apply()
+        }
+
+    override var songDurationSeconds: Int
+        get() = preferences.getInt(SONG_DURATION_SECONDS_KEY, DEFAULT_SETTINGS.songDurationSeconds)
+        set(value) {
+            preferences.edit().putInt(SONG_DURATION_SECONDS_KEY, value).apply()
         }
 
 
