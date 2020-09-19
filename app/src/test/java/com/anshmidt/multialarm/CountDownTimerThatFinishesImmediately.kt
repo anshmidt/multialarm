@@ -1,6 +1,6 @@
 package com.anshmidt.multialarm
 
-class TestingCountDownTimer : ICountDownTimer {
+class CountDownTimerThatFinishesImmediately : ICountDownTimer {
     override fun init(millisInFuture: Long, countDownInterval: Long, doOnCountDownFinish: () -> Unit) {
         doOnCountDownFinish()
     }
