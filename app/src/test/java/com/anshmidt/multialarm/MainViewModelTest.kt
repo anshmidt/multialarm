@@ -53,16 +53,16 @@ class MainViewModelTest {
 
     @Test
     fun firstAlarmTimeLeftCalculation() {
-        // given
-        val firstAlarmTime = LocalTime.of(1, 9)
-        `when`(alarmSettingsRepository.firstAlarmTime).thenReturn(firstAlarmTime)
-
-        // when
-        firstAlarmTimeViewModel.onViewCreated()
-        val actualTimeLeftMillis = firstAlarmTimeViewModel.timeLeftBeforeFirstAlarm.value!!.toMillis()
-
-        // then
-        //TODO
+//        // given
+//        val firstAlarmTime = LocalTime.of(1, 9)
+//        `when`(alarmSettingsRepository.firstAlarmTime).thenReturn(firstAlarmTime)
+//
+//        // when
+//        firstAlarmTimeViewModel.onViewCreated()
+//        val actualTimeLeftMillis = firstAlarmTimeViewModel.timeLeftBeforeFirstAlarm.value!!.toMillis()
+//
+//        // then
+//        //TODO
     }
 
 }

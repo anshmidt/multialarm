@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm
 
+import android.media.RingtoneManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
@@ -9,6 +10,8 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.anyOrNull
 
 class DismissAlarmViewModelTest {
 
@@ -46,7 +49,7 @@ class DismissAlarmViewModelTest {
         dismissAlarmViewModel.onViewCreated()
 
         //then
-        verify(musicPlayer, times(1)).play()
+        verify(musicPlayer).play(anyOrNull())
     }
 
     @Test

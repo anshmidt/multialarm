@@ -1,6 +1,8 @@
 package com.anshmidt.multialarm
 
+import android.net.Uri
+
 interface IMusicPlayer {
-    fun play()
+    fun play(songUri: Uri)
     fun stop()
 }

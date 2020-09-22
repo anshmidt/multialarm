@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm.repository
 
+import android.net.Uri
 import org.threeten.bp.LocalTime
 
 interface IAlarmSettingsRepository {
@@ -9,4 +10,5 @@ interface IAlarmSettingsRepository {
     var numberOfAlarms: Int
     var songDurationSeconds: Int
     fun clearAll()
+    val songUri: Uri
 }

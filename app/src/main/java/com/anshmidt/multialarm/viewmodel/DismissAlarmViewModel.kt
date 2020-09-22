@@ -19,7 +19,8 @@ class DismissAlarmViewModel (
         get() = _finishView
 
     fun onViewCreated() {
-        musicPlayer.play()
+        val songUri = repository.songUri
+        musicPlayer.play(songUri)
         val songDurationSeconds = repository.songDurationSeconds
         startCountDownTimer(durationSeconds = songDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
     }

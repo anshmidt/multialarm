@@ -13,7 +13,7 @@ import org.koin.dsl.module.module
 
 val appModule = module {
     single<IAlarmSettingsRepository> { AlarmSettingsRepository(androidContext()) }
-    factory<IMusicPlayer> { MusicPlayer() }
+    single<IMusicPlayer> { MusicPlayer(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
     viewModel { MainViewModel(get()) }
     viewModel { MinutesBetweenAlarmsViewModel(get()) }

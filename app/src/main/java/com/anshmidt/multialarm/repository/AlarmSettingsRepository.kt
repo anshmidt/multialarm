@@ -2,6 +2,8 @@ package com.anshmidt.multialarm.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.RingtoneManager
+import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
 import org.threeten.bp.LocalTime
 
@@ -62,6 +64,17 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
         set(value) {
             preferences.edit().putInt(SONG_DURATION_SECONDS_KEY, value).apply()
         }
+
+    override val songUri: Uri
+        get() = getDefaultRingtoneUri()
+
+    private fun getDefaultRingtoneUri(): Uri {
+        var defaultSongUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+        if (defaultSongUri == null) {  // it could happen if user has never set alarm on a new device
+            defaultSongUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        }
+        return defaultSongUri
+    }
 
 
     /**
