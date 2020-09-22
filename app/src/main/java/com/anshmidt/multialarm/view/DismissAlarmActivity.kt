@@ -1,15 +1,16 @@
 package com.anshmidt.multialarm.view
 
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityDismissBinding
-import com.anshmidt.multialarm.databinding.ActivityMainBinding
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
-import com.anshmidt.multialarm.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class DismissAlarmActivity : AppCompatActivity() {
 
@@ -21,6 +22,7 @@ class DismissAlarmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        displayActivityOnLockedScreen()
         initBinding()
 
         dismissAlarmViewModel.finishView.observe(this, Observer {
@@ -38,6 +40,14 @@ class DismissAlarmActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         dismissAlarmViewModel.onViewPaused()
+    }
+
+    private fun displayActivityOnLockedScreen() {
+        val window: Window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
     }
 
 
