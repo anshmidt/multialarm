@@ -37,7 +37,7 @@ class DismissAlarmViewModel (
 
     private fun startCountDownTimer(durationSeconds: Int, doOnCountDownFinish: () -> Unit) {
         val millisInFuture = TimeUnit.SECONDS.toMillis(durationSeconds.toLong())
-        val countDownInterval = TimeUnit.SECONDS.toMillis(1)  // is not really used
+        val countDownInterval = TimeUnit.SECONDS.toMillis(1)  // this argument of countdown timer is not used
 
         countDownTimer.init(millisInFuture, countDownInterval, doOnCountDownFinish)
         countDownTimer.start()
