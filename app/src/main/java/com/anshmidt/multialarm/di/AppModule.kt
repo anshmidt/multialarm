@@ -1,9 +1,6 @@
 package com.anshmidt.multialarm.di
 
-import com.anshmidt.multialarm.DefaultCountDownTimer
-import com.anshmidt.multialarm.ICountDownTimer
-import com.anshmidt.multialarm.IMusicPlayer
-import com.anshmidt.multialarm.MusicPlayer
+import com.anshmidt.multialarm.*
 import com.anshmidt.multialarm.repository.AlarmSettingsRepository
 import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
 import com.anshmidt.multialarm.viewmodel.*
@@ -15,6 +12,7 @@ val appModule = module {
     single<IAlarmSettingsRepository> { AlarmSettingsRepository(androidContext()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
+    factory<AlarmScheduler> { AlarmScheduler(androidContext()) }
     viewModel { MainViewModel(get()) }
     viewModel { MinutesBetweenAlarmsViewModel(get()) }
     viewModel { FirstAlarmTimeViewModel(get()) }

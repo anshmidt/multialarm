@@ -97,6 +97,9 @@ dependencies {
 
     //LocalDateTime for API < 26
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+    testImplementation("org.threeten:threetenbp:1.4.0") {
+        exclude module: "com.jakewharton.threetenabp:threetenabp:1.2.0"
+    }
 
     //Fragments
     implementation "androidx.fragment:fragment-ktx:1.2.5"

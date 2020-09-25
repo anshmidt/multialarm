@@ -37,6 +37,10 @@
             android:theme="@style/AppFullScreenTheme">
         </activity>
 
+        <receiver
+            android:name=".AlarmBroadcastReceiver">
+        </receiver>
+
 
     </application>
 
