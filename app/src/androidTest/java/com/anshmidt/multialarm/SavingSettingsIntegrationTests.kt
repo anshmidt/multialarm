@@ -23,7 +23,7 @@ import org.threeten.bp.format.DateTimeFormatter
  */
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class IntegrationTests : KoinTest {
+class SavingSettingsIntegrationTests : KoinTest {
 
 
     @get:Rule
