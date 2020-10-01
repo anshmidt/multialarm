@@ -30,6 +30,7 @@ class AlarmReceiversTest : KoinTest {
 
     val uiAutomation = InstrumentationRegistry.getInstrumentation().getUiAutomation()
     val uiDevice = UiDevice.getInstance(getInstrumentation())
+    val alarmDumpsysInteractor = AlarmDumpsysInteractor(uiDevice)
 
 
     private fun getStandardAlarmSettings(): AlarmSettings {
@@ -43,10 +44,6 @@ class AlarmReceiversTest : KoinTest {
         )
     }
 
-    private fun getScheduledAlarms(): String {
-        val output = uiDevice.executeShellCommand("dumpsys alarm | grep ${BuildConfig.APPLICATION_ID}")
-        return output
-    }
 
 
 
@@ -62,11 +59,17 @@ class AlarmReceiversTest : KoinTest {
 
     @Test
     fun temp() {
+        val withoutAlarmOutput = alarmDumpsysInteractor.getAlarmEntry()
+
         alarmScheduler.schedule(getStandardAlarmSettings())
 
+        Thread.sleep(1000)
+
+        val withAlarmOutput = alarmDumpsysInteractor.getAlarmEntry()
+
         Thread.sleep(1000000)
-        val output1 = uiDevice.executeShellCommand("dumpsys alarm")
-        Log.d("tdd", output1)
+
+
     }
 
 }

@@ -83,4 +83,14 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
     override fun clearAll() {
         preferences.edit().clear().commit()
     }
+
+    override fun getSettings(): AlarmSettings {
+        return AlarmSettings(
+                alarmSwitchState = alarmSwitchState,
+                firstAlarmTime = firstAlarmTime,
+                minutesBetweenAlarms = minutesBetweenAlarms,
+                numberOfAlarms = numberOfAlarms,
+                songDurationSeconds = songDurationSeconds
+        )
+    }
 }
