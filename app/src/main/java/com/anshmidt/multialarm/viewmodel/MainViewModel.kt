@@ -1,18 +1,10 @@
 package com.anshmidt.multialarm.viewmodel
 
 import androidx.lifecycle.*
-import com.anshmidt.multialarm.SingleLiveEvent
-import com.anshmidt.multialarm.data.LiveDataUtil
-import com.anshmidt.multialarm.data.TimeFormatter
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalTime
-import java.util.concurrent.TimeUnit
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
+import com.anshmidt.multialarm.repository.ISettingsRepository
 
 open class MainViewModel(
-    private val repository: IAlarmSettingsRepository
+    private val repository: ISettingsRepository
 ) : ViewModel() {
 
 
@@ -22,10 +14,10 @@ open class MainViewModel(
     }
 
 
-    var alarmSwitchState: Boolean
-        get() = repository.alarmSwitchState
+    var alarmTurnedOn: Boolean
+        get() = repository.alarmTurnedOn
         set(value) {
-            repository.alarmSwitchState = value
+            repository.alarmTurnedOn = value
         }
 
 

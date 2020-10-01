@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.SingleLiveEvent
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 
 class NumberOfAlarmsViewModel(
-        private val repository: IAlarmSettingsRepository
+        private val repository: ISettingsRepository
 ) : ViewModel()  {
 
     private val _openNumberOfAlarmsDialog = SingleLiveEvent<Any>()

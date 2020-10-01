@@ -1,17 +1,16 @@
 package com.anshmidt.multialarm
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anshmidt.multialarm.data.AlarmSettings
-import com.anshmidt.multialarm.repository.AlarmSettingsRepository
+import com.anshmidt.multialarm.repository.SettingsRepository
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalTime
 
-class AlarmSettingsRepositoryTest {
+class SettingsRepositoryTest {
 
     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    val repository = AlarmSettingsRepository(appContext)
+    val repository = SettingsRepository(appContext)
 
     @Before
     fun setUp() {
@@ -20,7 +19,7 @@ class AlarmSettingsRepositoryTest {
 
     @Test
     fun initialValue_switchState() {
-        Assert.assertEquals(false, repository.alarmSwitchState)
+        Assert.assertEquals(false, repository.alarmTurnedOn)
     }
 
     @Test
@@ -44,18 +43,18 @@ class AlarmSettingsRepositoryTest {
     @Test
     fun saveSwitchState_ifPreferencesEmpty() {
         val newSwitchState = true
-        repository.alarmSwitchState = newSwitchState
-        val actualSwitchStateFromRepository = repository.alarmSwitchState
+        repository.alarmTurnedOn = newSwitchState
+        val actualSwitchStateFromRepository = repository.alarmTurnedOn
         Assert.assertEquals(newSwitchState, actualSwitchStateFromRepository)
     }
 
     @Test
     fun saveSwitchState_ifPreferencesNotEmpty() {
-        repository.alarmSwitchState = true
+        repository.alarmTurnedOn = true
 
         val newSwitchState = false
-        repository.alarmSwitchState = newSwitchState
-        val actualSwitchStateFromRepository = repository.alarmSwitchState
+        repository.alarmTurnedOn = newSwitchState
+        val actualSwitchStateFromRepository = repository.alarmTurnedOn
         Assert.assertEquals(newSwitchState, actualSwitchStateFromRepository)
     }
 

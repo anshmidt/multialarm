@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.SingleLiveEvent
 import com.anshmidt.multialarm.data.LiveDataUtil
 import com.anshmidt.multialarm.data.TimeFormatter
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import org.threeten.bp.Duration
@@ -15,7 +15,7 @@ import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 
 class FirstAlarmTimeViewModel(
-        private val repository: IAlarmSettingsRepository
+        private val repository: ISettingsRepository
 ) : ViewModel() {
 
     var subscriptions = CompositeDisposable()

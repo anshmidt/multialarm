@@ -1,8 +1,5 @@
 package com.anshmidt.multialarm
 
-import android.app.PendingIntent
-import android.content.Intent
-import android.util.Log
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
@@ -36,7 +33,7 @@ class AlarmReceiversTest : KoinTest {
     private fun getStandardAlarmSettings(): AlarmSettings {
         val firstAlarmTime = LocalTime.now().plusHours(1)
         return AlarmSettings(
-                alarmSwitchState = true,
+                turnedOn = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,

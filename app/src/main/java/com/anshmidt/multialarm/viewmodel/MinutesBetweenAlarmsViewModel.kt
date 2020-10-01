@@ -1,14 +1,13 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.SingleLiveEvent
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 
 class MinutesBetweenAlarmsViewModel(
-        private val repository: IAlarmSettingsRepository
+        private val repository: ISettingsRepository
 ) : ViewModel() {
     private val _openMinutesBetweenAlarmsDialog = SingleLiveEvent<Any>()
     val openMinutesBetweenAlarmsDialog: LiveData<Any>

@@ -4,7 +4,7 @@ import org.threeten.bp.LocalTime
 import java.util.*
 
 data class AlarmSettings (
-        var alarmSwitchState: Boolean,
+        var turnedOn: Boolean,
 
         /**
          * Important note:

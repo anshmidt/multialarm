@@ -9,10 +9,8 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowAlarmManager
 import org.threeten.bp.LocalTime
 import java.lang.Math.abs
@@ -31,7 +29,7 @@ class AlarmSchedulingTest {
     private fun getStandardAlarmSettings(): AlarmSettings {
         val firstAlarmTime = LocalTime.now().plusHours(1)
         return AlarmSettings(
-                alarmSwitchState = true,
+                turnedOn = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -119,7 +117,7 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                alarmSwitchState = true,
+                turnedOn = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -142,7 +140,7 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                alarmSwitchState = true,
+                turnedOn = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -164,7 +162,7 @@ class AlarmSchedulingTest {
     @Test
     fun alarmNotScheduledIfSwitchOff() {
         val alarmSettings = AlarmSettings(
-                alarmSwitchState = false,
+                turnedOn = false,
                 firstAlarmTime = LocalTime.MIDNIGHT,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,

@@ -1,15 +1,15 @@
 package com.anshmidt.multialarm.di
 
 import com.anshmidt.multialarm.*
-import com.anshmidt.multialarm.repository.AlarmSettingsRepository
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.SettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.viewmodel.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val appModule = module {
-    single<IAlarmSettingsRepository> { AlarmSettingsRepository(androidContext()) }
+    single<ISettingsRepository> { SettingsRepository(androidContext()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
     factory<AlarmScheduler> { AlarmScheduler(androidContext()) }

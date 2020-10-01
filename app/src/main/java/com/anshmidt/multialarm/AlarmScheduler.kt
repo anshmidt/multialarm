@@ -18,7 +18,7 @@ class AlarmScheduler(val context: Context) {
     }
 
     fun schedule(alarmSettings: AlarmSettings) {
-        if (!alarmSettings.alarmSwitchState) {
+        if (!alarmSettings.turnedOn) {
             Log.d(TAG, "Not scheduling the alarm because it's turned off in settings")
             return
         }

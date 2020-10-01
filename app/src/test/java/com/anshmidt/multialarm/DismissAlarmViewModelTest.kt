@@ -1,8 +1,7 @@
 package com.anshmidt.multialarm
 
-import android.media.RingtoneManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.junit.Before
 import org.junit.Rule
@@ -10,13 +9,12 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.anyOrNull
 
 class DismissAlarmViewModelTest {
 
     @Mock
-    private lateinit var alarmSettingsRepository: IAlarmSettingsRepository
+    private lateinit var settingsRepository: ISettingsRepository
 
     @Mock
     private lateinit var musicPlayer: IMusicPlayer
@@ -38,9 +36,9 @@ class DismissAlarmViewModelTest {
         MockitoAnnotations.initMocks(this)
 
         val songDurationSeconds = 1
-        `when`(alarmSettingsRepository.songDurationSeconds).thenReturn(songDurationSeconds)
+        `when`(settingsRepository.songDurationSeconds).thenReturn(songDurationSeconds)
 
-        dismissAlarmViewModel = DismissAlarmViewModel(alarmSettingsRepository, musicPlayer, countDownTimer)
+        dismissAlarmViewModel = DismissAlarmViewModel(settingsRepository, musicPlayer, countDownTimer)
     }
 
     @Test
@@ -79,7 +77,7 @@ class DismissAlarmViewModelTest {
     @Test
     fun playerStopsWhenCountDownTimerFinishes() {
         //given
-        dismissAlarmViewModel = DismissAlarmViewModel(alarmSettingsRepository, musicPlayer, countDownTimerThatFinishesImmediately)
+        dismissAlarmViewModel = DismissAlarmViewModel(settingsRepository, musicPlayer, countDownTimerThatFinishesImmediately)
 
         //when
         dismissAlarmViewModel.onViewCreated()

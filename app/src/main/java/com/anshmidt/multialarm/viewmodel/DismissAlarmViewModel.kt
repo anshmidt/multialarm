@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.ICountDownTimer
 import com.anshmidt.multialarm.IMusicPlayer
 import com.anshmidt.multialarm.SingleLiveEvent
-import com.anshmidt.multialarm.repository.IAlarmSettingsRepository
+import com.anshmidt.multialarm.repository.ISettingsRepository
 import java.util.concurrent.TimeUnit
 
 class DismissAlarmViewModel (
-        private val repository: IAlarmSettingsRepository,
+        private val repository: ISettingsRepository,
         private val musicPlayer: IMusicPlayer,
         private val countDownTimer: ICountDownTimer
 ) : ViewModel() {

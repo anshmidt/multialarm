@@ -4,8 +4,8 @@ import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
 import org.threeten.bp.LocalTime
 
-interface IAlarmSettingsRepository {
-    var alarmSwitchState: Boolean
+interface ISettingsRepository {
+    var alarmTurnedOn: Boolean
     var firstAlarmTime: LocalTime
     var minutesBetweenAlarms: Int
     var numberOfAlarms: Int

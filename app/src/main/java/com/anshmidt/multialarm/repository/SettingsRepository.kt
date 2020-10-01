@@ -7,7 +7,7 @@ import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
 import org.threeten.bp.LocalTime
 
-open class AlarmSettingsRepository(private val context: Context) : IAlarmSettingsRepository {
+open class SettingsRepository(private val context: Context) : ISettingsRepository {
 
     companion object {
         private const val PREFERENCES_NAME = "alarmPreferences"
@@ -20,7 +20,7 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
         private const val SONG_DURATION_SECONDS_KEY = "songDurationSeconds"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
-                alarmSwitchState = false,
+                turnedOn = false,
                 firstAlarmTime = LocalTime.of(6, 0),
                 minutesBetweenAlarms = 10,
                 numberOfAlarms = 5,
@@ -30,8 +30,8 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
 
     private val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    override var alarmSwitchState: Boolean
-        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.alarmSwitchState)
+    override var alarmTurnedOn: Boolean
+        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.turnedOn)
         set(alarmState) {
             preferences.edit().putBoolean(ALARM_SWITCH_STATE_KEY, alarmState).apply()
         }
@@ -86,7 +86,7 @@ open class AlarmSettingsRepository(private val context: Context) : IAlarmSetting
 
     override fun getSettings(): AlarmSettings {
         return AlarmSettings(
-                alarmSwitchState = alarmSwitchState,
+                turnedOn = alarmTurnedOn,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = minutesBetweenAlarms,
                 numberOfAlarms = numberOfAlarms,
