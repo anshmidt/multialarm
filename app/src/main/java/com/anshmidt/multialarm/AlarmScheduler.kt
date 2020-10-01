@@ -18,6 +18,10 @@ class AlarmScheduler(val context: Context) {
     }
 
     fun schedule(alarmSettings: AlarmSettings) {
+        if (!alarmSettings.alarmSwitchState) {
+            Log.d(TAG, "Not scheduling the alarm because it's turned off in settings")
+            return
+        }
         val firstAlarmTimeMillis = TimeFormatter.getFirstAlarmTimeMillis(alarmSettings.firstAlarmTime)
         val intervalBetweenAlarmsMillis = TimeUnit.MINUTES.toMillis(alarmSettings.minutesBetweenAlarms.toLong())
         schedule(firstAlarmTimeMillis = firstAlarmTimeMillis, intervalBetweenAlarmsMillis = intervalBetweenAlarmsMillis)

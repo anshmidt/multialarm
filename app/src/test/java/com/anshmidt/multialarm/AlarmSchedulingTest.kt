@@ -161,5 +161,23 @@ class AlarmSchedulingTest {
         Assert.assertTrue(abs(expectedFirstAlarmTimeMillis - actualFirstAlarmTimeMillis) < MAX_RESULTS_DIFFERENCE_MILLIS)
     }
 
+    @Test
+    fun alarmNotScheduledIfSwitchOff() {
+        val alarmSettings = AlarmSettings(
+                alarmSwitchState = false,
+                firstAlarmTime = LocalTime.MIDNIGHT,
+                minutesBetweenAlarms = 5,
+                numberOfAlarms = 5,
+                songDurationSeconds = 60
+        )
+
+        //when
+        alarmScheduler.schedule(alarmSettings)
+
+        //then
+        val nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
+        Assert.assertNull(nextAlarm)
+    }
+
 
 }
