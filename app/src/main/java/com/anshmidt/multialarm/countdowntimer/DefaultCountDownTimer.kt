@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.countdowntimer
 
 import android.os.CountDownTimer
 

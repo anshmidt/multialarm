@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.musicplayer
 
 import android.content.Context
 import android.media.AudioAttributes

@@ -3,7 +3,7 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.anshmidt.multialarm.SingleLiveEvent
+import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.ISettingsRepository
 
 class MinutesBetweenAlarmsViewModel(

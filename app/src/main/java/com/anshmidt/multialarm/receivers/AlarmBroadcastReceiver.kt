@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

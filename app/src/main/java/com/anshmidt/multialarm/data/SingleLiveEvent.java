@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm;
+package com.anshmidt.multialarm.data;
 
 /*
  *  Copyright 2017 Google Inc.

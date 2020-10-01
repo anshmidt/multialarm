@@ -3,6 +3,7 @@ package com.anshmidt.multialarm
 import android.app.AlarmManager
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.AlarmSettings
 import org.junit.After
 import org.junit.Assert

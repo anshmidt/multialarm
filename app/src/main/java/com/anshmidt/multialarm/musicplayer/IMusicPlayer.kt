@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.musicplayer
 
 import android.net.Uri
 

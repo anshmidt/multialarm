@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".BaseApplication"
+        android:name=".application.BaseApplication"
         tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -38,12 +38,19 @@
         </activity>
 
         <receiver
-            android:name=".AlarmBroadcastReceiver">
+            android:name=".receivers.AlarmBroadcastReceiver">
         </receiver>
 
-        <receiver android:name=".DeviceBootReceiver">
+        <receiver android:name=".receivers.DeviceBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receivers.TimeChangeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
             </intent-filter>
         </receiver>
 

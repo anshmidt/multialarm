@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.application
 
 import android.app.Application
 import com.anshmidt.multialarm.di.appModule

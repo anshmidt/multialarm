@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.alarmscheduler
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -7,6 +7,7 @@ import android.content.Intent
 import android.util.Log
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
+import com.anshmidt.multialarm.receivers.AlarmBroadcastReceiver
 import java.util.concurrent.TimeUnit
 
 class AlarmScheduler(val context: Context) {

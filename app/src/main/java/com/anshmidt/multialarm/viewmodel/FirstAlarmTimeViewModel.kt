@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anshmidt.multialarm.SingleLiveEvent
+import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.data.LiveDataUtil
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.ISettingsRepository

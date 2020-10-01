@@ -1,6 +1,10 @@
 package com.anshmidt.multialarm.di
 
-import com.anshmidt.multialarm.*
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
+import com.anshmidt.multialarm.countdowntimer.DefaultCountDownTimer
+import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
+import com.anshmidt.multialarm.musicplayer.IMusicPlayer
+import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.repository.SettingsRepository
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.viewmodel.*

@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm
+package com.anshmidt.multialarm.countdowntimer
 
 /**
  * CountDownTimer timer is implemented via interface in order to improve testability

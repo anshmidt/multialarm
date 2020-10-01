@@ -1,6 +1,8 @@
 package com.anshmidt.multialarm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
+import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.junit.Before
