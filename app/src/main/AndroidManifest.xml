@@ -54,6 +54,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receivers.NotificationDismissButtonClickedReceiver">
+            <intent-filter android:priority="999" >
+                <action android:name="com.anshmidt.multialarm.dismissNotification" />
+            </intent-filter>
+        </receiver>
+
 
     </application>
 

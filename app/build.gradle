@@ -42,6 +42,7 @@ android {
     dataBinding {
         enabled = true
     }
+    useLibrary 'android.test.mock'
 
 }
 

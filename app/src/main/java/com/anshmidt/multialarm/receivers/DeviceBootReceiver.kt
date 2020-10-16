@@ -20,6 +20,7 @@ class DeviceBootReceiver : BroadcastReceiver(), KoinComponent {
     }
 
     private fun scheduleAlarm() {
+        alarmScheduler.cancel()
         val alarmSettings = settingsRepository.getSettings()
         alarmScheduler.schedule(alarmSettings)
     }
