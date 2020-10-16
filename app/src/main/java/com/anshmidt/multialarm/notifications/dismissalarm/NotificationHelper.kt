@@ -20,8 +20,6 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val CHANNEL_ID = "alarm"
-
     fun showNotification() {
         val fullScreenIntent = Intent(context, DismissAlarmActivity::class.java)
         val requestCode = 0
@@ -47,13 +45,13 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
     private fun setNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val notificationChannel = NotificationChannel(CHANNEL_ID, getChannelName(), importance)
+            val notificationChannel = NotificationChannel(NotificationParams.CHANNEL_ID, getChannelName(), importance)
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 
     private fun buildNotification(fullScreenPendingIntent: PendingIntent, notificationId: Int): Notification {
-        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val notificationBuilder = NotificationCompat.Builder(context, NotificationParams.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_on_notification)
                 .setContentTitle(context.getString(R.string.dismiss_alarm_notification_title))
                 .setContentText(context.getString(R.string.dismiss_alarm_notification_text, getCurrentTime()))
