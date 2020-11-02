@@ -30,45 +30,38 @@ class DismissAlarmActivityTest : KoinTest {
 
     lateinit var scenario: ActivityScenario<DismissAlarmActivity>
 
-    @Before
-    fun setUp() {
-        scenario = launchActivity<DismissAlarmActivity>()
-    }
-
     @After
     fun tearDown() {
         uiDevice.wakeUp()
-    }
-
-    @Test
-    fun screenAppears() {
-        onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
+        deviceStateController.returnFromDozeMode()
         scenario.close()
     }
 
     @Test
+    fun screenAppears() {
+        scenario = launchActivity<DismissAlarmActivity>()
+        onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun screenAppearsIfScreenLocked() {
+        scenario = launchActivity<DismissAlarmActivity>()
+
         //when
         uiDevice.sleep()
 
         //then
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
-
-        //teardown
-        scenario.close()
     }
 
     @Test
     fun screenAppearsInDozeMode() {
+        scenario = launchActivity<DismissAlarmActivity>()
+
         //when
         deviceStateController.goToDozeMode()
 
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
-
-        //teardown
-        deviceStateController.returnFromDozeMode()
-        scenario.close()
-
     }
 
 }
