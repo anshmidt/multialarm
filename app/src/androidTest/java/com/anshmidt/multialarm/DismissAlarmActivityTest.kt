@@ -24,20 +24,7 @@ import org.koin.test.KoinTest
 class DismissAlarmActivityTest : KoinTest {
 
     val uiDevice = UiDevice.getInstance(getInstrumentation())
-    val uiAutomation = getInstrumentation().getUiAutomation()
-
-    private fun goToDozeMode() {
-        uiAutomation.executeShellCommand("dumpsys battery unplug")
-        uiAutomation.executeShellCommand("dumpsys deviceidle force-idle")
-    }
-
-    private fun returnFromDozeMode() {
-        uiAutomation.executeShellCommand("dumpsys deviceidle unforce")
-        uiAutomation.executeShellCommand("dumpsys battery reset")
-    }
-
-
-
+    val deviceStateController = DeviceStateController()
 
     @Test
     fun screenAppears() {
@@ -63,13 +50,13 @@ class DismissAlarmActivityTest : KoinTest {
     @Test
     fun screenAppearsInDozeMode() {
         //when
-        goToDozeMode()
+        deviceStateController.goToDozeMode()
 
         val scenario = launchActivity<DismissAlarmActivity>()
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
 
         //teardown
-        returnFromDozeMode()
+        deviceStateController.returnFromDozeMode()
         scenario.close()
 
     }

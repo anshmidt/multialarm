@@ -1,18 +1,12 @@
 package com.anshmidt.multialarm
 
-import android.graphics.Point
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
-import androidx.test.uiautomator.By
-import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiObject2
-import androidx.test.uiautomator.Until
+import androidx.test.uiautomator.*
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationParams
-import com.anshmidt.multialarm.view.MainActivity
+import org.junit.After
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -24,9 +18,12 @@ class AlarmNotificationTest {
     val notificationParams = NotificationParams()
     val notificationHelper = NotificationHelper(context = appContext, notificationParams = notificationParams)
 
-    val expectedAppName = appContext.getString(R.string.app_name)
-
     private val uiDevice by lazy { UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()) }
+
+    val deviceStateController = DeviceStateController()
+
+    val expectedTitle = appContext.getString(R.string.dismiss_alarm_notification_title)
+    val notificationAnimationTimeout = 10000L
 
     private fun hideNotifications() {
         val displayHeight = uiDevice.displayHeight
@@ -44,24 +41,40 @@ class AlarmNotificationTest {
         )
     }
 
+    private fun isDismissAlarmActivityDisplayed(): Boolean {
+        val packageName = BuildConfig.APPLICATION_ID
+        val buttonResourceId = "button_dismiss_alarm"
+        val fullScreenDismissButton = uiDevice.findObject(By.res(packageName, buttonResourceId))
+        return fullScreenDismissButton.isClickable
+    }
+
+    @After
+    fun tearDown() {
+        notificationHelper.cancelNotification()
+        uiDevice.wait(Until.gone(By.text(expectedTitle)), notificationAnimationTimeout)
+        hideNotifications()
+        uiDevice.wakeUp()
+    }
+
     @Test
     fun notificationAppears() {
-        //given
-        val expectedTitle = appContext.getString(R.string.dismiss_alarm_notification_title)
-
         //when
         notificationHelper.showNotification()
 
         //then
         uiDevice.openNotification()
-        val timeout = 10000L
-        uiDevice.wait(Until.hasObject(By.text(expectedTitle)), timeout)
+        uiDevice.wait(Until.hasObject(By.text(expectedTitle)), notificationAnimationTimeout)
         val title: UiObject2 = uiDevice.findObject(By.text(expectedTitle))
         Assert.assertEquals(expectedTitle, title.text)
+    }
 
-        //teardown
-        notificationHelper.cancelNotification()
-        uiDevice.wait(Until.gone(By.text(expectedTitle)), timeout)
-        hideNotifications()
+    @Test
+    fun turnedOffScreen() {
+        //when
+        uiDevice.sleep()
+        notificationHelper.showNotification()
+
+        //then full screen activity appears
+        Assert.assertTrue(isDismissAlarmActivityDisplayed())
     }
 }
