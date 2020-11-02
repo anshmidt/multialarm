@@ -14,6 +14,8 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
 import com.anshmidt.multialarm.view.DismissAlarmActivity
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,9 +28,20 @@ class DismissAlarmActivityTest : KoinTest {
     val uiDevice = UiDevice.getInstance(getInstrumentation())
     val deviceStateController = DeviceStateController()
 
+    lateinit var scenario: ActivityScenario<DismissAlarmActivity>
+
+    @Before
+    fun setUp() {
+        scenario = launchActivity<DismissAlarmActivity>()
+    }
+
+    @After
+    fun tearDown() {
+        uiDevice.wakeUp()
+    }
+
     @Test
     fun screenAppears() {
-        val scenario = launchActivity<DismissAlarmActivity>()
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
         scenario.close()
     }
@@ -37,13 +50,11 @@ class DismissAlarmActivityTest : KoinTest {
     fun screenAppearsIfScreenLocked() {
         //when
         uiDevice.sleep()
-        val scenario = launchActivity<DismissAlarmActivity>()
 
         //then
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
 
         //teardown
-        uiDevice.wakeUp()
         scenario.close()
     }
 
@@ -52,7 +63,6 @@ class DismissAlarmActivityTest : KoinTest {
         //when
         deviceStateController.goToDozeMode()
 
-        val scenario = launchActivity<DismissAlarmActivity>()
         onView(withId(R.id.button_dismiss_alarm)).check(matches(isDisplayed()))
 
         //teardown

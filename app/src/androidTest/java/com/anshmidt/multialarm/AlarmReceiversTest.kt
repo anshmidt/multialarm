@@ -57,16 +57,6 @@ class AlarmReceiversTest : KoinTest {
 
     @Test
     fun temp() {
-        val withoutAlarmOutput = alarmDumpsysInteractor.getAlarmEntry()
-
-        alarmScheduler.schedule(getStandardAlarmSettings())
-
-        Thread.sleep(1000)
-
-        val withAlarmOutput = alarmDumpsysInteractor.getAlarmEntry()
-
-        Thread.sleep(1000000)
-
 
     }
 

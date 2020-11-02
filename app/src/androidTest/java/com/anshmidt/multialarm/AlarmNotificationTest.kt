@@ -76,5 +76,7 @@ class AlarmNotificationTest {
 
         //then full screen activity appears
         Assert.assertTrue(isDismissAlarmActivityDisplayed())
+
+        //then music plays
     }
 }
