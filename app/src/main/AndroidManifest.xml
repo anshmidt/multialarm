@@ -60,6 +60,11 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".receivers.NotificationDismissedBySwipeReceiver"
+            android:exported="false">
+        </receiver>
+
 
     </application>
 

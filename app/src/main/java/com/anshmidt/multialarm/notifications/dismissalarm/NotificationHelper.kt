@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.receivers.NotificationDismissButtonClickedReceiver
+import com.anshmidt.multialarm.receivers.NotificationDismissedBySwipeReceiver
 import com.anshmidt.multialarm.view.DismissAlarmActivity
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -50,6 +51,17 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
         }
     }
 
+    private fun createOnNotificationDismissedIntent(): PendingIntent {
+        val intent = Intent(context, NotificationDismissedBySwipeReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+                context.applicationContext,
+                0,
+                intent,
+                0
+        )
+        return pendingIntent
+    }
+
     private fun buildNotification(fullScreenPendingIntent: PendingIntent, notificationId: Int): Notification {
         val notificationBuilder = NotificationCompat.Builder(context, NotificationParams.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_on_notification)
@@ -59,6 +71,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
                 .setAutoCancel(true)
                 .addAction(getDismissNotificationAction(notificationId = notificationId))
                 .setFullScreenIntent(fullScreenPendingIntent, true)
+                .setDeleteIntent(createOnNotificationDismissedIntent())
         return notificationBuilder.build()
     }
 
