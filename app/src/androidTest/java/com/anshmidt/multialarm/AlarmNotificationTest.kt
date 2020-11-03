@@ -20,8 +20,6 @@ class AlarmNotificationTest {
 
     private val uiDevice by lazy { UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()) }
 
-    val deviceStateController = DeviceStateController()
-
     val expectedTitle = appContext.getString(R.string.dismiss_alarm_notification_title)
     val notificationAnimationTimeout = 10000L
 
@@ -76,7 +74,41 @@ class AlarmNotificationTest {
 
         //then full screen activity appears
         Assert.assertTrue(isDismissAlarmActivityDisplayed())
+    }
 
-        //then music plays
+    @Test
+    fun dismissButton() {
+        //when
+        notificationHelper.showNotification()
+        uiDevice.openNotification()
+
+        val dismissButtonBy = By.text("Dismiss")
+        val dismissButton: UiObject2 = uiDevice.findObject(dismissButtonBy)
+        dismissButton.click()
+        uiDevice.wait(Until.gone(dismissButtonBy), notificationAnimationTimeout)
+
+        //then there is no dismiss button
+        val dismissButtons = uiDevice.findObjects(dismissButtonBy)
+        Assert.assertEquals(0, dismissButtons.size)
+    }
+
+    @Test
+    fun nextNotificationAppearsAfterDismissingPreviousOne() {
+        //given
+        notificationHelper.showNotification()
+        uiDevice.openNotification()
+
+        val dismissButtonBy = By.text("Dismiss")
+        val dismissButton: UiObject2 = uiDevice.findObject(dismissButtonBy)
+        dismissButton.click()
+        uiDevice.wait(Until.gone(dismissButtonBy), notificationAnimationTimeout)
+
+        //when
+        notificationHelper.showNotification()
+
+        //then
+        uiDevice.wait(Until.hasObject(By.text(expectedTitle)), notificationAnimationTimeout)
+        val title: UiObject2 = uiDevice.findObject(By.text(expectedTitle))
+        Assert.assertEquals(expectedTitle, title.text)
     }
 }
