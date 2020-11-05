@@ -65,6 +65,11 @@
             android:exported="false">
         </receiver>
 
+        <service
+            android:name=".services.MusicService"
+            android:enabled="true">
+        </service>
+
 
     </application>
 

@@ -18,6 +18,10 @@ class DismissAlarmViewModel (
     val finishView: LiveData<Any>
         get() = _finishView
 
+    private val _stopMusicService = SingleLiveEvent<Any>()
+    val stopMusicService: LiveData<Any>
+        get() = _stopMusicService
+
     fun onViewCreated() {
         val songUri = repository.songUri
         musicPlayer.play(songUri)
@@ -26,6 +30,8 @@ class DismissAlarmViewModel (
     }
 
     fun onDismissButtonClicked() {
+        _stopMusicService.call()
+        //TODO remove countdowntimer
         musicPlayer.stop()
         _finishView.call()
     }
@@ -45,6 +51,10 @@ class DismissAlarmViewModel (
 
     fun onViewPaused() {
         musicPlayer.stop()
+    }
+
+    fun onCountDownFinished() {
+        _finishView.call()
     }
 
 }
