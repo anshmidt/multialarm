@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
+import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.view.DismissAlarmActivity
 import org.koin.standalone.KoinComponent
@@ -19,6 +20,7 @@ class MusicService : Service(), KoinComponent {
     private val musicPlayer: MusicPlayer by inject()
     private val repository: ISettingsRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
+    private val notificationHelper: NotificationHelper by inject()
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -59,11 +61,16 @@ class MusicService : Service(), KoinComponent {
     private fun finishView() {
         // notification or DismissActivity could be present, they need to disappear if count down timer finished
         finishDismissActivity()
+        cancelNotification()
     }
 
     private fun finishDismissActivity() {
         val intent = Intent(DismissAlarmActivity.COUNT_DOWN_FINISHED_ACTION)
         sendBroadcast(intent)
+    }
+
+    private fun cancelNotification() {
+        notificationHelper.cancelNotification()
     }
 
 

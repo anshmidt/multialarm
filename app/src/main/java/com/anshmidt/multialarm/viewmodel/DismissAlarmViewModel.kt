@@ -8,11 +8,7 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import java.util.concurrent.TimeUnit
 
-class DismissAlarmViewModel (
-        private val repository: ISettingsRepository,
-        private val musicPlayer: IMusicPlayer,
-        private val countDownTimer: ICountDownTimer
-) : ViewModel() {
+class DismissAlarmViewModel : ViewModel() {
 
     private val _finishView = SingleLiveEvent<Any>()
     val finishView: LiveData<Any>
@@ -23,34 +19,18 @@ class DismissAlarmViewModel (
         get() = _stopMusicService
 
     fun onViewCreated() {
-        val songUri = repository.songUri
-        musicPlayer.play(songUri)
-        val songDurationSeconds = repository.songDurationSeconds
-        startCountDownTimer(durationSeconds = songDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
+
     }
 
     fun onDismissButtonClicked() {
         _stopMusicService.call()
-        //TODO remove countdowntimer
-        musicPlayer.stop()
         _finishView.call()
     }
 
-    private fun doOnCountDownFinish() {
-        musicPlayer.stop()
-        _finishView.call()
-    }
-
-    private fun startCountDownTimer(durationSeconds: Int, doOnCountDownFinish: () -> Unit) {
-        val millisInFuture = TimeUnit.SECONDS.toMillis(durationSeconds.toLong())
-        val countDownInterval = TimeUnit.SECONDS.toMillis(1)  // this argument of countdown timer is not used
-
-        countDownTimer.init(millisInFuture, countDownInterval, doOnCountDownFinish)
-        countDownTimer.start()
-    }
 
     fun onViewPaused() {
-        musicPlayer.stop()
+        _stopMusicService.call()
+        _finishView.call()
     }
 
     fun onCountDownFinished() {

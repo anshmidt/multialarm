@@ -25,5 +25,5 @@ val appModule = module {
     viewModel { MinutesBetweenAlarmsViewModel(get()) }
     viewModel { FirstAlarmTimeViewModel(get()) }
     viewModel { NumberOfAlarmsViewModel(get()) }
-    viewModel { DismissAlarmViewModel(get(), get(), get()) }
+    viewModel { DismissAlarmViewModel() }
 }
