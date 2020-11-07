@@ -45,6 +45,7 @@ class AlarmNotificationTest {
         val packageName = BuildConfig.APPLICATION_ID
         val buttonResourceId = "button_dismiss_alarm"
         val fullScreenDismissButton = uiDevice.findObject(By.res(packageName, buttonResourceId))
+        if (fullScreenDismissButton == null) return false
         return fullScreenDismissButton.isClickable
     }
 
@@ -72,6 +73,9 @@ class AlarmNotificationTest {
     fun turnedOffScreen() {
         //when
         uiDevice.sleep()
+
+        val isScreenOn = uiDevice.isScreenOn
+
         notificationHelper.showNotification()
 
         //then full screen activity appears
