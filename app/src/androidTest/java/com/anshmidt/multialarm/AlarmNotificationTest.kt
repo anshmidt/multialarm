@@ -1,10 +1,12 @@
 package com.anshmidt.multialarm
 
+import android.content.Intent
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.*
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationParams
+import com.anshmidt.multialarm.services.MusicService
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -111,4 +113,6 @@ class AlarmNotificationTest {
         val title: UiObject2 = uiDevice.findObject(By.text(expectedTitle))
         Assert.assertEquals(expectedTitle, title.text)
     }
+
+
 }

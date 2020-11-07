@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.services
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
@@ -21,6 +22,7 @@ class MusicService : Service(), KoinComponent {
     private val repository: ISettingsRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
     private val notificationHelper: NotificationHelper by inject()
+
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
