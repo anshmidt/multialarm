@@ -3,11 +3,13 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.ISettingsRepository
 
 class NumberOfAlarmsViewModel(
-        private val repository: ISettingsRepository
+        private val repository: ISettingsRepository,
+        private val alarmScheduler: AlarmScheduler
 ) : ViewModel()  {
 
     private val _openNumberOfAlarmsDialog = SingleLiveEvent<Any>()
@@ -38,8 +40,10 @@ class NumberOfAlarmsViewModel(
         if (selectedVariantIndex.value == null) {
             return
         }
-        _numberOfAlarms.value = allAvailableVariants[selectedVariantIndex.value!!]
-        repository.numberOfAlarms = allAvailableVariants[selectedVariantIndex.value!!]
+        val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
+        _numberOfAlarms.value = selectedVariant
+        repository.numberOfAlarms = selectedVariant
+        alarmScheduler.reschedule(repository.getSettings())
     }
 
     fun onCancelButtonClickInNumberOfAlarmsDialog() {

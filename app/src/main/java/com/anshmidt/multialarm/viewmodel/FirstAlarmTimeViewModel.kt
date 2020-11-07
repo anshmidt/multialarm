@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.data.LiveDataUtil
 import com.anshmidt.multialarm.data.TimeFormatter
@@ -15,7 +16,8 @@ import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 
 class FirstAlarmTimeViewModel(
-        private val repository: ISettingsRepository
+        private val repository: ISettingsRepository,
+        private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
     companion object {
@@ -77,6 +79,7 @@ class FirstAlarmTimeViewModel(
     fun onOkButtonClickInFirstAlarmDialog() {
         _firstAlarmTime.value = firstAlarmTimeChangedByUser.value
         repository.firstAlarmTime = firstAlarmTimeChangedByUser.value!!
+        alarmScheduler.reschedule(repository.getSettings())
     }
 
     fun onCancelButtonClickInFirstAlarmDialog() {

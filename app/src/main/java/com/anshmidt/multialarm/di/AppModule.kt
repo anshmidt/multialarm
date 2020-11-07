@@ -22,8 +22,8 @@ val appModule = module {
     factory { NotificationParams() }
     factory<NotificationHelper> { NotificationHelper(androidContext(), get()) }
     viewModel { MainViewModel(get(), get()) }
-    viewModel { MinutesBetweenAlarmsViewModel(get()) }
-    viewModel { FirstAlarmTimeViewModel(get()) }
-    viewModel { NumberOfAlarmsViewModel(get()) }
+    viewModel { MinutesBetweenAlarmsViewModel(get(), get()) }
+    viewModel { FirstAlarmTimeViewModel(get(), get()) }
+    viewModel { NumberOfAlarmsViewModel(get(), get()) }
     viewModel { DismissAlarmViewModel() }
 }

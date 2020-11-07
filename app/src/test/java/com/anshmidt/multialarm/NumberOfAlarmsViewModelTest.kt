@@ -3,18 +3,17 @@ package com.anshmidt.multialarm
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.repository.SettingsRepository
-import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
-import com.anshmidt.multialarm.viewmodel.MainViewModel
+import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
+import com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel
 import com.nhaarman.mockitokotlin2.anyOrNull
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
-class MainViewModelTest {
+class NumberOfAlarmsViewModelTest {
 
     @Mock
     private lateinit var settingsRepository: SettingsRepository
@@ -22,7 +21,7 @@ class MainViewModelTest {
     @Mock
     private lateinit var alarmScheduler: AlarmScheduler
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var numberOfAlarmsViewModel: NumberOfAlarmsViewModel
 
     // Allows to set livedata
     @get:Rule
@@ -32,18 +31,14 @@ class MainViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        mainViewModel = MainViewModel(settingsRepository, alarmScheduler)
+        numberOfAlarmsViewModel = NumberOfAlarmsViewModel(settingsRepository, alarmScheduler)
     }
 
     @Test
-    fun alarmScheduledIfSwitchTurnedOn() {
-        mainViewModel.alarmTurnedOn = true
-        verify(alarmScheduler, times(1)).reschedule(anyOrNull())
-    }
+    fun alarmRescheduledWhenValueChanges() {
+        numberOfAlarmsViewModel.selectedVariantIndex.value = 3
+        numberOfAlarmsViewModel.onOkButtonClickInNumberOfAlarmsDialog()
 
-    @Test
-    fun alarmScheduledIfSwitchTurnedOff() {
-        mainViewModel.alarmTurnedOn = false
-        verify(alarmScheduler, times(1)).reschedule(anyOrNull())
+        verify(alarmScheduler).reschedule(anyOrNull())
     }
 }

@@ -1,14 +1,17 @@
 package com.anshmidt.multialarm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.repository.SettingsRepository
 import com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel
+import com.nhaarman.mockitokotlin2.anyOrNull
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.threeten.bp.LocalTime
 
@@ -17,6 +20,9 @@ class FirstAlarmTimeViewModelTest {
 
     @Mock
     private lateinit var settingsRepository: SettingsRepository
+
+    @Mock
+    private lateinit var alarmScheduler: AlarmScheduler
 
     private lateinit var firstAlarmTimeViewModel: FirstAlarmTimeViewModel
 
@@ -29,7 +35,7 @@ class FirstAlarmTimeViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        firstAlarmTimeViewModel = FirstAlarmTimeViewModel(settingsRepository)
+        firstAlarmTimeViewModel = FirstAlarmTimeViewModel(settingsRepository, alarmScheduler)
     }
 
     @Test
@@ -47,6 +53,14 @@ class FirstAlarmTimeViewModelTest {
 
         // then
         Assert.assertEquals(expectedDisplayableTime, actualDisplayableTime)
+    }
+
+    @Test
+    fun alarmRescheduled_whenFirstAlarmTimeChanged() {
+        firstAlarmTimeViewModel._firstAlarmTime.value = LocalTime.of(1,9)
+        firstAlarmTimeViewModel.onFirstAlarmTimeSelectedOnPicker(1, 9)
+        firstAlarmTimeViewModel.onOkButtonClickInFirstAlarmDialog()
+        verify(alarmScheduler).reschedule(anyOrNull())
     }
 
 
