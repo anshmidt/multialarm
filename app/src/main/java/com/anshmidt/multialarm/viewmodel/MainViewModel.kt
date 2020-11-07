@@ -1,16 +1,17 @@
 package com.anshmidt.multialarm.viewmodel
 
 import androidx.lifecycle.*
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.repository.ISettingsRepository
 
 open class MainViewModel(
-    private val repository: ISettingsRepository
+    private val repository: ISettingsRepository,
+    private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
-        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
     }
 
 
@@ -18,6 +19,7 @@ open class MainViewModel(
         get() = repository.alarmTurnedOn
         set(value) {
             repository.alarmTurnedOn = value
+            alarmScheduler.reschedule(repository.getSettings())
         }
 
 

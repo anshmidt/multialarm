@@ -48,6 +48,11 @@ class AlarmScheduler(val context: Context) {
         }
     }
 
+    fun reschedule(alarmSettings: AlarmSettings) {
+        cancel()
+        schedule(alarmSettings)
+    }
+
     fun cancel() {
         val pendingIntent = getAlarmIntent()
         alarmManager.cancel(pendingIntent)

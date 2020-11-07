@@ -18,6 +18,10 @@ class FirstAlarmTimeViewModel(
         private val repository: ISettingsRepository
 ) : ViewModel() {
 
+    companion object {
+        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
+    }
+
     var subscriptions = CompositeDisposable()
 
     var _firstAlarmTime = MutableLiveData<LocalTime>()
@@ -45,7 +49,7 @@ class FirstAlarmTimeViewModel(
     }
 
     fun onViewResumed() {
-        startToObserveCurrentTime(MainViewModel.TIME_LEFT_REFRESH_INTERVAL_SECONDS)
+        startToObserveCurrentTime(TIME_LEFT_REFRESH_INTERVAL_SECONDS)
     }
 
     private fun assignTimeLeft() {
