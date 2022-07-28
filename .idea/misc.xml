@@ -5,6 +5,19 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_dismiss.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/dialog_first_alarm_time.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/dialog_number_of_alarms.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/fragment_alarms_list.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/fragment_first_alarm_time.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/item_alarm.xml" value="0.2857789855072464" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

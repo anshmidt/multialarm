@@ -26,7 +26,7 @@ class FirstAlarmTimeViewModel(
 
     var subscriptions = CompositeDisposable()
 
-    var _firstAlarmTime = MutableLiveData<LocalTime>()
+    private var _firstAlarmTime = MutableLiveData<LocalTime>()
     val firstAlarmTime: LiveData<LocalTime> = _firstAlarmTime
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)

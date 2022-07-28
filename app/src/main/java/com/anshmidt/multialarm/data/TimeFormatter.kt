@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object TimeFormatter {
 
+    @JvmStatic
     fun getDisplayableTime(localTime: LocalTime): String {
         val format = DateTimeFormatter.ofPattern("HH:mm")
         val displayableTime = localTime.format(format)

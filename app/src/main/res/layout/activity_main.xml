@@ -29,17 +29,17 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_switch_main"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_main_alarmslist"
-                    android:layout_width="0dp"
+                <fragment
+                    android:id="@+id/fragment_alarms_list"
+                    android:name="com.anshmidt.multialarm.view.AlarmsListFragment"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/margin_main_activity"
-                    android:divider="@null"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
