@@ -6,11 +6,12 @@ import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
+import com.anshmidt.multialarm.data.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
 
-open class SettingsRepository(private val context: Context) : ISettingsRepository {
+class SettingsRepository(private val context: Context) : ISettingsRepository {
 
     companion object {
         private const val PREFERENCES_NAME = "alarmPreferences"
@@ -72,13 +73,20 @@ open class SettingsRepository(private val context: Context) : ISettingsRepositor
         get() = getDefaultRingtoneUri()
 
     private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener {
-        sharedPreferences, key ->
-            prefSubject.onNext(firstAlarmTime)
+        _, key ->
+        when (key) {
+            FIRST_ALARM_HOURS_KEY, FIRST_ALARM_MINUTES_KEY -> firstAlarmTimeObservable.onNext(firstAlarmTime)
+            MINUTES_BETWEEN_ALARMS_KEY -> minutesBetweenAlarmsObservable.onNext(minutesBetweenAlarms)
+            NUMBER_OF_ALARMS_KEY -> numberOfAlarmsObservable.onNext(numberOfAlarms)
+        }
+
     }
 
-    private val prefSubject = BehaviorSubject.createDefault(DEFAULT_SETTINGS.firstAlarmTime)
+    override val firstAlarmTimeObservable = BehaviorSubject.createDefault(firstAlarmTime)
+    override val minutesBetweenAlarmsObservable = BehaviorSubject.createDefault(minutesBetweenAlarms)
+    override val numberOfAlarmsObservable = BehaviorSubject.createDefault(numberOfAlarms)
 
-    override fun firstAlarmTimeObservable(): Observable<LocalTime> = prefSubject
+    override val alarmsListObservable = BehaviorSubject.createDefault(listOf(firstAlarmTime))
 
     override fun subscribeOnChangeListener() {
         preferences.registerOnSharedPreferenceChangeListener(prefChangeListener)
@@ -114,4 +122,7 @@ open class SettingsRepository(private val context: Context) : ISettingsRepositor
                 songDurationSeconds = songDurationSeconds
         )
     }
+
+
+
 }

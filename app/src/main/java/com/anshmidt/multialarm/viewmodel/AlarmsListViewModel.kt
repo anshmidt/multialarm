@@ -15,27 +15,25 @@ class AlarmsListViewModel(
     private var _alarms = MutableLiveData<List<LocalTime>>()
     val alarms: LiveData<List<LocalTime>> = _alarms
 
-    var subscriptions = CompositeDisposable()
+    private var subscriptions = CompositeDisposable()
 
     fun onViewCreated() {
-        repository.subscribeOnChangeListener()
 
-        val disposable = repository.firstAlarmTimeObservable()
+    }
+
+    fun onViewStarted() {
+        repository.subscribeOnChangeListener()
+        val disposable = repository.firstAlarmTimeObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ firstAlarmTime ->
-                    _alarms.value = listOf(firstAlarmTime)
+                    onFirstAlarmTimeChanged(firstAlarmTime)
                 }, Throwable::printStackTrace)
         subscriptions.add(disposable)
-//        _alarms.value = listOf(repository.firstAlarmTime)
-//        _alarms.value = listOf(
-//                LocalTime.of(1, 9),
-//                LocalTime.of(2, 11),
-//                LocalTime.of(3, 11),
-//                LocalTime.of(4, 11),
-//                LocalTime.of(5, 11),
-//                LocalTime.of(6, 11)
-//        )
+    }
+
+    private fun onFirstAlarmTimeChanged(firstAlarmTime: LocalTime) {
+        _alarms.value = listOf(firstAlarmTime)
     }
 
     fun onViewStopped() {
@@ -50,5 +48,7 @@ class AlarmsListViewModel(
             subscriptions.dispose()
         }
     }
+
+
 
 }

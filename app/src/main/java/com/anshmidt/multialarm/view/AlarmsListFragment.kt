@@ -34,6 +34,11 @@ class AlarmsListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onViewStarted()
+    }
+
     override fun onStop() {
         super.onStop()
         viewModel.onViewStopped()
