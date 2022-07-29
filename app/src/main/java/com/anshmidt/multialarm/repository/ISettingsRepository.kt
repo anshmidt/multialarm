@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.repository
 
 import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
+import io.reactivex.Observable
 import org.threeten.bp.LocalTime
 
 interface ISettingsRepository {
@@ -13,4 +14,8 @@ interface ISettingsRepository {
     fun clearAll()
     val songUri: Uri
     fun getSettings(): AlarmSettings
+
+    fun firstAlarmTimeObservable(): Observable<LocalTime>
+    fun subscribeOnChangeListener()
+    fun unsubscribeOnChangeListener()
 }

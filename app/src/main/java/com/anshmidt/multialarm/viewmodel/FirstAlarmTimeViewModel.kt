@@ -21,7 +21,7 @@ class FirstAlarmTimeViewModel(
 ) : ViewModel() {
 
     companion object {
-        val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
+        const val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
     }
 
     var subscriptions = CompositeDisposable()

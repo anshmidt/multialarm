@@ -7,7 +7,6 @@ data class AlarmSettings (
         var turnedOn: Boolean,
 
         /**
-         * Important note:
          * Always use org.threeten.bp.LocalTime and not java.time in order to support API < 26
          */
         var firstAlarmTime: LocalTime,

@@ -1,10 +1,13 @@
 package com.anshmidt.multialarm.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
 
 open class SettingsRepository(private val context: Context) : ISettingsRepository {
@@ -68,6 +71,23 @@ open class SettingsRepository(private val context: Context) : ISettingsRepositor
     override val songUri: Uri
         get() = getDefaultRingtoneUri()
 
+    private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener {
+        sharedPreferences, key ->
+            prefSubject.onNext(firstAlarmTime)
+    }
+
+    private val prefSubject = BehaviorSubject.createDefault(DEFAULT_SETTINGS.firstAlarmTime)
+
+    override fun firstAlarmTimeObservable(): Observable<LocalTime> = prefSubject
+
+    override fun subscribeOnChangeListener() {
+        preferences.registerOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+
+    override fun unsubscribeOnChangeListener() {
+        preferences.unregisterOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+
     private fun getDefaultRingtoneUri(): Uri {
         var defaultSongUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         if (defaultSongUri == null) {  // it could happen if user has never set alarm on a new device
@@ -80,6 +100,7 @@ open class SettingsRepository(private val context: Context) : ISettingsRepositor
     /**
      * Method created for testing purposes. That's why it uses the main thread.
      */
+    @SuppressLint("ApplySharedPref")
     override fun clearAll() {
         preferences.edit().clear().commit()
     }

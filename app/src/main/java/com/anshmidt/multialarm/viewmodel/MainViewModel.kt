@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.repository.ISettingsRepository
 
-open class MainViewModel(
+class MainViewModel(
     private val repository: ISettingsRepository,
     private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
