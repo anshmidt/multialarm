@@ -23,13 +23,10 @@ class AlarmsListFragment : Fragment() {
 
         adapter = AlarmsListAdapter()
         binding.recyclerviewMainAlarmslist.adapter = adapter
-        viewModel.onViewCreated()
-
 
         viewModel.alarms.observe(viewLifecycleOwner, Observer { alarms ->
             adapter.items = alarms
         })
-
 
         return binding.root
     }

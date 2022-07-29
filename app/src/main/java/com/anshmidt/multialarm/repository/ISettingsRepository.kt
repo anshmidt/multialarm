@@ -16,9 +16,6 @@ interface ISettingsRepository {
     val songUri: Uri
     fun getSettings(): AlarmSettings
 
-    val firstAlarmTimeObservable: Observable<LocalTime>
-    val minutesBetweenAlarmsObservable: Observable<Int>
-    val numberOfAlarmsObservable: Observable<Int>
     val alarmsListObservable: Observable<List<LocalTime>>
     fun subscribeOnChangeListener()
     fun unsubscribeOnChangeListener()

@@ -17,23 +17,19 @@ class AlarmsListViewModel(
 
     private var subscriptions = CompositeDisposable()
 
-    fun onViewCreated() {
-
-    }
-
     fun onViewStarted() {
         repository.subscribeOnChangeListener()
-        val disposable = repository.firstAlarmTimeObservable
+        val disposable = repository.alarmsListObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ firstAlarmTime ->
-                    onFirstAlarmTimeChanged(firstAlarmTime)
+                .subscribe({ alarmsList ->
+                       onAlarmsListChanged(alarmsList)
                 }, Throwable::printStackTrace)
         subscriptions.add(disposable)
     }
 
-    private fun onFirstAlarmTimeChanged(firstAlarmTime: LocalTime) {
-        _alarms.value = listOf(firstAlarmTime)
+    private fun onAlarmsListChanged(alarmsList: List<LocalTime>) {
+        _alarms.value = alarmsList
     }
 
     fun onViewStopped() {

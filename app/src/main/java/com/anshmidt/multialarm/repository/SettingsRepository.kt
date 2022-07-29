@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
+import com.anshmidt.multialarm.data.AlarmsConverter
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
@@ -72,21 +73,11 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
     override val songUri: Uri
         get() = getDefaultRingtoneUri()
 
-    private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener {
-        _, key ->
-        when (key) {
-            FIRST_ALARM_HOURS_KEY, FIRST_ALARM_MINUTES_KEY -> firstAlarmTimeObservable.onNext(firstAlarmTime)
-            MINUTES_BETWEEN_ALARMS_KEY -> minutesBetweenAlarmsObservable.onNext(minutesBetweenAlarms)
-            NUMBER_OF_ALARMS_KEY -> numberOfAlarmsObservable.onNext(numberOfAlarms)
-        }
-
+    private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+        alarmsListObservable.onNext(getAlarmsList())
     }
 
-    override val firstAlarmTimeObservable = BehaviorSubject.createDefault(firstAlarmTime)
-    override val minutesBetweenAlarmsObservable = BehaviorSubject.createDefault(minutesBetweenAlarms)
-    override val numberOfAlarmsObservable = BehaviorSubject.createDefault(numberOfAlarms)
-
-    override val alarmsListObservable = BehaviorSubject.createDefault(listOf(firstAlarmTime))
+    override val alarmsListObservable = BehaviorSubject.createDefault(getAlarmsList())
 
     override fun subscribeOnChangeListener() {
         preferences.registerOnSharedPreferenceChangeListener(prefChangeListener)
@@ -120,6 +111,14 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
                 minutesBetweenAlarms = minutesBetweenAlarms,
                 numberOfAlarms = numberOfAlarms,
                 songDurationSeconds = songDurationSeconds
+        )
+    }
+
+    private fun getAlarmsList(): List<LocalTime> {
+        return AlarmsConverter.getAlarmsList(
+                firstAlarmTime = firstAlarmTime,
+                numberOfAlarms = numberOfAlarms,
+                minutesBetweenAlarms = minutesBetweenAlarms
         )
     }
 
