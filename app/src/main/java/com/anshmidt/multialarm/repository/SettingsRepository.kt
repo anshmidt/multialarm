@@ -38,6 +38,7 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
     override var alarmTurnedOn: Boolean
         get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.turnedOn)
         set(alarmState) {
+            alarmTurnedOnObservable.onNext(alarmState)
             preferences.edit().putBoolean(ALARM_SWITCH_STATE_KEY, alarmState).apply()
         }
 
@@ -78,6 +79,7 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
     }
 
     override val alarmsListObservable = BehaviorSubject.createDefault(getAlarmsList())
+    override val alarmTurnedOnObservable = BehaviorSubject.createDefault(alarmTurnedOn)
 
     override fun subscribeOnChangeListener() {
         preferences.registerOnSharedPreferenceChangeListener(prefChangeListener)

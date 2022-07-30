@@ -17,6 +17,7 @@ interface ISettingsRepository {
     fun getSettings(): AlarmSettings
 
     val alarmsListObservable: Observable<List<LocalTime>>
+    val alarmTurnedOnObservable: Observable<Boolean>
     fun subscribeOnChangeListener()
     fun unsubscribeOnChangeListener()
 }

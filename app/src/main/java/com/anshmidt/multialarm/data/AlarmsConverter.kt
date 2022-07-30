@@ -13,7 +13,7 @@ object AlarmsConverter {
         val alarmsList: MutableList<LocalTime> = mutableListOf()
 
         var alarmTime = firstAlarmTime
-        for (i in 0..numberOfAlarms - 1) {
+        for (interval in 0..numberOfAlarms - 1) {
             alarmsList.add(alarmTime)
             alarmTime = alarmTime.plusMinutes(minutesBetweenAlarms.toLong())
         }
