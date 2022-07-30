@@ -1,6 +1,9 @@
 package com.anshmidt.multialarm.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -21,12 +24,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> {
+                openSettingsScreen()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initBinding() {
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
+    }
+
+    private fun openSettingsScreen() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 
 
