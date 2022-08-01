@@ -11,10 +11,9 @@ import androidx.core.app.NotificationCompat
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.receivers.NotificationDismissButtonClickedReceiver
 import com.anshmidt.multialarm.receivers.NotificationDismissedBySwipeReceiver
-import com.anshmidt.multialarm.view.DismissAlarmActivity
+import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit
 
 
 class NotificationHelper(val context: Context, val notificationParams: NotificationParams) {

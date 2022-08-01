@@ -36,7 +36,7 @@
 
                 <fragment
                     android:id="@+id/fragment_alarms_list"
-                    android:name="com.anshmidt.multialarm.view.AlarmsListFragment"
+                    android:name="com.anshmidt.multialarm.view.fragments.AlarmsListFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/margin_main_activity"
@@ -70,7 +70,7 @@
 
             <fragment
                 android:id="@+id/fragment_first_alarm_time"
-                android:name="com.anshmidt.multialarm.view.FirstAlarmTimeFragment"
+                android:name="com.anshmidt.multialarm.view.fragments.FirstAlarmTimeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider_1"
@@ -86,7 +86,7 @@
 
             <fragment
                 android:id="@+id/fragment_interval"
-                android:name="com.anshmidt.multialarm.view.MinutesBetweenAlarmsFragment"
+                android:name="com.anshmidt.multialarm.view.fragments.MinutesBetweenAlarmsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider_2"
@@ -102,7 +102,7 @@
 
             <fragment
                 android:id="@+id/fragment_numberofalarms"
-                android:name="com.anshmidt.multialarm.view.NumberOfAlarmsFragment"
+                android:name="com.anshmidt.multialarm.view.fragments.NumberOfAlarmsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider_3"

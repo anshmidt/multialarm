@@ -1,10 +1,9 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import com.anshmidt.multialarm.R
+import com.anshmidt.multialarm.view.fragments.SettingsFragment
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,10 +14,5 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.framelayout_settings, SettingsFragment())
                 .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
-
-
-
-
 }

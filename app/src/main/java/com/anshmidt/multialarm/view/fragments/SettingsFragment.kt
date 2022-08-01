@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,9 +7,12 @@ import androidx.preference.PreferenceManager
 import com.anshmidt.multialarm.R
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+    lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences
                 .registerOnSharedPreferenceChangeListener(this)
 
         setPreferencesFromResource(R.xml.preferences, rootKey)
@@ -18,14 +21,14 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-//        when (key) {
+        when (key) {
 //
-//        }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences
                 .unregisterOnSharedPreferenceChangeListener(this)
     }
 

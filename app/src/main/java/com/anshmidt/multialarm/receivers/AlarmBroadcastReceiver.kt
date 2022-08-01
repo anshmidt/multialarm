@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Build
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.services.MusicService
-import com.anshmidt.multialarm.view.DismissAlarmActivity
+import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 

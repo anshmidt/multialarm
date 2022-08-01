@@ -2,13 +2,12 @@ package com.anshmidt.multialarm.services
 
 import android.app.Service
 import android.content.Intent
-import android.os.Binder
 import android.os.IBinder
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.ISettingsRepository
-import com.anshmidt.multialarm.view.DismissAlarmActivity
+import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.concurrent.TimeUnit

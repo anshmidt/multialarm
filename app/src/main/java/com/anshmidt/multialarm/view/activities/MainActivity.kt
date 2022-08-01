@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
-import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {

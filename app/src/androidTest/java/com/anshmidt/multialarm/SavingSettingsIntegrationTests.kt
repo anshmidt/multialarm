@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.rule.ActivityTestRule
-import com.anshmidt.multialarm.view.MainActivity
+import com.anshmidt.multialarm.view.activities.MainActivity
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test

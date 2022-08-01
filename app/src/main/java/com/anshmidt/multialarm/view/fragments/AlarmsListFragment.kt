@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anshmidt.multialarm.databinding.FragmentAlarmsListBinding
+import com.anshmidt.multialarm.view.AlarmsListAdapter
 import com.anshmidt.multialarm.viewmodel.AlarmsListViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

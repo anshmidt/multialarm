@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,14 +32,14 @@
         </activity>
 
         <activity
-            android:name=".view.DismissAlarmActivity"
+            android:name=".view.activities.DismissAlarmActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppFullScreenTheme">
         </activity>
 
         <activity
-            android:name=".view.SettingsActivity"
-            android:parentActivityName=".view.MainActivity">
+            android:name=".view.activities.SettingsActivity"
+            android:parentActivityName=".view.activities.MainActivity">
         </activity>
 
         <receiver

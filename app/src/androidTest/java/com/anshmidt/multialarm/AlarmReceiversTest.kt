@@ -7,7 +7,7 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.AlarmSettings
-import com.anshmidt.multialarm.view.MainActivity
+import com.anshmidt.multialarm.view.activities.MainActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

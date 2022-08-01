@@ -1,4 +1,4 @@
-package com.anshmidt.multialarm.view
+package com.anshmidt.multialarm.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
