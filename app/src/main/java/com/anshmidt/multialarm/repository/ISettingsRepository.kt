@@ -5,6 +5,7 @@ import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import io.reactivex.Observable
 import org.threeten.bp.LocalTime
+import java.io.File
 
 interface ISettingsRepository {
     var alarmTurnedOn: Boolean
@@ -13,7 +14,7 @@ interface ISettingsRepository {
     var numberOfAlarms: Int
     var songDurationSeconds: Int
     fun clearAll()
-    val songUri: Uri
+    var songUri: Uri
     fun getSettings(): AlarmSettings
 
     val alarmsListObservable: Observable<List<LocalTime>>

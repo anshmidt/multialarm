@@ -11,6 +11,7 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
+import java.io.File
 
 class SettingsRepository(private val context: Context) : ISettingsRepository {
 
@@ -23,6 +24,7 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
         private const val MINUTES_BETWEEN_ALARMS_KEY = "minutesBetweenAlarms"
         private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
         private const val SONG_DURATION_SECONDS_KEY = "songDurationSeconds"
+        private const val RINGTONE_FILENAME_KEY = "ringtoneFilename"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
                 turnedOn = false,
@@ -71,8 +73,17 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
             preferences.edit().putInt(SONG_DURATION_SECONDS_KEY, value).apply()
         }
 
-    override val songUri: Uri
-        get() = getDefaultRingtoneUri()
+    override var songUri: Uri
+        //get() = getDefaultRingtoneUri()
+        get() {
+            val defaultUriString = getDefaultRingtoneUri().toString()
+            val uriString = preferences.getString(RINGTONE_FILENAME_KEY, defaultUriString)
+            return Uri.parse(uriString)
+        }
+        set(value) {
+            val uriString = value.toString()
+            preferences.edit().putString(RINGTONE_FILENAME_KEY, uriString).apply()
+        }
 
     private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
         alarmsListObservable.onNext(getAlarmsList())
@@ -90,11 +101,9 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
     }
 
     private fun getDefaultRingtoneUri(): Uri {
-        var defaultSongUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        if (defaultSongUri == null) {  // it could happen if user has never set alarm on a new device
-            defaultSongUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        }
-        return defaultSongUri
+        // if user has never set alarm on a new device, uri for TYPE_ALARM could be null
+        return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM) ?:
+            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     }
 
 
