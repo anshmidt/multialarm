@@ -6,6 +6,7 @@ import android.os.IBinder
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
+import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.koin.standalone.KoinComponent
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class MusicService : Service(), KoinComponent {
 
     private val musicPlayer: MusicPlayer by inject()
-    private val repository: ISettingsRepository by inject()
+    private val ringtoneSettingRepository: IRingtoneSettingRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
     private val notificationHelper: NotificationHelper by inject()
 
@@ -28,9 +29,9 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val songUri = repository.songUri
+        val songUri = ringtoneSettingRepository.songUri
         musicPlayer.play(songUri)
-        val songDurationSeconds = repository.songDurationSeconds
+        val songDurationSeconds = ringtoneSettingRepository.songDurationSeconds
         startCountDownTimer(durationSeconds = songDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
 
         return START_NOT_STICKY

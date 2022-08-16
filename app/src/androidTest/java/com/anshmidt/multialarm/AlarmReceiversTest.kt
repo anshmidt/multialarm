@@ -37,8 +37,7 @@ class AlarmReceiversTest : KoinTest {
                 turnedOn = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
-                numberOfAlarms = 5,
-                songDurationSeconds = 60
+                numberOfAlarms = 5
         )
     }
 

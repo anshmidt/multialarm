@@ -12,12 +12,11 @@ interface ISettingsRepository {
     var firstAlarmTime: LocalTime
     var minutesBetweenAlarms: Int
     var numberOfAlarms: Int
-    var songDurationSeconds: Int
+
     fun clearAll()
-    var songUri: Uri
+
     fun getSettings(): AlarmSettings
-    fun getRingtoneFileName(): String?
-    fun getRingtoneFileName(uri: Uri): String?
+
 
     val alarmsListObservable: Observable<List<LocalTime>>
     val alarmTurnedOnObservable: Observable<Boolean>

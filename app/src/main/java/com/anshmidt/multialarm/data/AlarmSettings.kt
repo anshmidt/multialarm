@@ -12,6 +12,5 @@ data class AlarmSettings (
         var firstAlarmTime: LocalTime,
 
         val minutesBetweenAlarms: Int,
-        val numberOfAlarms: Int,
-        val songDurationSeconds: Int
+        val numberOfAlarms: Int
 )

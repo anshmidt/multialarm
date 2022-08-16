@@ -3,6 +3,7 @@ package com.anshmidt.multialarm.di
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.countdowntimer.DefaultCountDownTimer
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
@@ -17,9 +18,10 @@ import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val appModule = module {
-    single<ISettingsRepository> { SettingsRepository(androidContext()) }
-    single<IRingtoneSettingRepository> { RingtoneSettingRepository(androidContext()) }
+    single<ISettingsRepository> { SettingsRepository(get()) }
+    single<IRingtoneSettingRepository> { RingtoneSettingRepository(androidContext(), get()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
+    single<SharedPreferencesStorage> { SharedPreferencesStorage(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
     factory<AlarmScheduler> { AlarmScheduler(androidContext()) }
     factory { NotificationParams() }
