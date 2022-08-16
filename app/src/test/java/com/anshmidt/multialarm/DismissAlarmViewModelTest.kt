@@ -38,8 +38,8 @@ class DismissAlarmViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-//        val songDurationSeconds = 1
-//        `when`(settingsRepository.songDurationSeconds).thenReturn(songDurationSeconds)
+//        val ringtoneDurationSeconds = 1
+//        `when`(settingsRepository.ringtoneDurationSeconds).thenReturn(ringtoneDurationSeconds)
 
         dismissAlarmViewModel = DismissAlarmViewModel()
     }

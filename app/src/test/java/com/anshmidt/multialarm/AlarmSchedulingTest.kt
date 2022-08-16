@@ -34,7 +34,7 @@ class AlarmSchedulingTest {
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
-                songDurationSeconds = 60
+                ringtoneDurationSeconds = 60
         )
     }
 
@@ -122,7 +122,7 @@ class AlarmSchedulingTest {
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
-                songDurationSeconds = 60
+                ringtoneDurationSeconds = 60
         )
 
         //when
@@ -145,7 +145,7 @@ class AlarmSchedulingTest {
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
-                songDurationSeconds = 60
+                ringtoneDurationSeconds = 60
         )
 
         //when
@@ -167,7 +167,7 @@ class AlarmSchedulingTest {
                 firstAlarmTime = LocalTime.MIDNIGHT,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
-                songDurationSeconds = 60
+                ringtoneDurationSeconds = 60
         )
 
         //when

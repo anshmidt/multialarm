@@ -26,7 +26,7 @@ class SettingsViewModel(
         CoroutineScope(Dispatchers.IO).launch {
             ringtoneSettingRepository.clearAllRingtones() // no need to store previously copied files
             val destinationFileUri = ringtoneSettingRepository.copyRingtoneToAppDirectory(sourceFileUri)
-            ringtoneSettingRepository.songUri = destinationFileUri
+            ringtoneSettingRepository.ringtoneUri = destinationFileUri
         }
     }
 

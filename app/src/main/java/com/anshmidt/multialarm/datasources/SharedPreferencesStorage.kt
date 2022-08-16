@@ -21,7 +21,7 @@ class SharedPreferencesStorage(private val context: Context) {
         private const val FIRST_ALARM_MINUTES_KEY = "firstAlarmMinutes"
         private const val MINUTES_BETWEEN_ALARMS_KEY = "minutesBetweenAlarms"
         private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
-        private const val SONG_DURATION_SECONDS_KEY = "songDurationSeconds"
+        private const val RINGTONE_DURATION_SECONDS_KEY = "ringtoneDurationSeconds"
         private const val RINGTONE_FILENAME_KEY = "ringtoneFilename"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
@@ -31,7 +31,7 @@ class SharedPreferencesStorage(private val context: Context) {
                 numberOfAlarms = 5
         )
 
-        private const val DEFAULT_SONG_DURATION_SECONDS = 90
+        private const val DEFAULT_RINGTONE_DURATION_SECONDS = 90
         private const val DEFAULT_RINGTONE_URI_STRING = ""
     }
 
@@ -65,10 +65,10 @@ class SharedPreferencesStorage(private val context: Context) {
             preferences.edit().putInt(NUMBER_OF_ALARMS_KEY, value).apply()
         }
 
-    var songDurationSeconds: Int
-        get() = preferences.getInt(SONG_DURATION_SECONDS_KEY, DEFAULT_SONG_DURATION_SECONDS)
+    var ringtoneDurationSeconds: Int
+        get() = preferences.getInt(RINGTONE_DURATION_SECONDS_KEY, DEFAULT_RINGTONE_DURATION_SECONDS)
         set(value) {
-            preferences.edit().putInt(SONG_DURATION_SECONDS_KEY, value).apply()
+            preferences.edit().putInt(RINGTONE_DURATION_SECONDS_KEY, value).apply()
         }
 
     var ringtoneUriString: String?

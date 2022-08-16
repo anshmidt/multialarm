@@ -29,10 +29,10 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val songUri = ringtoneSettingRepository.songUri
-        musicPlayer.play(songUri)
-        val songDurationSeconds = ringtoneSettingRepository.songDurationSeconds
-        startCountDownTimer(durationSeconds = songDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
+        val ringtoneUri = ringtoneSettingRepository.ringtoneUri
+        musicPlayer.play(ringtoneUri)
+        val ringtoneDurationSeconds = ringtoneSettingRepository.ringtoneDurationSeconds
+        startCountDownTimer(durationSeconds = ringtoneDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
 
         return START_NOT_STICKY
     }

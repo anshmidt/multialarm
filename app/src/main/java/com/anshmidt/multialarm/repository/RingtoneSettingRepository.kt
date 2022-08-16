@@ -12,9 +12,13 @@ class RingtoneSettingRepository(
         private val sharedPreferencesStorage: SharedPreferencesStorage
 ) : IRingtoneSettingRepository {
 
-    override var songDurationSeconds = sharedPreferencesStorage.songDurationSeconds
+    override var ringtoneDurationSeconds
+        get() = sharedPreferencesStorage.ringtoneDurationSeconds
+        set(value) {
+            sharedPreferencesStorage.ringtoneDurationSeconds = value
+        }
 
-    override var songUri: Uri
+    override var ringtoneUri: Uri
         get() {
             val defaultUriString = getDefaultRingtoneUri().toString()
             val uriString = sharedPreferencesStorage.ringtoneUriString
@@ -31,7 +35,7 @@ class RingtoneSettingRepository(
         }
 
     override fun getRingtoneFileName(): String? {
-        return songUri.getFileName(context)
+        return ringtoneUri.getFileName(context)
     }
 
     override fun getRingtoneFileName(uri: Uri): String? {

@@ -1,6 +1,7 @@
 package com.anshmidt.multialarm
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import com.anshmidt.multialarm.repository.SettingsRepository
 import org.junit.Assert
 import org.junit.Before
@@ -10,7 +11,8 @@ import org.threeten.bp.LocalTime
 class SettingsRepositoryTest {
 
     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    val repository = SettingsRepository(appContext)
+    val sharedPreferencesStorage = SharedPreferencesStorage(appContext)
+    val repository = SettingsRepository(sharedPreferencesStorage)
 
     @Before
     fun setUp() {

@@ -11,11 +11,11 @@ class MusicPlayer(val context: Context) : IMusicPlayer {
 
     private var mediaPlayer: MediaPlayer? = null
 
-    override fun play(songUri: Uri) {
+    override fun play(ringtoneUri: Uri) {
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(getAudioAttributes())
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-            setDataSource(context, songUri)
+            setDataSource(context, ringtoneUri)
             prepare()
             start()
         }
