@@ -3,21 +3,18 @@ package com.anshmidt.multialarm
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
-import com.anshmidt.multialarm.repository.ISettingsRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import com.nhaarman.mockitokotlin2.anyOrNull
-import org.junit.Assert
 
 class DismissAlarmViewModelTest {
 
     @Mock
-    private lateinit var settingsRepository: ISettingsRepository
+    private lateinit var settingsRepository: IScheduleSettingsRepository
 
     @Mock
     private lateinit var musicPlayer: IMusicPlayer

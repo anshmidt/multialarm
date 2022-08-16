@@ -3,9 +3,7 @@ package com.anshmidt.multialarm.datasources
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
-import com.anshmidt.multialarm.repository.SettingsRepository
 import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
 

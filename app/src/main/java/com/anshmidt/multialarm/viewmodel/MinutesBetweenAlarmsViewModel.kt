@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
-import com.anshmidt.multialarm.repository.ISettingsRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 
 class MinutesBetweenAlarmsViewModel(
-        private val repository: ISettingsRepository,
+        private val scheduleSettingsRepository: IScheduleSettingsRepository,
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
     private val _openMinutesBetweenAlarmsDialog = SingleLiveEvent<Any>()
@@ -23,7 +23,7 @@ class MinutesBetweenAlarmsViewModel(
 
 
     fun onViewCreated() {
-        _minutesBetweenAlarms.value = repository.minutesBetweenAlarms
+        _minutesBetweenAlarms.value = scheduleSettingsRepository.minutesBetweenAlarms
         selectedVariantIndex.value = allAvailableVariants.indexOf(_minutesBetweenAlarms.value!!)
     }
 
@@ -41,8 +41,8 @@ class MinutesBetweenAlarmsViewModel(
         }
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _minutesBetweenAlarms.value = selectedVariant
-        repository.minutesBetweenAlarms = selectedVariant
-        alarmScheduler.reschedule(repository.getSettings())
+        scheduleSettingsRepository.minutesBetweenAlarms = selectedVariant
+        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
     }
 
     fun onCancelButtonClickInMinutesBetweenAlarmsDialog() {

@@ -3,13 +3,12 @@ package com.anshmidt.multialarm.repository
 import android.content.Context
 import android.media.RingtoneManager
 import android.net.Uri
+import com.anshmidt.multialarm.datasources.FileStorage
 import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
-import com.anshmidt.multialarm.repository.FileExtensions.copyToAppDir
-import com.anshmidt.multialarm.repository.FileExtensions.getFileName
 
 class RingtoneSettingRepository(
-        private val context: Context,
-        private val sharedPreferencesStorage: SharedPreferencesStorage
+        private val sharedPreferencesStorage: SharedPreferencesStorage,
+        private val fileStorage: FileStorage
 ) : IRingtoneSettingRepository {
 
     override var ringtoneDurationSeconds
@@ -35,19 +34,19 @@ class RingtoneSettingRepository(
         }
 
     override fun getRingtoneFileName(): String? {
-        return ringtoneUri.getFileName(context)
+        return fileStorage.getFileName(ringtoneUri)
     }
 
     override fun getRingtoneFileName(uri: Uri): String? {
-        return uri.getFileName(context)
+        return fileStorage.getFileName(uri)
     }
 
     override fun clearAllRingtones() {
-        context.filesDir.deleteRecursively()
+        fileStorage.clearFilesDir()
     }
 
     override fun copyRingtoneToAppDirectory(ringtoneUri: Uri): Uri {
-        return ringtoneUri.copyToAppDir(context)
+        return fileStorage.copyToAppDir(ringtoneUri)
     }
 
     private fun getDefaultRingtoneUri(): Uri {

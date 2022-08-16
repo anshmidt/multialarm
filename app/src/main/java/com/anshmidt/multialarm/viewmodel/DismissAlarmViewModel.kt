@@ -2,11 +2,7 @@ package com.anshmidt.multialarm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
-import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.data.SingleLiveEvent
-import com.anshmidt.multialarm.repository.ISettingsRepository
-import java.util.concurrent.TimeUnit
 
 class DismissAlarmViewModel : ViewModel() {
 

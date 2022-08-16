@@ -1,12 +1,12 @@
 package com.anshmidt.multialarm.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
-import com.anshmidt.multialarm.repository.ISettingsRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 
 class MainViewModel(
-    private val repository: ISettingsRepository,
-    private val alarmScheduler: AlarmScheduler
+        private val scheduleSettingsRepository: IScheduleSettingsRepository,
+        private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
 
@@ -16,10 +16,10 @@ class MainViewModel(
 
 
     var alarmTurnedOn: Boolean
-        get() = repository.alarmTurnedOn
+        get() = scheduleSettingsRepository.alarmTurnedOn
         set(value) {
-            repository.alarmTurnedOn = value
-            alarmScheduler.reschedule(repository.getSettings())
+            scheduleSettingsRepository.alarmTurnedOn = value
+            alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
         }
 
 

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
-import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.data.LiveDataUtil
+import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
-import com.anshmidt.multialarm.repository.ISettingsRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import org.threeten.bp.Duration
@@ -16,7 +16,7 @@ import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 
 class FirstAlarmTimeViewModel(
-        private val repository: ISettingsRepository,
+        private val scheduleSettingsRepository: IScheduleSettingsRepository,
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
@@ -46,7 +46,7 @@ class FirstAlarmTimeViewModel(
 
 
     fun onViewCreated() {
-        _firstAlarmTime.value = repository.firstAlarmTime
+        _firstAlarmTime.value = scheduleSettingsRepository.firstAlarmTime
         assignTimeLeft()
     }
 
@@ -78,8 +78,8 @@ class FirstAlarmTimeViewModel(
 
     fun onOkButtonClickInFirstAlarmDialog() {
         _firstAlarmTime.value = firstAlarmTimeChangedByUser.value
-        repository.firstAlarmTime = firstAlarmTimeChangedByUser.value!!
-        alarmScheduler.reschedule(repository.getSettings())
+        scheduleSettingsRepository.firstAlarmTime = firstAlarmTimeChangedByUser.value!!
+        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
     }
 
     fun onCancelButtonClickInFirstAlarmDialog() {

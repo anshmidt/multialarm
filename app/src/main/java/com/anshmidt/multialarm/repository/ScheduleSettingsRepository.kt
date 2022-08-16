@@ -1,23 +1,14 @@
 package com.anshmidt.multialarm.repository
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
-import android.media.RingtoneManager
-import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
-import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
-import com.anshmidt.multialarm.repository.FileExtensions.getFileName
-import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
-import java.io.File
 
-class SettingsRepository(
+class ScheduleSettingsRepository(
         private val sharedPreferencesStorage: SharedPreferencesStorage
-) : ISettingsRepository {
+) : IScheduleSettingsRepository {
 
     override var alarmTurnedOn: Boolean
         get() = sharedPreferencesStorage.alarmTurnedOn

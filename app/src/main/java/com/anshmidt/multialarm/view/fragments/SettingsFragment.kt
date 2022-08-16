@@ -15,8 +15,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.activity.result.contract.ActivityResultContracts
 
-import com.anshmidt.multialarm.repository.ISettingsRepository
-import org.koin.android.ext.android.inject
 import com.anshmidt.multialarm.viewmodel.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

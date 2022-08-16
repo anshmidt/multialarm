@@ -2,8 +2,7 @@ package com.anshmidt.multialarm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
-import com.anshmidt.multialarm.repository.SettingsRepository
-import com.anshmidt.multialarm.viewmodel.MainViewModel
+import com.anshmidt.multialarm.repository.ScheduleSettingsRepository
 import com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel
 import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.verify
@@ -16,7 +15,7 @@ import org.mockito.MockitoAnnotations
 class MinutesBetweenAlarmsViewModelTest {
 
     @Mock
-    private lateinit var settingsRepository: SettingsRepository
+    private lateinit var settingsRepository: ScheduleSettingsRepository
 
     @Mock
     private lateinit var alarmScheduler: AlarmScheduler

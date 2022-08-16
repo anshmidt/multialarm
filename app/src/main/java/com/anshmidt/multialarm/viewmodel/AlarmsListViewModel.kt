@@ -3,14 +3,14 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.anshmidt.multialarm.repository.ISettingsRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.threeten.bp.LocalTime
 
 class AlarmsListViewModel(
-        private val repository: ISettingsRepository
+        private val scheduleSettingsRepository: IScheduleSettingsRepository
 ) : ViewModel() {
     private var _alarms = MutableLiveData<List<LocalTime>>()
     val alarms: LiveData<List<LocalTime>> = _alarms
@@ -21,9 +21,9 @@ class AlarmsListViewModel(
     private var subscriptions = CompositeDisposable()
 
     fun onViewStarted() {
-        repository.subscribeOnChangeListener()
+        scheduleSettingsRepository.subscribeOnChangeListener()
 
-        repository.alarmsListObservable
+        scheduleSettingsRepository.alarmsListObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ alarmsList ->
@@ -31,7 +31,7 @@ class AlarmsListViewModel(
                 }, Throwable::printStackTrace)
                 .let { subscriptions.add(it) }
 
-        repository.alarmTurnedOnObservable
+        scheduleSettingsRepository.alarmTurnedOnObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ alarmTurnedOn ->
@@ -49,7 +49,7 @@ class AlarmsListViewModel(
     }
 
     fun onViewStopped() {
-        repository.unsubscribeOnChangeListener()
+        scheduleSettingsRepository.unsubscribeOnChangeListener()
         if (!subscriptions.isDisposed) {
             subscriptions.clear()
         }

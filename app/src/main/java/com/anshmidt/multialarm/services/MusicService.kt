@@ -7,7 +7,6 @@ import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
-import com.anshmidt.multialarm.repository.ISettingsRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
