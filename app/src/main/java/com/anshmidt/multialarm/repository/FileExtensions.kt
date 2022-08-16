@@ -3,6 +3,7 @@ package com.anshmidt.multialarm.repository
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
@@ -85,11 +86,22 @@ object FileExtensions {
     }
 
 
-//    fun Uri.copyToAppDir(context: Context): Uri {
-//        CoroutineScope(Dispatchers.IO).launch { scope ->
-//            copyToAppDir2("", context)
-//        }
-//    }
+    private fun getMediaFileName(uri: Uri, context: Context): String? {
+        val projection = arrayOf(
+                MediaStore.Audio.Media.DISPLAY_NAME)
+        context.contentResolver.query(
+                uri, projection, null, null, null, null)?.use { cursor ->
+            //cache column indices
+            val nameColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)
+
+            //iterating over all of the found images
+            while (cursor.moveToNext()) {
+                return cursor.getString(nameColumn)
+            }
+            return null
+        }
+        return null
+    }
 
 }
 

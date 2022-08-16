@@ -16,6 +16,8 @@ interface ISettingsRepository {
     fun clearAll()
     var songUri: Uri
     fun getSettings(): AlarmSettings
+    fun getRingtoneFileName(): String?
+    fun getRingtoneFileName(uri: Uri): String?
 
     val alarmsListObservable: Observable<List<LocalTime>>
     val alarmTurnedOnObservable: Observable<Boolean>

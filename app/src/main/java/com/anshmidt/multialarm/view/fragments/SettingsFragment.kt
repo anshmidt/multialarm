@@ -3,39 +3,37 @@ package com.anshmidt.multialarm.view.fragments
 import android.Manifest
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.anshmidt.multialarm.R
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
 
-import com.anshmidt.multialarm.repository.FileExtensions.copyToAppDir
 import com.anshmidt.multialarm.repository.ISettingsRepository
 import org.koin.android.ext.android.inject
-import com.anshmidt.multialarm.repository.FileExtensions.getFileName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.anshmidt.multialarm.viewmodel.SettingsViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var sharedPreferences: SharedPreferences
-    private val settingsRepository: ISettingsRepository by inject()
+    private val viewModel: SettingsViewModel by sharedViewModel()
 
-    val ringtoneFilenamePreference: Preference? by lazy {
+    private val ringtoneFilenamePreference: Preference? by lazy {
         val ringtonePreferenceKey = getString(R.string.key_ringtone_filename)
         findPreference(ringtonePreferenceKey)
     }
 
-    companion object {
-        val TAG = SettingsFragment::class.java.simpleName
-        private const val PERMISSION_READ_EXTERNAL_STORAGE_REQUEST_CODE = 23
-        private const val FILE_CHOOSER_REQUEST_CODE = 202
+    private val openAudioFileResult = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let { viewModel.onAudioFileChosen(it) }
     }
 
     /**\
@@ -48,93 +46,62 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
      *
      * Idea of naming:
      * RingtoneSettingRepository, AlarmSettingRepository
+     * or
+     * ScheduleSettingRepository, RingtoneSettingRepository (duration, filename)
      * RingtoneStorage, SettingStorage  (data sources)
      * And if I need to: SharedPreferencesManager, FileManager
      */
 
-    private fun openActivityForResult() {
+    private fun openAudioFileChooser() {
         openAudioFileResult.launch("audio/*")
     }
 
 
-    val openAudioFileResult = registerForActivityResult(
-            ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let { onAudioFileChosen(it) }
-    }
-
-    private fun onAudioFileChosen(sourceFileUri: Uri) {
-        val sourceFileName = sourceFileUri.getFileName(requireContext())
-        displayRingtoneName(sourceFileName)
-
-        //copy file to app folder
-        CoroutineScope(Dispatchers.IO).launch {
-            clearRingtonesDir() // no need to store previously copied files
-            val destinationFileUri = sourceFileUri.copyToAppDir(requireContext())
-            settingsRepository.songUri = destinationFileUri
-        }
-    }
-
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        sharedPreferences
-                .registerOnSharedPreferenceChangeListener(this)
-
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-//        val ringtonePreferenceKey = getString(R.string.key_ringtone_filename)
-//        val ringtoneFilenamePreference: Preference? = findPreference(ringtonePreferenceKey)
         ringtoneFilenamePreference?.setOnPreferenceClickListener {
             onRingtonePreferenceClicked()
             return@setOnPreferenceClickListener true
         }
-
-        val ringtoneFileName = settingsRepository.songUri.getFileName(requireContext())
-        displayRingtoneName(ringtoneFileName)
-
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-//
-        }
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        viewModel.chosenRingtoneName.observe(viewLifecycleOwner, {
+            displayRingtoneName(it)
+        })
 
-    override fun onDestroy() {
-        super.onDestroy()
-        sharedPreferences
-                .unregisterOnSharedPreferenceChangeListener(this)
-    }
+        viewModel.onViewCreated()
 
-    private fun openFileChooser() {
-        openActivityForResult()
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun onRingtonePreferenceClicked() {
         // request permissions if user didn't grant them before
-        if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED) {
+        if (areStoragePermissionsGranted()) {
+            Log.d(TAG, "Permission already granted")
+            onStoragePermissionsGranted()
+        } else {
             requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PERMISSION_READ_EXTERNAL_STORAGE_REQUEST_CODE)
-        } else {
-            Log.d(TAG, "Permission already granted")
-            openFileChooser()
         }
+    }
+
+    private fun areStoragePermissionsGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_READ_EXTERNAL_STORAGE_REQUEST_CODE -> {
-
-                // If request is cancelled, the result array is empty.
                 if (grantResults.isNotEmpty()
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d(TAG, "Permission granted")
-                    openFileChooser()
+                    onStoragePermissionsGranted()
                 } else {
                     Log.d(TAG, "Permission denied")
                 }
@@ -142,8 +109,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
-    private fun clearRingtonesDir() {
-        requireContext().filesDir.deleteRecursively()
+    private fun onStoragePermissionsGranted() {
+        openAudioFileChooser()
     }
 
     private fun displayRingtoneName(ringtoneName: String?) {
@@ -159,22 +126,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         ringtoneFilenamePreference?.summary = defaultRingtoneName
     }
 
-    private fun getMediaFileName(uri: Uri): String? {
-        val projection = arrayOf(
-                MediaStore.Audio.Media.DISPLAY_NAME)
-        requireContext().contentResolver.query(
-                uri, projection, null, null, null, null)?.use { cursor ->
-            //cache column indices
-            val nameColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)
-
-            //iterating over all of the found images
-            while (cursor.moveToNext()) {
-                return cursor.getString(nameColumn)
-            }
-            return null
-        }
-        return null
+    companion object {
+        val TAG = SettingsFragment::class.java.simpleName
+        private const val PERMISSION_READ_EXTERNAL_STORAGE_REQUEST_CODE = 23
     }
+
+
 
 
 

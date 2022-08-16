@@ -8,6 +8,7 @@ import android.net.Uri
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.repository.FileExtensions.getFileName
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import org.threeten.bp.LocalTime
@@ -98,6 +99,14 @@ class SettingsRepository(private val context: Context) : ISettingsRepository {
 
     override fun unsubscribeOnChangeListener() {
         preferences.unregisterOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+
+    override fun getRingtoneFileName(): String? {
+        return songUri.getFileName(context)
+    }
+
+    override fun getRingtoneFileName(uri: Uri): String? {
+        return uri.getFileName(context)
     }
 
     private fun getDefaultRingtoneUri(): Uri {

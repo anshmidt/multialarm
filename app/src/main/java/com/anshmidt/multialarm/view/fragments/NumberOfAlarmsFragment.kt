@@ -27,7 +27,7 @@ class NumberOfAlarmsFragment : Fragment() {
         initBinding(binding)
         val view = binding.root
 
-        numberOfAlarmsViewModel.openNumberOfAlarmsDialog.observe(this, Observer {
+        numberOfAlarmsViewModel.openNumberOfAlarmsDialog.observe(viewLifecycleOwner, Observer {
             openNumberOfAlarmsDialog()
         })
 
