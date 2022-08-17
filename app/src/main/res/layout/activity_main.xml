@@ -57,7 +57,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:checked="@={mainViewModel.alarmTurnedOn}"
+                    android:checked="@{mainViewModel.alarmTurnedOn}"
+                    android:onCheckedChanged="@{mainViewModel::onAlarmSwitchChanged}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

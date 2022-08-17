@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
+
+        mainViewModel.onViewCreated()
+        mainViewModel.displayAlarmSwitchChangedMessage.observe(this@MainActivity, {
+            displayAlarmSwitchStateChangedToast(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,6 +52,38 @@ class MainActivity : AppCompatActivity() {
     private fun openSettingsScreen() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun displayAlarmsOnToast() {
+        Toast.makeText(
+                this@MainActivity,
+                getString(R.string.main_alarm_turned_on_toast),
+                Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun displayAlarmsOffToast() {
+        Toast.makeText(
+                this@MainActivity,
+                getString(R.string.main_alarm_turned_off_toast),
+                Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun displayAlarmsResetToast() {
+        Toast.makeText(
+                this@MainActivity,
+                getString(R.string.main_alarm_reset_toast),
+                Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun displayAlarmSwitchStateChangedToast(switchState: Boolean) {
+        if (switchState) {
+            displayAlarmsOnToast()
+        } else {
+            displayAlarmsOffToast()
+        }
     }
 
 

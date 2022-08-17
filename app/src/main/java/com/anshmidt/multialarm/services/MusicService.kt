@@ -31,7 +31,10 @@ class MusicService : Service(), KoinComponent {
         val ringtoneUri = ringtoneSettingRepository.ringtoneUri
         musicPlayer.play(ringtoneUri)
         val ringtoneDurationSeconds = ringtoneSettingRepository.ringtoneDurationSeconds
-        startCountDownTimer(durationSeconds = ringtoneDurationSeconds, doOnCountDownFinish = this::doOnCountDownFinish)
+        startCountDownTimer(
+                durationSeconds = ringtoneDurationSeconds,
+                doOnCountDownFinish = this::doOnCountDownFinish
+        )
 
         return START_NOT_STICKY
     }
