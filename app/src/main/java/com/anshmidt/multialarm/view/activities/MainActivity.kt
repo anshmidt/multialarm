@@ -27,6 +27,25 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.displayAlarmSwitchChangedMessage.observe(this@MainActivity, {
             displayAlarmSwitchChangedToast(it)
         })
+
+        mainViewModel.displayAlarmsResetMessage.observe(this@MainActivity, {
+            displayAlarmsResetToast()
+        })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.onViewStarted()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mainViewModel.onViewStopped()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.onViewDestroyed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
