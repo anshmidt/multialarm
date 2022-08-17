@@ -24,9 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initBinding()
 
-        mainViewModel.onViewCreated()
         mainViewModel.displayAlarmSwitchChangedMessage.observe(this@MainActivity, {
-            displayAlarmSwitchStateChangedToast(it)
+            displayAlarmSwitchChangedToast(it)
         })
     }
 
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun displayAlarmSwitchStateChangedToast(switchState: Boolean) {
+    private fun displayAlarmSwitchChangedToast(switchState: Boolean) {
         if (switchState) {
             displayAlarmsOnToast()
         } else {
