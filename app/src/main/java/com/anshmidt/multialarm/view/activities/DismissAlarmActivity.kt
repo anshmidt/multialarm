@@ -5,24 +5,29 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.anshmidt.multialarm.R
-import com.anshmidt.multialarm.databinding.ActivityDismissBinding
+import com.anshmidt.multialarm.databinding.ActivityDismissAnimatedBinding
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import pl.bclogic.pulsator4droid.library.PulsatorLayout
+
+
+
 
 
 class DismissAlarmActivity : AppCompatActivity() {
 
     private val dismissAlarmViewModel: DismissAlarmViewModel by viewModel()
 
-    private val binding: ActivityDismissBinding by lazy {
-        DataBindingUtil.setContentView<ActivityDismissBinding>(this, R.layout.activity_dismiss)
+    private val binding: ActivityDismissAnimatedBinding by lazy {
+        DataBindingUtil.setContentView<ActivityDismissAnimatedBinding>(this, R.layout.activity_dismiss_animated)
     }
 
     private val countDownFinishReceiver: BroadcastReceiver by lazy {
@@ -42,6 +47,7 @@ class DismissAlarmActivity : AppCompatActivity() {
         displayActivityOnLockedScreen()
         initBinding()
         registerCountDownFinishReceiver(countDownFinishReceiver)
+        startButtonAnimation()
 
         dismissAlarmViewModel.finishView.observe(this, Observer {
             finish()
@@ -85,6 +91,11 @@ class DismissAlarmActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(countDownFinishReceiver)
+    }
+
+    private fun startButtonAnimation() {
+        val animatedButton = findViewById<View>(R.id.pulsator) as PulsatorLayout
+        animatedButton.start()
     }
 
 

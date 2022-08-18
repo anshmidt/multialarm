@@ -8,7 +8,7 @@ import org.koin.android.ext.android.startKoin
 class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf(appModule))
+        startKoin(this@BaseApplication, listOf(appModule))
         AndroidThreeTen.init(this)
     }
 }

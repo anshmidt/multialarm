@@ -10,6 +10,8 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/activity_dismiss.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/activity_dismiss_animated.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/activity_dismiss_new.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2857789855072464" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/layout/dialog_first_alarm_time.xml" value="0.2857789855072464" />

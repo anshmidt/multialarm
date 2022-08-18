@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.PowerManager
 
 
-class MusicPlayer(val context: Context) : IMusicPlayer {
+class MusicPlayer(private val context: Context) : IMusicPlayer {
 
     private var mediaPlayer: MediaPlayer? = null
 

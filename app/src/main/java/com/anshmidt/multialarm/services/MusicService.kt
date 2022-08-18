@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
-import com.anshmidt.multialarm.musicplayer.MusicPlayer
+import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  */
 class MusicService : Service(), KoinComponent {
 
-    private val musicPlayer: MusicPlayer by inject()
+    private val musicPlayer: IMusicPlayer by inject()
     private val ringtoneSettingRepository: IRingtoneSettingRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
     private val notificationHelper: NotificationHelper by inject()
@@ -29,7 +29,7 @@ class MusicService : Service(), KoinComponent {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val ringtoneUri = ringtoneSettingRepository.ringtoneUri
-        musicPlayer.play(ringtoneUri)
+//        musicPlayer.play(ringtoneUri)
         val ringtoneDurationSeconds = ringtoneSettingRepository.ringtoneDurationSeconds
         startCountDownTimer(
                 durationSeconds = ringtoneDurationSeconds,
@@ -52,12 +52,12 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
-        musicPlayer.stop()
+//        musicPlayer.stop()
         super.onDestroy()
     }
 
     private fun doOnCountDownFinish() {
-        musicPlayer.stop()
+//        musicPlayer.stop()
         finishView()
         stopSelf()
     }
