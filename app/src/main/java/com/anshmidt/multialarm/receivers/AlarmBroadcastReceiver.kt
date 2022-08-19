@@ -40,6 +40,10 @@ class AlarmBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
     private fun startMusicService(context: Context) {
         val serviceIntent = Intent(context, MusicService::class.java)
-        context.startService(serviceIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(serviceIntent)
+        } else {
+            context.startService(serviceIntent)
+        }
     }
 }

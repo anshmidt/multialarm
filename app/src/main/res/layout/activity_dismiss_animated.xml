@@ -40,7 +40,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-thin"
-            android:format12Hour="hh:mm"
+            android:format12Hour="k:mm"
             android:format24Hour="k:mm"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/dismissActivityTextcolor"

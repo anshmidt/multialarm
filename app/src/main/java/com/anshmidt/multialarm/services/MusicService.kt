@@ -2,7 +2,9 @@ package com.anshmidt.multialarm.services
 
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
@@ -29,6 +31,7 @@ class MusicService : Service(), KoinComponent {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val ringtoneUri = ringtoneSettingRepository.ringtoneUri
+        Log.d(TAG, "Music started")
 //        musicPlayer.play(ringtoneUri)
         val ringtoneDurationSeconds = ringtoneSettingRepository.ringtoneDurationSeconds
         startCountDownTimer(
@@ -37,6 +40,15 @@ class MusicService : Service(), KoinComponent {
         )
 
         return START_NOT_STICKY
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Looks like notification should be started from the service according to Android design
+            // startForeground(1, notification)
+
+        }
     }
 
     private fun startCountDownTimer(durationSeconds: Int, doOnCountDownFinish: () -> Unit) {
@@ -52,11 +64,13 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
+        Log.d(TAG, "Music stopped")
 //        musicPlayer.stop()
         super.onDestroy()
     }
 
     private fun doOnCountDownFinish() {
+        Log.d(TAG, "Music stopped")
 //        musicPlayer.stop()
         finishView()
         stopSelf()
@@ -77,6 +91,9 @@ class MusicService : Service(), KoinComponent {
         notificationHelper.cancelNotification()
     }
 
+    companion object {
+        val TAG = MusicService::class.java.simpleName
+    }
 
 
 
