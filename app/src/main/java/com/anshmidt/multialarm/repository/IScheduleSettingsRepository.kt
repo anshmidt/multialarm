@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.repository
 
 import com.anshmidt.multialarm.data.AlarmSettings
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalTime
 
 interface IScheduleSettingsRepository {
@@ -19,4 +20,6 @@ interface IScheduleSettingsRepository {
     fun subscribeOnChangeListener()
     fun unsubscribeOnChangeListener()
 
+    suspend fun saveAlarmSwitchState(switchState: Boolean)
+    fun getAlarmSwitchState(): Flow<Boolean>
 }

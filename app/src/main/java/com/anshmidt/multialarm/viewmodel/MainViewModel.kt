@@ -3,12 +3,16 @@ package com.anshmidt.multialarm.viewmodel
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainViewModel(
         private val scheduleSettingsRepository: IScheduleSettingsRepository,
@@ -20,8 +24,9 @@ class MainViewModel(
     }
 
     // used only for displaying the initial switch state when the view is created
-    val alarmTurnedOn: Boolean
-        get() = scheduleSettingsRepository.alarmTurnedOn
+//    private var _alarmSwitchState = MutableLiveData<Boolean>()
+//    val alarmSwitchState: LiveData<Boolean> = _alarmSwitchState
+    var alarmSwitchState: Boolean = false
 
     private var _displayAlarmSwitchChangedMessage = SingleLiveEvent<Boolean>()
     val displayAlarmSwitchChangedMessage: LiveData<Boolean> = _displayAlarmSwitchChangedMessage
@@ -33,7 +38,10 @@ class MainViewModel(
 
     fun onAlarmSwitchChanged(switchView: View, switchState: Boolean) {
         _displayAlarmSwitchChangedMessage.value = switchState
-        scheduleSettingsRepository.alarmTurnedOn = switchState
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.saveAlarmSwitchState(switchState)
+        }
+//        scheduleSettingsRepository.alarmTurnedOn = switchState
         alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
     }
 
@@ -47,6 +55,12 @@ class MainViewModel(
                     onAlarmsListChanged()
                 }, Throwable::printStackTrace)
                 .let { subscriptions.add(it) }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
+                alarmSwitchState = switchState
+            }
+        }
     }
 
     fun onViewStopped() {

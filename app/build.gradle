@@ -118,6 +118,9 @@ dependencies {
     //Animated button
     implementation 'pl.bclogic:pulsator4droid:1.0.3'
 
+    //Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
 }
 repositories {
     mavenCentral()

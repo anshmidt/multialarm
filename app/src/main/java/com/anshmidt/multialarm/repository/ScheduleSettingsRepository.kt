@@ -2,12 +2,15 @@ package com.anshmidt.multialarm.repository
 
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
+import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalTime
 
 class ScheduleSettingsRepository(
-        private val sharedPreferencesStorage: SharedPreferencesStorage
+        private val sharedPreferencesStorage: SharedPreferencesStorage,
+        private val dataStoreStorage: DataStoreStorage
 ) : IScheduleSettingsRepository {
 
     override var alarmTurnedOn: Boolean
@@ -16,6 +19,12 @@ class ScheduleSettingsRepository(
             alarmTurnedOnObservable.onNext(alarmState)
             sharedPreferencesStorage.alarmTurnedOn = alarmState
         }
+
+    override suspend fun saveAlarmSwitchState(switchState: Boolean) {
+        dataStoreStorage.saveAlarmSwitchState(switchState)
+    }
+
+    override fun getAlarmSwitchState(): Flow<Boolean> = dataStoreStorage.getAlarmSwitchStateFlow()
 
     override var firstAlarmTime: LocalTime
         get() {

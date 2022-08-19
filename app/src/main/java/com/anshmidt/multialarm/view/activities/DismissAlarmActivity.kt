@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import com.anshmidt.multialarm.databinding.ActivityDismissAnimatedBinding
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import pl.bclogic.pulsator4droid.library.PulsatorLayout
 
 
 
@@ -94,8 +92,7 @@ class DismissAlarmActivity : AppCompatActivity() {
     }
 
     private fun startButtonAnimation() {
-        val animatedButton = findViewById<View>(R.id.pulsator) as PulsatorLayout
-        animatedButton.start()
+        binding.dismissButton.start()
     }
 
 

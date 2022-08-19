@@ -10,7 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dismissLayout"
+        android:id="@+id/dismiss_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAllCaps="false"
@@ -18,7 +18,7 @@
         android:background="@color/dismissActivityBackground">
 
         <pl.bclogic.pulsator4droid.library.PulsatorLayout
-            android:id="@+id/pulsator"
+            android:id="@+id/dismiss_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
