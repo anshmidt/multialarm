@@ -37,7 +37,7 @@ class FirstAlarmTimeFragment : Fragment() {
 
     private fun initBinding(binding: FragmentFirstAlarmTimeBinding) {
         binding.lifecycleOwner = this
-        binding.firstAlarmTimeViewModel = firstAlarmTimeViewModel
+        binding.viewModel = firstAlarmTimeViewModel
     }
 
     private fun openFirstAlarmTimeDialog() {

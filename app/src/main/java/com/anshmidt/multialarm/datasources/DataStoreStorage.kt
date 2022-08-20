@@ -1,6 +1,7 @@
 package com.anshmidt.multialarm.datasources
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -18,12 +19,15 @@ class DataStoreStorage(private val context: Context) {
 
     suspend fun saveAlarmSwitchState(switchState: Boolean) {
         dataStore.edit { pref ->
-            pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] = switchState
+            pref[PreferencesKeys.ALARM_SWITCH_STATE_PREFERENCES_KEY] = switchState
         }
     }
 
+//    fun getAlarmSwitchState() = flow { emit(true) }
+
     fun getAlarmSwitchState() = dataStore.data.map { pref ->
-        pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] ?: DEFAULT_SETTINGS.switchState
+        Log.d(TAG, "getAlarmSwitchState")
+        pref[PreferencesKeys.ALARM_SWITCH_STATE_PREFERENCES_KEY] ?: DEFAULT_SETTINGS.switchState
     }
 
     suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int) {
@@ -33,16 +37,19 @@ class DataStoreStorage(private val context: Context) {
     }
 
     fun getMinutesBetweenAlarms() = dataStore.data.map { pref ->
+        Log.d(TAG, "getMinutesBetweenAlarms")
         pref[intPreferencesKey(MINUTES_BETWEEN_ALARMS_KEY)] ?: DEFAULT_SETTINGS.minutesBetweenAlarms
     }
 
     suspend fun saveNumberOfAlarms(numberOfAlarms: Int) {
         dataStore.edit { pref ->
+            Log.d(TAG, "saveNumberOfAlarms")
             pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] = numberOfAlarms
         }
     }
 
     fun getNumberOfAlarms() = dataStore.data.map { pref ->
+        Log.d(TAG, "getNumberOfAlarms")
         pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] ?: DEFAULT_SETTINGS.numberOfAlarms
     }
 
@@ -68,6 +75,7 @@ class DataStoreStorage(private val context: Context) {
     }
 
     fun getAlarmSettings() = dataStore.data.map { pref ->
+        Log.d(TAG, "getAlarmSettings")
         pref.toAlarmSettings()
     }
 
@@ -105,6 +113,13 @@ class DataStoreStorage(private val context: Context) {
 
         private const val DEFAULT_RINGTONE_DURATION_SECONDS = 90
         private const val DEFAULT_RINGTONE_URI_STRING = ""
+
+        private val TAG = DataStoreStorage::class.java.simpleName
+    }
+
+    private object PreferencesKeys {
+        val ALARM_SWITCH_STATE_PREFERENCES_KEY = booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)
     }
 
 }
+

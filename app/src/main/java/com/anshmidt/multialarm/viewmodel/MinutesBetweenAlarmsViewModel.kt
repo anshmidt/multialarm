@@ -51,12 +51,15 @@ class MinutesBetweenAlarmsViewModel(
             return
         }
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
+
         _minutesBetweenAlarms.value = selectedVariant
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.saveMinutesBetweenAlarms(selectedVariant)
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
+                alarmScheduler.reschedule(newAlarmSettings)
+                scheduleSettingsRepository.saveMinutesBetweenAlarms(selectedVariant)
+            }
         }
-//        scheduleSettingsRepository.minutesBetweenAlarms = selectedVariant
-        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
     }
 
     fun onCancelButtonClickInMinutesBetweenAlarmsDialog() {

@@ -40,12 +40,19 @@ class MainViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.saveAlarmSwitchState(switchState)
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                val newAlarmSettings = alarmSettings.copy(switchState = switchState)
+                alarmScheduler.reschedule(newAlarmSettings)
+            }
+        }
 //        scheduleSettingsRepository.alarmTurnedOn = switchState
-        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
+
     }
 
     fun onViewStarted() {
-        scheduleSettingsRepository.subscribeOnChangeListener()
+//        scheduleSettingsRepository.subscribeOnChangeListener()
 
 //        scheduleSettingsRepository.alarmsListObservable
 //                .subscribeOn(Schedulers.io())
@@ -59,7 +66,9 @@ class MainViewModel(
             scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
                 alarmSwitchState = switchState
             }
+        }
 
+        viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmsList()
                     .drop(1) // ignore initial value since we're only interested when alarm list changes
                     .collect {
@@ -69,20 +78,20 @@ class MainViewModel(
     }
 
     fun onViewStopped() {
-        scheduleSettingsRepository.unsubscribeOnChangeListener()
-        if (!subscriptions.isDisposed) {
-            subscriptions.clear()
-        }
+//        scheduleSettingsRepository.unsubscribeOnChangeListener()
+//        if (!subscriptions.isDisposed) {
+//            subscriptions.clear()
+//        }
     }
 
     fun onViewDestroyed() {
-        if (!subscriptions.isDisposed) {
-            subscriptions.dispose()
-        }
+//        if (!subscriptions.isDisposed) {
+//            subscriptions.dispose()
+//        }
     }
 
     private fun onAlarmsListChanged() {
-        _displayAlarmsResetMessage.call()
+        _displayAlarmsResetMessage.postCall()
     }
 
 }

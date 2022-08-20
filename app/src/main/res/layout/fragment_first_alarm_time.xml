@@ -2,7 +2,7 @@
 <layout>
     <data>
     <variable
-        name="firstAlarmTimeViewModel"
+        name="viewModel"
         type="com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel" />
     </data>
 
@@ -14,7 +14,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> firstAlarmTimeViewModel.onFirstAlarmTimeClicked()}">
+        android:onClick="@{() -> viewModel.onFirstAlarmTimeClicked()}">
 
         <TextView
             android:id="@+id/textview_main_firstalarm_time"
@@ -25,15 +25,15 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:fullText="@{String.format(@string/main_firstalarm_time, firstAlarmTimeViewModel.firstAlarmTimeDisplayable)}"
-            app:partOfTextToResize="@{firstAlarmTimeViewModel.firstAlarmTimeDisplayable}"/>
+            app:fullText="@{String.format(@string/main_firstalarm_time, viewModel.firstAlarmTimeDisplayable)}"
+            app:partOfTextToResize="@{viewModel.firstAlarmTimeDisplayable}"/>
 
         <TextView
             android:id="@+id/textview_main_timeleft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_main_activity"
-            android:text="@{@string/all_time_left(firstAlarmTimeViewModel.timeLeftHours, firstAlarmTimeViewModel.timeLeftMinutesPart)}"
+            android:text="@{@string/all_time_left(viewModel.timeLeftHours, viewModel.timeLeftMinutesPart)}"
             android:textColor="@color/primary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"

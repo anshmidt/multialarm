@@ -18,14 +18,14 @@ package com.anshmidt.multialarm.data;
 
 import android.util.Log;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A lifecycle-aware observable that sends only new updates after subscription, used for events like
@@ -73,5 +73,9 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
     @MainThread
     public void call() {
         setValue(null);
+    }
+
+    public void postCall() {
+        postValue(null);
     }
 }

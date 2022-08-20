@@ -1,10 +1,10 @@
 package com.anshmidt.multialarm.repository
 
+import android.util.Log
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
 import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
-import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
@@ -15,12 +15,12 @@ class ScheduleSettingsRepository(
         private val dataStoreStorage: DataStoreStorage
 ) : IScheduleSettingsRepository {
 
-    override var alarmTurnedOn: Boolean
-        get() = sharedPreferencesStorage.alarmTurnedOn
-        set(alarmState) {
-            alarmTurnedOnObservable.onNext(alarmState)
-            sharedPreferencesStorage.alarmTurnedOn = alarmState
-        }
+//    override var alarmTurnedOn: Boolean
+//        get() = sharedPreferencesStorage.alarmTurnedOn
+//        set(alarmState) {
+//            alarmTurnedOnObservable.onNext(alarmState)
+//            sharedPreferencesStorage.alarmTurnedOn = alarmState
+//        }
 
     override suspend fun saveAlarmSwitchState(switchState: Boolean) {
         dataStoreStorage.saveAlarmSwitchState(switchState)
@@ -51,6 +51,7 @@ class ScheduleSettingsRepository(
             }
 
     override fun getAlarmsList(): Flow<List<LocalTime>> = dataStoreStorage.getAlarmSettings().map {
+        Log.d(TAG, "getAlarmList")
         AlarmsConverter.getAlarmsList(
                 firstAlarmTime = it.firstAlarmTime,
                 minutesBetweenAlarms = it.minutesBetweenAlarms,
@@ -58,56 +59,71 @@ class ScheduleSettingsRepository(
         )
     }
 
+//    override fun testFun(): Flow<AlarmSettings> {
+//        Log.d(TAG, "testFun")
+//        return dataStoreStorage.getTestFun()
+//    }
+
+    //    override fun getAlarmsList(): Flow<List<LocalTime>> = dataStoreStorage.getNumberOfAlarms()
+//            .combine(dataStoreStorage.getMinutesBetweenAlarms()) { numberOfAlarms, minutesBetweenAlarms ->
+//                Log.d("SchedulteSettingRepo.getAlarmsList", "$")
+//                return@combine AlarmsConverter.getAlarmsList(
+//                        firstAlarmTime = LocalTime.of(5,0 ),
+//                        minutesBetweenAlarms = minutesBetweenAlarms,
+//                        numberOfAlarms = numberOfAlarms
+//                )
+//            }
+
     override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings()
 
-    override var firstAlarmTime: LocalTime
-        get() {
-            val hours = sharedPreferencesStorage.firstAlarmHours
-            val minutes = sharedPreferencesStorage.firstAlarmMinutes
-            return LocalTime.of(hours, minutes)
-        }
-        set(value) {
-            sharedPreferencesStorage.firstAlarmHours = value.hour
-            sharedPreferencesStorage.firstAlarmMinutes = value.minute
-        }
+//    override var firstAlarmTime: LocalTime
+//        get() {
+//            val hours = sharedPreferencesStorage.firstAlarmHours
+//            val minutes = sharedPreferencesStorage.firstAlarmMinutes
+//            return LocalTime.of(hours, minutes)
+//        }
+//        set(value) {
+//            sharedPreferencesStorage.firstAlarmHours = value.hour
+//            sharedPreferencesStorage.firstAlarmMinutes = value.minute
+//        }
 
-    override var minutesBetweenAlarms: Int
-        get() = sharedPreferencesStorage.minutesBetweenAlarms
-        set(value) {
-            sharedPreferencesStorage.minutesBetweenAlarms = value
-        }
-
-    override var numberOfAlarms: Int
-        get() = sharedPreferencesStorage.numberOfAlarms
-        set(value) {
-            sharedPreferencesStorage.numberOfAlarms = value
-        }
+//    override var minutesBetweenAlarms: Int
+//        get() = sharedPreferencesStorage.minutesBetweenAlarms
+//        set(value) {
+//            sharedPreferencesStorage.minutesBetweenAlarms = value
+//        }
+//
+//    override var numberOfAlarms: Int
+//        get() = sharedPreferencesStorage.numberOfAlarms
+//        set(value) {
+//            sharedPreferencesStorage.numberOfAlarms = value
+//        }
 
 //    override val alarmsListObservable = sharedPreferencesStorage.alarmSettingsChangedObservable
 //            .map { getAlarmsList() }
 
-    override val alarmTurnedOnObservable = BehaviorSubject.createDefault(alarmTurnedOn)
+//    override val alarmTurnedOnObservable = BehaviorSubject.createDefault(alarmTurnedOn)
+//
+//    override fun subscribeOnChangeListener() {
+//        sharedPreferencesStorage.subscribeOnChangeListener()
+//    }
+//
+//    override fun unsubscribeOnChangeListener() {
+//        sharedPreferencesStorage.unsubscribeOnChangeListener()
+//    }
 
-    override fun subscribeOnChangeListener() {
-        sharedPreferencesStorage.subscribeOnChangeListener()
-    }
-
-    override fun unsubscribeOnChangeListener() {
-        sharedPreferencesStorage.unsubscribeOnChangeListener()
-    }
-
-    override fun clearAll() {
-        sharedPreferencesStorage.clearAll()
-    }
-
-    override fun getSettings(): AlarmSettings {
-        return AlarmSettings(
-                switchState = alarmTurnedOn,
-                firstAlarmTime = firstAlarmTime,
-                minutesBetweenAlarms = minutesBetweenAlarms,
-                numberOfAlarms = numberOfAlarms
-        )
-    }
+//    override fun clearAll() {
+//        sharedPreferencesStorage.clearAll()
+//    }
+//
+//    override fun getSettings(): AlarmSettings {
+//        return AlarmSettings(
+//                switchState = alarmTurnedOn,
+//                firstAlarmTime = firstAlarmTime,
+//                minutesBetweenAlarms = minutesBetweenAlarms,
+//                numberOfAlarms = numberOfAlarms
+//        )
+//    }
 
 //    private fun getAlarmsList(): List<LocalTime> {
 //        return AlarmsConverter.getAlarmsList(
@@ -118,5 +134,8 @@ class ScheduleSettingsRepository(
 //    }
 
 
+    companion object {
+        val TAG = ScheduleSettingsRepository::class.java.simpleName
+    }
 
 }

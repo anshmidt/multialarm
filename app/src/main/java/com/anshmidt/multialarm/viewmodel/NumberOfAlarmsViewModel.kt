@@ -54,10 +54,16 @@ class NumberOfAlarmsViewModel(
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _numberOfAlarms.value = selectedVariant
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
+                alarmScheduler.reschedule(newAlarmSettings)
+                scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
+            }
+
+
+
         }
-//        scheduleSettingsRepository.numberOfAlarms = selectedVariant
-        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
+
     }
 
     fun onCancelButtonClickInNumberOfAlarmsDialog() {

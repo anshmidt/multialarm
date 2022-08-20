@@ -1,9 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.LiveDataUtil
 import com.anshmidt.multialarm.data.SingleLiveEvent
@@ -11,6 +8,9 @@ import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
@@ -26,7 +26,7 @@ class FirstAlarmTimeViewModel(
 
     var subscriptions = CompositeDisposable()
 
-    var _firstAlarmTime = MutableLiveData<LocalTime>()
+    private var _firstAlarmTime = MutableLiveData<LocalTime>()
     val firstAlarmTime: LiveData<LocalTime> = _firstAlarmTime
     var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
         TimeFormatter.getDisplayableTime(localTime)
@@ -46,8 +46,13 @@ class FirstAlarmTimeViewModel(
 
 
     fun onViewCreated() {
-        _firstAlarmTime.value = scheduleSettingsRepository.firstAlarmTime
-        assignTimeLeft()
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getFirstAlarmTime().collect { firstAlarmTime ->
+                _firstAlarmTime.postValue(firstAlarmTime)
+                assignTimeLeft()
+            }
+        }
+
     }
 
     fun onViewResumed() {
@@ -78,8 +83,17 @@ class FirstAlarmTimeViewModel(
 
     fun onOkButtonClickInFirstAlarmDialog() {
         _firstAlarmTime.value = firstAlarmTimeChangedByUser.value
-        scheduleSettingsRepository.firstAlarmTime = firstAlarmTimeChangedByUser.value!!
-        alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
+
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                firstAlarmTimeChangedByUser.value?.let { newFirstAlarmTime ->
+                    val newAlarmSettings = alarmSettings.copy(firstAlarmTime = newFirstAlarmTime)
+                    alarmScheduler.reschedule(newAlarmSettings)
+                    scheduleSettingsRepository.saveFirstAlarmTime(newFirstAlarmTime)
+                }
+            }
+        }
+
     }
 
     fun onCancelButtonClickInFirstAlarmDialog() {
