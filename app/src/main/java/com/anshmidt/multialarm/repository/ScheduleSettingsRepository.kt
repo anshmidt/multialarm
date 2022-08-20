@@ -6,6 +6,8 @@ import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalTime
 
 class ScheduleSettingsRepository(
@@ -24,7 +26,39 @@ class ScheduleSettingsRepository(
         dataStoreStorage.saveAlarmSwitchState(switchState)
     }
 
-    override fun getAlarmSwitchState(): Flow<Boolean> = dataStoreStorage.getAlarmSwitchStateFlow()
+    override fun getAlarmSwitchState(): Flow<Boolean> = dataStoreStorage.getAlarmSwitchState()
+
+    override suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int) {
+        dataStoreStorage.saveMinutesBetweenAlarms(minutesBetweenAlarms)
+    }
+
+    override fun getMinutesBetweenAlarms(): Flow<Int> = dataStoreStorage.getMinutesBetweenAlarms()
+
+    override suspend fun saveNumberOfAlarms(numberOfAlarms: Int) {
+        dataStoreStorage.saveNumberOfAlarms(numberOfAlarms)
+    }
+
+    override fun getNumberOfAlarms(): Flow<Int> = dataStoreStorage.getNumberOfAlarms()
+
+    override suspend fun saveFirstAlarmTime(firstAlarmTime: LocalTime) {
+        dataStoreStorage.saveFirstAlarmHours(firstAlarmTime.hour)
+        dataStoreStorage.saveFirstAlarmMinutes(firstAlarmTime.minute)
+    }
+
+    override fun getFirstAlarmTime(): Flow<LocalTime> = dataStoreStorage.getFirstAlarmHours()
+            .zip(dataStoreStorage.getFirstAlarmMinutes()) { hours, minutes ->
+                LocalTime.of(hours, minutes)
+            }
+
+    override fun getAlarmsList(): Flow<List<LocalTime>> = dataStoreStorage.getAlarmSettings().map {
+        AlarmsConverter.getAlarmsList(
+                firstAlarmTime = it.firstAlarmTime,
+                minutesBetweenAlarms = it.minutesBetweenAlarms,
+                numberOfAlarms = it.numberOfAlarms
+        )
+    }
+
+    override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings()
 
     override var firstAlarmTime: LocalTime
         get() {
@@ -49,8 +83,8 @@ class ScheduleSettingsRepository(
             sharedPreferencesStorage.numberOfAlarms = value
         }
 
-    override val alarmsListObservable = sharedPreferencesStorage.alarmSettingsChangedObservable
-            .map { getAlarmsList() }
+//    override val alarmsListObservable = sharedPreferencesStorage.alarmSettingsChangedObservable
+//            .map { getAlarmsList() }
 
     override val alarmTurnedOnObservable = BehaviorSubject.createDefault(alarmTurnedOn)
 
@@ -68,20 +102,20 @@ class ScheduleSettingsRepository(
 
     override fun getSettings(): AlarmSettings {
         return AlarmSettings(
-                turnedOn = alarmTurnedOn,
+                switchState = alarmTurnedOn,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = minutesBetweenAlarms,
                 numberOfAlarms = numberOfAlarms
         )
     }
 
-    private fun getAlarmsList(): List<LocalTime> {
-        return AlarmsConverter.getAlarmsList(
-                firstAlarmTime = firstAlarmTime,
-                numberOfAlarms = numberOfAlarms,
-                minutesBetweenAlarms = minutesBetweenAlarms
-        )
-    }
+//    private fun getAlarmsList(): List<LocalTime> {
+//        return AlarmsConverter.getAlarmsList(
+//                firstAlarmTime = firstAlarmTime,
+//                numberOfAlarms = numberOfAlarms,
+//                minutesBetweenAlarms = minutesBetweenAlarms
+//        )
+//    }
 
 
 

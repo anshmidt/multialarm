@@ -19,6 +19,8 @@
         <entry key="app/src/main/res/layout/dialog_number_of_alarms.xml" value="0.2857789855072464" />
         <entry key="app/src/main/res/layout/fragment_alarms_list.xml" value="0.2857789855072464" />
         <entry key="app/src/main/res/layout/fragment_first_alarm_time.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/fragment_minutes_between_alarms.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/fragment_number_of_alarms.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/item_alarm.xml" value="0.2857789855072464" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/xml/preferences.xml" value="0.17447916666666666" />

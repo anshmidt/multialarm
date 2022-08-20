@@ -2,7 +2,7 @@
 <layout>
     <data>
         <variable
-            name="numberOfAlarmsViewModel"
+            name="viewModel"
             type="com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel" />
     </data>
 
@@ -15,7 +15,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> numberOfAlarmsViewModel.onNumberOfAlarmsClicked()}">
+        android:onClick="@{() -> viewModel.onNumberOfAlarmsClicked()}">
 
         <TextView
             android:id="@+id/textview_main_numberofalarms"
@@ -26,10 +26,8 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:fullText="@{@plurals/main_number_of_alarms(numberOfAlarmsViewModel.numberOfAlarms, numberOfAlarmsViewModel.numberOfAlarms)}"
-            app:partOfTextToResize="@{Integer.toString(numberOfAlarmsViewModel.numberOfAlarms)}"/>
-
-
+            app:fullText="@{viewModel.numberOfAlarms != null ? @plurals/main_number_of_alarms(viewModel.numberOfAlarms, viewModel.numberOfAlarms) : ``}"
+            app:partOfTextToResize="@{Integer.toString(viewModel.numberOfAlarms)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

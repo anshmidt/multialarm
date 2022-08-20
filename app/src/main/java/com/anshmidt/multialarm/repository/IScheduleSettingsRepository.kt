@@ -11,7 +11,7 @@ interface IScheduleSettingsRepository {
     var firstAlarmTime: LocalTime
     var minutesBetweenAlarms: Int
     var numberOfAlarms: Int
-    val alarmsListObservable: Observable<List<LocalTime>>
+//    val alarmsListObservable: Observable<List<LocalTime>>
     val alarmTurnedOnObservable: Observable<Boolean>
 
     fun clearAll()
@@ -22,4 +22,12 @@ interface IScheduleSettingsRepository {
 
     suspend fun saveAlarmSwitchState(switchState: Boolean)
     fun getAlarmSwitchState(): Flow<Boolean>
+    suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int)
+    fun getMinutesBetweenAlarms(): Flow<Int>
+    suspend fun saveNumberOfAlarms(numberOfAlarms: Int)
+    fun getNumberOfAlarms(): Flow<Int>
+    suspend fun saveFirstAlarmTime(firstAlarmTime: LocalTime)
+    fun getFirstAlarmTime(): Flow<LocalTime>
+    fun getAlarmsList(): Flow<List<LocalTime>>
+    fun getAlarmSettings(): Flow<AlarmSettings>
 }

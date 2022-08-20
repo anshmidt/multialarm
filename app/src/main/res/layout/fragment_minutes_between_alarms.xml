@@ -2,8 +2,9 @@
 
 <layout>
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="minutesBetweenAlarmsViewModel"
+            name="viewModel"
             type="com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel" />
     </data>
 
@@ -16,7 +17,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> minutesBetweenAlarmsViewModel.onMinutesBetweenAlarmsClicked()}">
+        android:onClick="@{() -> viewModel.onMinutesBetweenAlarmsClicked()}">
 
         <TextView
             android:id="@+id/textview_main_interval"
@@ -27,8 +28,8 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:fullText="@{@string/main_interval(minutesBetweenAlarmsViewModel.minutesBetweenAlarms)}"
-            app:partOfTextToResize="@{Integer.toString(minutesBetweenAlarmsViewModel.minutesBetweenAlarms)}"/>
+            app:fullText="@{@string/main_interval(viewModel.minutesBetweenAlarms)}"
+            app:partOfTextToResize="@{viewModel.minutesBetweenAlarms != null ? Integer.toString(viewModel.minutesBetweenAlarms) : ``}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

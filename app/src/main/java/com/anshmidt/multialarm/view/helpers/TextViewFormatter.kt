@@ -11,6 +11,9 @@ object TextViewFormatter {
     @BindingAdapter("fullText", "partOfTextToResize")
     @JvmStatic
     fun resizePartOfText(textView: TextView, fullText: String, partOfTextToResize: String) {
+        if (partOfTextToResize.isEmpty()) return
+        if (fullText.isEmpty()) return
+
         val resizeTextProportion = 2f
         val spannable = SpannableString(fullText)
         val partPosition = fullText.indexOf(partOfTextToResize)
@@ -22,7 +25,6 @@ object TextViewFormatter {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         textView.setText(spannable)
-
     }
 
 }

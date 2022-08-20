@@ -30,7 +30,7 @@ class AlarmSchedulingTest {
     private fun getStandardAlarmSettings(): AlarmSettings {
         val firstAlarmTime = LocalTime.now().plusHours(1)
         return AlarmSettings(
-                turnedOn = true,
+                switchState = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -118,7 +118,7 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                turnedOn = true,
+                switchState = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -141,7 +141,7 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                turnedOn = true,
+                switchState = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,
@@ -163,7 +163,7 @@ class AlarmSchedulingTest {
     @Test
     fun alarmNotScheduledIfSwitchOff() {
         val alarmSettings = AlarmSettings(
-                turnedOn = false,
+                switchState = false,
                 firstAlarmTime = LocalTime.MIDNIGHT,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5,

@@ -3,10 +3,12 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalTime
 
 class AlarmsListViewModel(
@@ -23,29 +25,40 @@ class AlarmsListViewModel(
     fun onViewStarted() {
         scheduleSettingsRepository.subscribeOnChangeListener()
 
-        scheduleSettingsRepository.alarmsListObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ alarmsList ->
-                       onAlarmsListChanged(alarmsList)
-                }, Throwable::printStackTrace)
-                .let { subscriptions.add(it) }
+//        scheduleSettingsRepository.alarmsListObservable
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ alarmsList ->
+//                       onAlarmsListChanged(alarmsList)
+//                }, Throwable::printStackTrace)
+//                .let { subscriptions.add(it) }
 
-        scheduleSettingsRepository.alarmTurnedOnObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ alarmTurnedOn ->
-                    onAlarmTurnedOn(alarmTurnedOn)
-                }, Throwable::printStackTrace)
-                .let { subscriptions.add(it) }
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
+                onAlarmSwitchChanged(switchState)
+            }
+
+            scheduleSettingsRepository.getAlarmsList().collect { alarmsList ->
+                onAlarmsListChanged(alarmsList)
+            }
+
+        }
+
+//        scheduleSettingsRepository.alarmTurnedOnObservable
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ alarmTurnedOn ->
+//                    onAlarmTurnedOn(alarmTurnedOn)
+//                }, Throwable::printStackTrace)
+//                .let { subscriptions.add(it) }
     }
 
     private fun onAlarmsListChanged(alarmsList: List<LocalTime>) {
-        _alarms.value = alarmsList
+        _alarms.postValue(alarmsList)
     }
 
-    private fun onAlarmTurnedOn(alarmTurnedOn: Boolean) {
-        _alarmTurnedOn.value = alarmTurnedOn
+    private fun onAlarmSwitchChanged(alarmTurnedOn: Boolean) {
+        _alarmTurnedOn.postValue(alarmTurnedOn)
     }
 
     fun onViewStopped() {

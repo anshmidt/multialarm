@@ -34,7 +34,7 @@ class AlarmReceiversTest : KoinTest {
     private fun getStandardAlarmSettings(): AlarmSettings {
         val firstAlarmTime = LocalTime.now().plusHours(1)
         return AlarmSettings(
-                turnedOn = true,
+                switchState = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5

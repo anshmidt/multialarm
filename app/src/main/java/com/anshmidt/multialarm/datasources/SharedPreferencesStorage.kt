@@ -23,7 +23,7 @@ class SharedPreferencesStorage(private val context: Context) {
         private const val RINGTONE_FILENAME_KEY = "ringtoneFilename"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
-                turnedOn = false,
+                switchState = false,
                 firstAlarmTime = LocalTime.of(6, 0),
                 minutesBetweenAlarms = 10,
                 numberOfAlarms = 5
@@ -34,7 +34,7 @@ class SharedPreferencesStorage(private val context: Context) {
     }
 
     var alarmTurnedOn: Boolean
-        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.turnedOn)
+        get() = preferences.getBoolean(ALARM_SWITCH_STATE_KEY, DEFAULT_SETTINGS.switchState)
         set(alarmState) {
             preferences.edit().putBoolean(ALARM_SWITCH_STATE_KEY, alarmState).apply()
         }

@@ -28,7 +28,7 @@ class MinutesBetweenAlarmsFragment : Fragment() {
         initBinding(binding)
         val view = binding.root
 
-        minutesBetweenAlarmsViewModel.openMinutesBetweenAlarmsDialog.observe(this, Observer {
+        minutesBetweenAlarmsViewModel.openMinutesBetweenAlarmsDialog.observe(viewLifecycleOwner, Observer {
             openMinutesBetweenAlarmsDialog()
         })
 
@@ -38,7 +38,7 @@ class MinutesBetweenAlarmsFragment : Fragment() {
 
     private fun initBinding(binding: FragmentMinutesBetweenAlarmsBinding) {
         binding.lifecycleOwner = this
-        binding.minutesBetweenAlarmsViewModel = minutesBetweenAlarmsViewModel
+        binding.viewModel = minutesBetweenAlarmsViewModel
     }
 
     private fun openMinutesBetweenAlarmsDialog() {

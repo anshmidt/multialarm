@@ -1,10 +1,9 @@
 package com.anshmidt.multialarm.data
 
 import org.threeten.bp.LocalTime
-import java.util.*
 
 data class AlarmSettings (
-        var turnedOn: Boolean,
+        var switchState: Boolean,
 
         /**
          * Always use org.threeten.bp.LocalTime and not java.time in order to support API < 26

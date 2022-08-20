@@ -37,7 +37,7 @@ class NumberOfAlarmsFragment : Fragment() {
 
     private fun initBinding(binding: FragmentNumberOfAlarmsBinding) {
         binding.lifecycleOwner = this
-        binding.numberOfAlarmsViewModel = numberOfAlarmsViewModel
+        binding.viewModel = numberOfAlarmsViewModel
     }
 
     private fun openNumberOfAlarmsDialog() {

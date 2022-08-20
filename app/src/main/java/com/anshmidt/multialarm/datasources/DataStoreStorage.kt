@@ -2,52 +2,87 @@ package com.anshmidt.multialarm.datasources
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.anshmidt.multialarm.data.AlarmSettings
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalTime
 
 class DataStoreStorage(private val context: Context) {
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCE_NAME)
+    private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCE_NAME)
+    private val dataStore: DataStore<Preferences> = context._dataStore
 
     suspend fun saveAlarmSwitchState(switchState: Boolean) {
-        context.writeBoolean(ALARM_SWITCH_STATE_KEY, switchState)
-    }
-
-    fun getAlarmSwitchStateFlow() = context.readBoolean(ALARM_SWITCH_STATE_KEY)
-
-
-    private suspend fun Context.writeString(key: String, value: String) {
-        dataStore.edit { pref -> pref[stringPreferencesKey(key)] = value }
-    }
-
-    private fun Context.readString(key: String): Flow<String> {
-        return dataStore.data.map{ pref ->
-            pref[stringPreferencesKey(key)] ?: ""
+        dataStore.edit { pref ->
+            pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] = switchState
         }
     }
 
-    private suspend fun Context.writeInt(key: String, value: Int) {
-        dataStore.edit { pref -> pref[intPreferencesKey(key)] = value }
+    fun getAlarmSwitchState() = dataStore.data.map { pref ->
+        pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] ?: DEFAULT_SETTINGS.switchState
     }
 
-    private fun Context.readInt(key: String): Flow<Int> {
-        return dataStore.data.map { pref ->
-            pref[intPreferencesKey(key)] ?: 0
+    suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int) {
+        dataStore.edit { pref ->
+            pref[intPreferencesKey(MINUTES_BETWEEN_ALARMS_KEY)] = minutesBetweenAlarms
         }
     }
 
-    private suspend fun Context.writeBoolean(key: String, value: Boolean) {
-        dataStore.edit { pref -> pref[booleanPreferencesKey(key)] = value }
+    fun getMinutesBetweenAlarms() = dataStore.data.map { pref ->
+        pref[intPreferencesKey(MINUTES_BETWEEN_ALARMS_KEY)] ?: DEFAULT_SETTINGS.minutesBetweenAlarms
     }
 
-    private fun Context.readBoolean(key: String): Flow<Boolean> {
-        return dataStore.data.map { pref ->
-            pref[booleanPreferencesKey(key)] ?: false
+    suspend fun saveNumberOfAlarms(numberOfAlarms: Int) {
+        dataStore.edit { pref ->
+            pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] = numberOfAlarms
         }
+    }
+
+    fun getNumberOfAlarms() = dataStore.data.map { pref ->
+        pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] ?: DEFAULT_SETTINGS.numberOfAlarms
+    }
+
+
+    suspend fun saveFirstAlarmHours(firstAlarmHours: Int) {
+        dataStore.edit { pref ->
+            pref[intPreferencesKey(FIRST_ALARM_HOURS_KEY)] = firstAlarmHours
+        }
+    }
+
+    fun getFirstAlarmHours() = dataStore.data.map { pref ->
+        pref[intPreferencesKey(FIRST_ALARM_HOURS_KEY)] ?: DEFAULT_SETTINGS.firstAlarmTime.hour
+    }
+
+    suspend fun saveFirstAlarmMinutes(firstAlarmMinutes: Int) {
+        dataStore.edit { pref ->
+            pref[intPreferencesKey(FIRST_ALARM_MINUTES_KEY)] = firstAlarmMinutes
+        }
+    }
+
+    fun getFirstAlarmMinutes() = dataStore.data.map { pref ->
+        pref[intPreferencesKey(FIRST_ALARM_MINUTES_KEY)] ?: DEFAULT_SETTINGS.firstAlarmTime.minute
+    }
+
+    fun getAlarmSettings() = dataStore.data.map { pref ->
+        pref.toAlarmSettings()
+    }
+
+    private fun Preferences.toAlarmSettings(): AlarmSettings {
+        val switchState = this[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] ?: DEFAULT_SETTINGS.switchState
+        val numberOfAlarms = this[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] ?: DEFAULT_SETTINGS.numberOfAlarms
+        val firstAlarmHours = this[intPreferencesKey(FIRST_ALARM_HOURS_KEY)] ?: DEFAULT_SETTINGS.firstAlarmTime.hour
+        val firstAlarmMinutes = this[intPreferencesKey(FIRST_ALARM_MINUTES_KEY)] ?: DEFAULT_SETTINGS.firstAlarmTime.minute
+        val minutesBetweenAlarms = this[intPreferencesKey(MINUTES_BETWEEN_ALARMS_KEY)] ?: DEFAULT_SETTINGS.minutesBetweenAlarms
+        return AlarmSettings(
+                switchState = switchState,
+                firstAlarmTime = LocalTime.of(firstAlarmHours, firstAlarmMinutes),
+                minutesBetweenAlarms = minutesBetweenAlarms,
+                numberOfAlarms = numberOfAlarms
+        )
     }
 
     companion object {
@@ -62,7 +97,7 @@ class DataStoreStorage(private val context: Context) {
         private const val RINGTONE_FILENAME_KEY = "ringtoneFilename"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
-                turnedOn = false,
+                switchState = false,
                 firstAlarmTime = LocalTime.of(6, 0),
                 minutesBetweenAlarms = 10,
                 numberOfAlarms = 5

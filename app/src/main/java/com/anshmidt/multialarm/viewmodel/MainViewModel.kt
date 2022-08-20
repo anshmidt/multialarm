@@ -7,11 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -48,17 +47,23 @@ class MainViewModel(
     fun onViewStarted() {
         scheduleSettingsRepository.subscribeOnChangeListener()
 
-        scheduleSettingsRepository.alarmsListObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    onAlarmsListChanged()
-                }, Throwable::printStackTrace)
-                .let { subscriptions.add(it) }
+//        scheduleSettingsRepository.alarmsListObservable
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    onAlarmsListChanged()
+//                }, Throwable::printStackTrace)
+//                .let { subscriptions.add(it) }
 
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
                 alarmSwitchState = switchState
+            }
+
+            scheduleSettingsRepository.getAlarmsList()
+                    .drop(1) // ignore initial value since we're only interested when alarm list changes
+                    .collect {
+                onAlarmsListChanged()
             }
         }
     }

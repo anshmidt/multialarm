@@ -17,6 +17,7 @@
     <string name="notification_icon_title">Alarms turned on</string>
     <string name="main_firstalarm_time">First alarm time: %1$s</string>
     <string name="chooseringtone_chooser_title">Select a file</string>
+    <string name="empty" />
 
     <string name="dismiss_alarm_notification_title">Alarm!</string>
     <string name="dismiss_alarm_notification_text">You\'ve set an alarm to %1$s</string>

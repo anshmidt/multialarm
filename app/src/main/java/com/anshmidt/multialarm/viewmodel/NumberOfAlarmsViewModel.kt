@@ -3,9 +3,13 @@ package com.anshmidt.multialarm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class NumberOfAlarmsViewModel(
         private val scheduleSettingsRepository: IScheduleSettingsRepository,
@@ -24,8 +28,15 @@ class NumberOfAlarmsViewModel(
 
 
     fun onViewCreated() {
-        _numberOfAlarms.value = scheduleSettingsRepository.numberOfAlarms
-        selectedVariantIndex.value = allAvailableVariants.indexOf(_numberOfAlarms.value!!)
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getNumberOfAlarms().collect { numberOfAlarms ->
+                _numberOfAlarms.postValue(numberOfAlarms)
+                val selectedVariant = allAvailableVariants.indexOf(numberOfAlarms)
+                selectedVariantIndex.postValue(selectedVariant)
+            }
+        }
+//        _numberOfAlarms.value = scheduleSettingsRepository.numberOfAlarms
+//        selectedVariantIndex.value = allAvailableVariants.indexOf(_numberOfAlarms.value!!)
     }
 
     fun onNumberOfAlarmsChangedByUser(newValueIndex: Int) {
@@ -42,7 +53,10 @@ class NumberOfAlarmsViewModel(
         }
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _numberOfAlarms.value = selectedVariant
-        scheduleSettingsRepository.numberOfAlarms = selectedVariant
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
+        }
+//        scheduleSettingsRepository.numberOfAlarms = selectedVariant
         alarmScheduler.reschedule(scheduleSettingsRepository.getSettings())
     }
 
