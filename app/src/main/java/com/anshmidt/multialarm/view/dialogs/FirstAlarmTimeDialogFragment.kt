@@ -18,7 +18,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
         val FRAGMENT_TAG = FirstAlarmTimeDialogFragment::class.java.simpleName
     }
 
-    private val firstAlarmTimeViewModel: FirstAlarmTimeViewModel by activityViewModels()
+    private val viewModel: FirstAlarmTimeViewModel by activityViewModels()
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -39,7 +39,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
 
     private fun initBinding(binding: DialogFirstAlarmTimeBinding) {
         binding.lifecycleOwner = this
-        binding.firstAlarmTimeViewModel = firstAlarmTimeViewModel
+        binding.viewModel = viewModel
     }
 
     private fun configureTimePicker(dialogView: View) {
@@ -53,11 +53,11 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
         dialogBuilder.setView(dialogView)
 
         dialogBuilder.setPositiveButton(R.string.dialog_ok_button_name) {
-            dialog, which -> firstAlarmTimeViewModel.onOkButtonClickInFirstAlarmDialog()
+            dialog, which -> viewModel.onOkButtonClickInFirstAlarmDialog()
         }
 
         dialogBuilder.setNegativeButton(R.string.dialog_cancel_button_name) {
-            dialog, which -> firstAlarmTimeViewModel.onCancelButtonClickInFirstAlarmDialog()
+            dialog, which -> viewModel.onCancelButtonClickInFirstAlarmDialog()
         }
 
         configureTimePicker(dialogView)

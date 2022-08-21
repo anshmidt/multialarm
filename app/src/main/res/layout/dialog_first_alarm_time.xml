@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="firstAlarmTimeViewModel"
+            name="viewModel"
             type="com.anshmidt.multialarm.viewmodel.FirstAlarmTimeViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textview_title_firstalarmdialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/mainTextColor"
-            android:text="@string/timepicker_dialog_title"
             android:layout_margin="16dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/timepicker_dialog_title"
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textview_timeleft_firstalarmdialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/primary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_title_firstalarmdialog"
-            android:text="@{@string/all_time_left(firstAlarmTimeViewModel.timeLeftHours, firstAlarmTimeViewModel.timeLeftMinutesPart)}"
+            displayAllTimeLeft="@{viewModel.timeLeft ?? null}"
             tools:text="21 h 17 min left"/>
+
+<!--        android:text="@{@string/all_time_left(viewModel.timeLeftHours, viewModel.timeLeftMinutesPart)}"-->
 
         <TimePicker
             android:id="@+id/timepicker_firstalarmdialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_timeleft_firstalarmdialog"
-            android:hour="@{firstAlarmTimeViewModel.firstAlarmTime.hour}"
-            android:minute="@{firstAlarmTimeViewModel.firstAlarmTime.minute}"
-            android:onTimeChanged="@{(view, hour, minute) -> firstAlarmTimeViewModel.onFirstAlarmTimeSelectedOnPicker(hour, minute)}"/>
+            android:hour="@{viewModel.firstAlarmTime.hour}"
+            android:minute="@{viewModel.firstAlarmTime.minute}"
+            android:onTimeChanged="@{(view, hour, minute) -> viewModel.onFirstAlarmTimeSelectedOnPicker(hour, minute)}"/>
+
 
 
 

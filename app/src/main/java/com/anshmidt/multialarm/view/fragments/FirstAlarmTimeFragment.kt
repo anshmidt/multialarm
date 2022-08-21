@@ -27,7 +27,7 @@ class FirstAlarmTimeFragment : Fragment() {
         initBinding(binding)
         val view = binding.root
 
-        firstAlarmTimeViewModel.openFirstAlarmTimeDialog.observe(this, Observer {
+        firstAlarmTimeViewModel.openFirstAlarmTimeDialog.observe(viewLifecycleOwner, Observer {
             openFirstAlarmTimeDialog()
         })
 

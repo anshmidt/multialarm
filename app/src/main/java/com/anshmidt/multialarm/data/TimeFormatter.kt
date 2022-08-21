@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit
 
 object TimeFormatter {
 
@@ -27,6 +26,17 @@ object TimeFormatter {
         }
     }
 
+    fun getTimeLeft(alarmTime: LocalTime, currentTime: LocalTime): TimeLeft {
+        val timeLeftDuration = Duration.between(currentTime, alarmTime)
+        /**
+         * Time left (before the alarm) must be always > 0 and no more that 24 h.
+         * Since alarmTime and currentTime are LocalTime and not LocalDateTime,
+         * normalization might be needed after performing between()
+         */
+        val normalizedTimeLeftDuration = normalizeDurationByAddingOrSubtractingDays(timeLeftDuration)
+        return normalizedTimeLeftDuration.toTimeLeft()
+    }
+
     fun normalizeDurationByAddingOrSubtractingDays(duration: Duration): Duration {
         var normalizedDuration = duration
         while (normalizedDuration.isNegative) {
@@ -42,6 +52,12 @@ object TimeFormatter {
         return Transformations.map(duration) {
             it.toHours().toInt()
         }
+    }
+
+    fun Duration.toTimeLeft(): TimeLeft {
+        val hours = this.toHours().toInt()
+        val minutes = this.toMinutes().toInt() % 60
+        return TimeLeft(hours = hours, minutes = minutes)
     }
 
     fun getMinutesPart(duration: LiveData<Duration>): LiveData<Int> {

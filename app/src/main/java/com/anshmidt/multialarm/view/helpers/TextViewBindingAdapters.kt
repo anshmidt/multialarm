@@ -6,11 +6,11 @@ import android.text.style.RelativeSizeSpan
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
-object TextViewFormatter {
+object TextViewBindingAdapters {
 
     @BindingAdapter("fullText", "partOfTextToResize")
     @JvmStatic
-    fun resizePartOfText(textView: TextView, fullText: String, partOfTextToResize: String) {
+    fun TextView.resizePartOfText(fullText: String, partOfTextToResize: String) {
         if (partOfTextToResize.isEmpty()) return
         if (fullText.isEmpty()) return
 
@@ -24,7 +24,9 @@ object TextViewFormatter {
                 partPosition + partLength,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        textView.setText(spannable)
+        this.setText(spannable)
     }
+
+
 
 }
