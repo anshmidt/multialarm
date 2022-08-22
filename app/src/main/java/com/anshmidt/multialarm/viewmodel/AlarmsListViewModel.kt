@@ -21,19 +21,7 @@ class AlarmsListViewModel(
     private var _alarmTurnedOn = MutableLiveData<Boolean>()
     val alarmTurnedOn: LiveData<Boolean> = _alarmTurnedOn
 
-//    private var subscriptions = CompositeDisposable()
-
     fun onViewStarted() {
-//        scheduleSettingsRepository.subscribeOnChangeListener()
-
-//        scheduleSettingsRepository.alarmsListObservable
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ alarmsList ->
-//                       onAlarmsListChanged(alarmsList)
-//                }, Throwable::printStackTrace)
-//                .let { subscriptions.add(it) }
-
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
                 onAlarmSwitchChanged(switchState)
@@ -51,13 +39,6 @@ class AlarmsListViewModel(
                 Log.d(TAG, "onAlarmSettingsChanged")
             }
         }
-//        scheduleSettingsRepository.alarmTurnedOnObservable
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ alarmTurnedOn ->
-//                    onAlarmTurnedOn(alarmTurnedOn)
-//                }, Throwable::printStackTrace)
-//                .let { subscriptions.add(it) }
     }
 
     private fun onAlarmsListChanged(alarmsList: List<LocalTime>) {
@@ -71,16 +52,9 @@ class AlarmsListViewModel(
     }
 
     fun onViewStopped() {
-//        scheduleSettingsRepository.unsubscribeOnChangeListener()
-//        if (!subscriptions.isDisposed) {
-//            subscriptions.clear()
-//        }
     }
 
     fun onViewDestroyed() {
-//        if (!subscriptions.isDisposed) {
-//            subscriptions.dispose()
-//        }
     }
 
     companion object {

@@ -9,6 +9,7 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class NumberOfAlarmsViewModel(
@@ -24,7 +25,7 @@ class NumberOfAlarmsViewModel(
     private var _numberOfAlarms = MutableLiveData<Int>()
     val numberOfAlarms: LiveData<Int> = _numberOfAlarms
     val selectedVariantIndex = MutableLiveData<Int>()
-    val allAvailableVariants: List<Int> = List(200) { i -> i + 1 }  // 1, 2, 3, ...
+    val allAvailableVariants: List<Int> = List(200) { i -> i + 1 }  // 1, 2, 3, ... 200
 
 
     fun onViewCreated() {
@@ -35,8 +36,6 @@ class NumberOfAlarmsViewModel(
                 selectedVariantIndex.postValue(selectedVariant)
             }
         }
-//        _numberOfAlarms.value = scheduleSettingsRepository.numberOfAlarms
-//        selectedVariantIndex.value = allAvailableVariants.indexOf(_numberOfAlarms.value!!)
     }
 
     fun onNumberOfAlarmsChangedByUser(newValueIndex: Int) {
@@ -54,16 +53,13 @@ class NumberOfAlarmsViewModel(
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _numberOfAlarms.value = selectedVariant
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
                 alarmScheduler.reschedule(newAlarmSettings)
                 scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
+                return@first true
             }
-
-
-
         }
-
     }
 
     fun onCancelButtonClickInNumberOfAlarmsDialog() {

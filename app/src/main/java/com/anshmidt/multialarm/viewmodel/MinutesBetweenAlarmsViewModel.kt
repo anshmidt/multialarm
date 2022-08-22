@@ -9,16 +9,17 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MinutesBetweenAlarmsViewModel(
         private val scheduleSettingsRepository: IScheduleSettingsRepository,
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
+
     private val _openMinutesBetweenAlarmsDialog = SingleLiveEvent<Any>()
     val openMinutesBetweenAlarmsDialog: LiveData<Any>
         get() = _openMinutesBetweenAlarmsDialog
-
 
     private var _minutesBetweenAlarms = MutableLiveData<Int>()
     val minutesBetweenAlarms: LiveData<Int> = _minutesBetweenAlarms
@@ -34,8 +35,6 @@ class MinutesBetweenAlarmsViewModel(
                 selectedVariantIndex.postValue(selectedVariant)
             }
         }
-//        _minutesBetweenAlarms.value = scheduleSettingsRepository.minutesBetweenAlarms
-//        selectedVariantIndex.value = allAvailableVariants.indexOf(_minutesBetweenAlarms.value!!)
     }
 
     fun onMinutesBetweenAlarmsChangedByUser(newValueIndex: Int) {
@@ -54,10 +53,11 @@ class MinutesBetweenAlarmsViewModel(
 
         _minutesBetweenAlarms.value = selectedVariant
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
                 alarmScheduler.reschedule(newAlarmSettings)
                 scheduleSettingsRepository.saveMinutesBetweenAlarms(selectedVariant)
+                return@first true
             }
         }
     }
