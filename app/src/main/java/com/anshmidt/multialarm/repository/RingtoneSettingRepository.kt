@@ -1,40 +1,46 @@
 package com.anshmidt.multialarm.repository
 
-import android.content.Context
 import android.media.RingtoneManager
 import android.net.Uri
+import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.FileStorage
-import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class RingtoneSettingRepository(
-        private val sharedPreferencesStorage: SharedPreferencesStorage,
+        private val dataStoreStorage: DataStoreStorage,
         private val fileStorage: FileStorage
 ) : IRingtoneSettingRepository {
 
-    override var ringtoneDurationSeconds
-        get() = sharedPreferencesStorage.ringtoneDurationSeconds
-        set(value) {
-            sharedPreferencesStorage.ringtoneDurationSeconds = value
-        }
+    override suspend fun saveRingtoneDurationSeconds(ringtoneDurationSeconds: Int) {
+        dataStoreStorage.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
+    }
 
-    override var ringtoneUri: Uri
-        get() {
-            val defaultUriString = getDefaultRingtoneUri().toString()
-            val uriString = sharedPreferencesStorage.ringtoneUriString
+    override fun getRingtoneDurationSeconds(): Flow<Int> {
+        return dataStoreStorage.getRingtoneDurationSeconds()
+    }
 
-            return if (uriString.isNullOrEmpty()) {
+    override suspend fun saveRingtoneUri(uri: Uri) {
+        val uriString = uri.toString()
+        dataStoreStorage.saveRingtoneUriString(uriString)
+    }
+
+    override fun getRingtoneUri(): Flow<Uri> {
+        val defaultUriString = getDefaultRingtoneUri().toString()
+
+        return dataStoreStorage.getRingtoneUriString().map { uriString ->
+            if (uriString.isEmpty()) {
                 Uri.parse(defaultUriString)
             } else {
                 Uri.parse(uriString)
             }
         }
-        set(value) {
-            val uriString = value.toString()
-            sharedPreferencesStorage.ringtoneUriString = uriString
-        }
+    }
 
-    override fun getRingtoneFileName(): String? {
-        return fileStorage.getFileName(ringtoneUri)
+    override fun getRingtoneFileName(): Flow<String?> {
+        return getRingtoneUri().map { ringtoneUri ->
+            fileStorage.getFileName(ringtoneUri)
+        }
     }
 
     override fun getRingtoneFileName(uri: Uri): String? {

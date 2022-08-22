@@ -4,9 +4,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -21,15 +22,20 @@ class SettingsViewModel(
         _chosenRingtoneName.value = sourceFileName
 
         //copy file to app folder
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             ringtoneSettingRepository.clearAllRingtones() // no need to store previously copied files
             val destinationFileUri = ringtoneSettingRepository.copyRingtoneToAppDirectory(sourceFileUri)
-            ringtoneSettingRepository.ringtoneUri = destinationFileUri
+            ringtoneSettingRepository.saveRingtoneUri(destinationFileUri)
         }
     }
 
     fun onViewCreated() {
-        _chosenRingtoneName.value = ringtoneSettingRepository.getRingtoneFileName()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.getRingtoneFileName().collect { ringtoneFileName ->
+                _chosenRingtoneName.postValue(ringtoneFileName)
+            }
+        }
     }
 
 }

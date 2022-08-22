@@ -2,19 +2,18 @@ package com.anshmidt.multialarm.view.fragments
 
 import android.Manifest
 import android.content.SharedPreferences
-import android.os.Bundle
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
-import com.anshmidt.multialarm.R
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.activity.result.contract.ActivityResultContracts
-
+import androidx.core.content.ContextCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.viewmodel.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -33,22 +32,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     ) { uri ->
         uri?.let { viewModel.onAudioFileChosen(it) }
     }
-
-    /**\
-     * TODO: I should have RingtoneRepository, IRingtoneRepository, SettingsViewModel,
-     * SharedPreferencesDataSource, FileDataSource
-     *
-     * Maybe I should also migrate to Jetpack DataStore from Shared Preferences
-     *
-     * Naming is bad: SettingsRepository vs SettingsFragment
-     *
-     * Idea of naming:
-     * RingtoneSettingRepository, AlarmSettingRepository
-     * or
-     * ScheduleSettingRepository, RingtoneSettingRepository (duration, filename)
-     * RingtoneStorage, SettingStorage  (data sources)
-     * And if I need to: SharedPreferencesManager, FileManager
-     */
 
     private fun openAudioFileChooser() {
         openAudioFileResult.launch("audio/*")

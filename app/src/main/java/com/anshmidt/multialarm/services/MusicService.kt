@@ -10,6 +10,11 @@ import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.concurrent.TimeUnit
@@ -23,6 +28,7 @@ class MusicService : Service(), KoinComponent {
     private val ringtoneSettingRepository: IRingtoneSettingRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
     private val notificationHelper: NotificationHelper by inject()
+    private val scope = CoroutineScope(SupervisorJob())
 
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -30,14 +36,21 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val ringtoneUri = ringtoneSettingRepository.ringtoneUri
-        Log.d(TAG, "Music started")
-//        musicPlayer.play(ringtoneUri)
-        val ringtoneDurationSeconds = ringtoneSettingRepository.ringtoneDurationSeconds
-        startCountDownTimer(
-                durationSeconds = ringtoneDurationSeconds,
-                doOnCountDownFinish = this::doOnCountDownFinish
-        )
+        scope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.getRingtoneUri().collect { ringtoneUri ->
+                Log.d(TAG, "Music started")
+                //        musicPlayer.play(ringtoneUri)
+            }
+        }
+
+        scope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.getRingtoneDurationSeconds().collect { ringtoneDurationSeconds ->
+                startCountDownTimer(
+                        durationSeconds = ringtoneDurationSeconds,
+                        doOnCountDownFinish = { doOnCountDownFinish() }
+                )
+            }
+        }
 
         return START_NOT_STICKY
     }
@@ -45,8 +58,9 @@ class MusicService : Service(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Looks like notification should be started from the service according to Android design
-            // startForeground(1, notification)
+            // Looks like notification should be started from the service according to Android design,
+            // not the other way around
+            //startForeground(1, notification)
 
         }
     }

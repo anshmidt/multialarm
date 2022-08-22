@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val appModule = module {
-    single<IScheduleSettingsRepository> { ScheduleSettingsRepository(get(), get()) }
+    single<IScheduleSettingsRepository> { ScheduleSettingsRepository(get()) }
     single<IRingtoneSettingRepository> { RingtoneSettingRepository(get(), get()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
     single<SharedPreferencesStorage> { SharedPreferencesStorage(androidContext()) }

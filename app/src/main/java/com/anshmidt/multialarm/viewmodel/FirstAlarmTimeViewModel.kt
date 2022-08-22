@@ -21,63 +21,33 @@ class FirstAlarmTimeViewModel(
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
-
-
-
-
-
-//    companion object {
-//        const val TIME_LEFT_REFRESH_INTERVAL_SECONDS = 10
-//    }
-//
-//    var subscriptions = CompositeDisposable()
-//
     private var _firstAlarmTime = MutableLiveData<LocalTime>()
     val firstAlarmTime: LiveData<LocalTime> = _firstAlarmTime
 
     private var _timeLeft = MutableLiveData<TimeLeft>()
     val timeLeft: LiveData<TimeLeft> = _timeLeft
 
-//    var firstAlarmTimeDisplayable = Transformations.map(firstAlarmTime) { localTime ->
-//        TimeFormatter.getDisplayableTime(localTime)
-//    }
-    private var firstAlarmTimeSelectedByUser = MutableLiveData<LocalTime>()
-    private var timeLeftSelectedByUser = MutableLiveData<TimeLeft>()
+    private val firstAlarmTimeSelectedByUserFlow = MutableStateFlow<LocalTime?>(null)
 
-    val firstAlarmTimeSelectedByUserFlow = MutableStateFlow<LocalTime>(LocalTime.of(1, 1))
-
-//    private val firstAlarmTimeSelectedByUserFlow = Flow<LocalTime>()
-//
-//    lateinit var timeLeftBeforeFirstAlarm: LiveData<Duration>
-//
-//    private var currentTime = MutableLiveData<LocalTime>()
-//
-//    var timeLeftHours: LiveData<Int> = MutableLiveData<Int>()
-//
-//    var timeLeftMinutesPart: LiveData<Int> = MutableLiveData<Int>()
-//
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
-//
-//
+
     fun onViewCreated() {
+
+    }
+
+    fun onViewResumed() {
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getFirstAlarmTime().collect { firstAlarmTime ->
                 _firstAlarmTime.postValue(firstAlarmTime)
-//                assignTimeLeft()
             }
         }
 
-
-
-    }
-//
-    fun onViewResumed() {
         viewModelScope.launch(Dispatchers.IO) {
             val firstAlarmTimeFlow = merge(
                     scheduleSettingsRepository.getFirstAlarmTime(),
-                    firstAlarmTimeSelectedByUserFlow
+                    firstAlarmTimeSelectedByUserFlow.filterNotNull()
             )
             timeLeftFlow(
                     firstAlarmTimeFlow = firstAlarmTimeFlow,
@@ -87,81 +57,45 @@ class FirstAlarmTimeViewModel(
             }
         }
     }
-//
-//    private fun assignTimeLeft() {
-//        val firstAlarmTimeFromRepository = firstAlarmTime
-//        val firstAlarmTimeFromPicker = firstAlarmTimeChangedByUser
-//
-//        val firstAlarmTimeFromPickerAndRepository = LiveDataUtil.combineLiveDataFromDifferentSources(
-//                firstAlarmTimeFromRepository,
-//                firstAlarmTimeFromPicker
-//        )
-//
-//        timeLeftBeforeFirstAlarm = Transformations.switchMap(currentTime) {
-//            TimeFormatter.getTimeLeft(firstAlarmTimeFromPickerAndRepository, it)
-//        }
-//
-//        timeLeftHours = TimeFormatter.getHours(timeLeftBeforeFirstAlarm)
-//        timeLeftMinutesPart = TimeFormatter.getMinutesPart(timeLeftBeforeFirstAlarm)
-//    }
-//
-//
+
     fun onFirstAlarmTimeClicked() {
         _openFirstAlarmTimeDialog.call()
     }
-//
+
     fun onOkButtonClickInFirstAlarmDialog() {
-//        _firstAlarmTime.value = firstAlarmTimeChangedByUser.value
-//
-//        viewModelScope.launch(Dispatchers.IO) {
-//            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
-//                firstAlarmTimeChangedByUser.value?.let { newFirstAlarmTime ->
-//                    val newAlarmSettings = alarmSettings.copy(firstAlarmTime = newFirstAlarmTime)
-//                    alarmScheduler.reschedule(newAlarmSettings)
-//                    scheduleSettingsRepository.saveFirstAlarmTime(newFirstAlarmTime)
-//                }
-//            }
-//        }
-//
+        val firstAlarmTimeSelectedByUser = firstAlarmTimeSelectedByUserFlow.value
+
+        if (firstAlarmTimeSelectedByUser == null) return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                firstAlarmTimeSelectedByUser.let { newFirstAlarmTime ->
+                    val newAlarmSettings = alarmSettings.copy(firstAlarmTime = newFirstAlarmTime)
+                    alarmScheduler.reschedule(newAlarmSettings)
+                    scheduleSettingsRepository.saveFirstAlarmTime(newFirstAlarmTime)
+                }
+            }
+        }
+
     }
-//
+
     fun onCancelButtonClickInFirstAlarmDialog() {
         //close dialog without saving selected value
+        //TODO implement
     }
-//
-//
-    fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
-//        firstAlarmTimeSelectedByUser.value = LocalTime.of(hour, minute)
 
-//        _timeLeft.value = TimeFormatter.getTimeLeft(
-//                alarmTime = LocalTime.of(hour, minute),
-//                currentTime = LocalTime.now()
-//        )
+    fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         viewModelScope.launch(Dispatchers.Default) {
             firstAlarmTimeSelectedByUserFlow.emit(LocalTime.of(hour, minute))
         }
     }
-//
-//    private fun startToObserveCurrentTime(intervalSeconds: Int) {
-//        val disposable = Observable.interval(0, intervalSeconds.toLong(), TimeUnit.SECONDS)
-//                .subscribe({
-//                    currentTime.postValue(LocalTime.now())
-//                }, Throwable::printStackTrace)
-//        subscriptions.add(disposable)
-//    }
-//
-//
+
     fun onViewPaused() {
 
-//        if (!subscriptions.isDisposed) {
-//            subscriptions.clear()
-//        }
     }
-//
+
     fun onViewDestroyed() {
-//        if (!subscriptions.isDisposed) {
-//            subscriptions.dispose()
-//        }
+
     }
 
     private fun tickerEverySecondFlow() = flow {

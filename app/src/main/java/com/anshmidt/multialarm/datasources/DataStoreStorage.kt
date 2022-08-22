@@ -1,12 +1,8 @@
 package com.anshmidt.multialarm.datasources
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.anshmidt.multialarm.data.AlarmSettings
 import kotlinx.coroutines.flow.map
@@ -19,15 +15,12 @@ class DataStoreStorage(private val context: Context) {
 
     suspend fun saveAlarmSwitchState(switchState: Boolean) {
         dataStore.edit { pref ->
-            pref[PreferencesKeys.ALARM_SWITCH_STATE_PREFERENCES_KEY] = switchState
+            pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] = switchState
         }
     }
 
-//    fun getAlarmSwitchState() = flow { emit(true) }
-
     fun getAlarmSwitchState() = dataStore.data.map { pref ->
-        Log.d(TAG, "getAlarmSwitchState")
-        pref[PreferencesKeys.ALARM_SWITCH_STATE_PREFERENCES_KEY] ?: DEFAULT_SETTINGS.switchState
+        pref[booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)] ?: DEFAULT_SETTINGS.switchState
     }
 
     suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int) {
@@ -37,22 +30,18 @@ class DataStoreStorage(private val context: Context) {
     }
 
     fun getMinutesBetweenAlarms() = dataStore.data.map { pref ->
-        Log.d(TAG, "getMinutesBetweenAlarms")
         pref[intPreferencesKey(MINUTES_BETWEEN_ALARMS_KEY)] ?: DEFAULT_SETTINGS.minutesBetweenAlarms
     }
 
     suspend fun saveNumberOfAlarms(numberOfAlarms: Int) {
         dataStore.edit { pref ->
-            Log.d(TAG, "saveNumberOfAlarms")
             pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] = numberOfAlarms
         }
     }
 
     fun getNumberOfAlarms() = dataStore.data.map { pref ->
-        Log.d(TAG, "getNumberOfAlarms")
         pref[intPreferencesKey(NUMBER_OF_ALARMS_KEY)] ?: DEFAULT_SETTINGS.numberOfAlarms
     }
-
 
     suspend fun saveFirstAlarmHours(firstAlarmHours: Int) {
         dataStore.edit { pref ->
@@ -75,7 +64,6 @@ class DataStoreStorage(private val context: Context) {
     }
 
     fun getAlarmSettings() = dataStore.data.map { pref ->
-        Log.d(TAG, "getAlarmSettings")
         pref.toAlarmSettings()
     }
 
@@ -93,6 +81,26 @@ class DataStoreStorage(private val context: Context) {
         )
     }
 
+    suspend fun saveRingtoneDurationSeconds(ringtoneDurationSeconds: Int) {
+        dataStore.edit { pref ->
+            pref[intPreferencesKey(RINGTONE_DURATION_SECONDS_KEY)] = ringtoneDurationSeconds
+        }
+    }
+
+    fun getRingtoneDurationSeconds() = dataStore.data.map { pref ->
+        pref[intPreferencesKey(RINGTONE_DURATION_SECONDS_KEY)] ?: DEFAULT_RINGTONE_DURATION_SECONDS
+    }
+
+    suspend fun saveRingtoneUriString(ringtoneUriString: String) {
+        dataStore.edit { pref ->
+            pref[stringPreferencesKey(RINGTONE_URI_KEY)] = ringtoneUriString
+        }
+    }
+
+    fun getRingtoneUriString() = dataStore.data.map { pref ->
+        pref[stringPreferencesKey(RINGTONE_URI_KEY)] ?: DEFAULT_RINGTONE_URI_STRING
+    }
+
     companion object {
         private const val PREFERENCE_NAME = "AlarmDataStore"
 
@@ -102,7 +110,7 @@ class DataStoreStorage(private val context: Context) {
         private const val MINUTES_BETWEEN_ALARMS_KEY = "minutesBetweenAlarms"
         private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
         private const val RINGTONE_DURATION_SECONDS_KEY = "ringtoneDurationSeconds"
-        private const val RINGTONE_FILENAME_KEY = "ringtoneFilename"
+        private const val RINGTONE_URI_KEY = "ringtoneUri"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
                 switchState = false,
@@ -117,9 +125,6 @@ class DataStoreStorage(private val context: Context) {
         private val TAG = DataStoreStorage::class.java.simpleName
     }
 
-    private object PreferencesKeys {
-        val ALARM_SWITCH_STATE_PREFERENCES_KEY = booleanPreferencesKey(ALARM_SWITCH_STATE_KEY)
-    }
 
 }
 
