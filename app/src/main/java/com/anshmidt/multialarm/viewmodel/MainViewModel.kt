@@ -69,7 +69,9 @@ class MainViewModel(
     }
 
     private fun onAlarmsListChanged() {
-        _displayAlarmsResetMessage.postCall()
+        if (alarmSwitchState) {
+            _displayAlarmsResetMessage.postCall()
+        }
     }
 
 }

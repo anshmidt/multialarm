@@ -1,10 +1,10 @@
 package com.anshmidt.multialarm.repository
 
-import android.util.Log
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
 import com.anshmidt.multialarm.datasources.DataStoreStorage
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalTime
@@ -42,13 +42,12 @@ class ScheduleSettingsRepository(
             }
 
     override fun getAlarmsList(): Flow<List<LocalTime>> = dataStoreStorage.getAlarmSettings().map {
-        Log.d(TAG, "getAlarmList")
         AlarmsConverter.getAlarmsList(
                 firstAlarmTime = it.firstAlarmTime,
                 minutesBetweenAlarms = it.minutesBetweenAlarms,
                 numberOfAlarms = it.numberOfAlarms
         )
-    }
+    }.distinctUntilChanged()
 
     override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings()
 

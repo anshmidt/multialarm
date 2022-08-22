@@ -1,6 +1,5 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,20 +33,13 @@ class AlarmsListViewModel(
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().collect {
-                Log.d(TAG, "onAlarmSettingsChanged")
-            }
-        }
     }
 
     private fun onAlarmsListChanged(alarmsList: List<LocalTime>) {
-        Log.d(TAG, "onAlarmsListChanged")
         _alarms.postValue(alarmsList)
     }
 
     private fun onAlarmSwitchChanged(alarmTurnedOn: Boolean) {
-        Log.d(TAG, "onAlarmSwitchChanged")
         _alarmTurnedOn.postValue(alarmTurnedOn)
     }
 
