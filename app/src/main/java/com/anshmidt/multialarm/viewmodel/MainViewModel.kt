@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.viewmodel
 
 import android.view.View
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
@@ -21,8 +22,8 @@ class MainViewModel(
         private val TAG = MainViewModel::class.java.simpleName
     }
 
-    // used only for displaying the initial switch state when the view is created
-    var alarmSwitchState: Boolean = false
+    private var _alarmSwitchState = MutableLiveData<Boolean>()
+    val alarmSwitchState: LiveData<Boolean> = _alarmSwitchState
 
     private var _displayAlarmSwitchChangedMessage = SingleLiveEvent<Boolean>()
     val displayAlarmSwitchChangedMessage: LiveData<Boolean> = _displayAlarmSwitchChangedMessage
@@ -47,7 +48,7 @@ class MainViewModel(
     fun onViewStarted() {
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
-                alarmSwitchState = switchState
+                _alarmSwitchState.postValue(switchState)
             }
         }
 
@@ -69,8 +70,10 @@ class MainViewModel(
     }
 
     private fun onAlarmsListChanged() {
-        if (alarmSwitchState) {
-            _displayAlarmsResetMessage.postCall()
+        _alarmSwitchState.value?.let {
+            if (it) {
+                _displayAlarmsResetMessage.postCall()
+            }
         }
     }
 
