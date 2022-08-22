@@ -20,7 +20,6 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
 
     private val viewModel: FirstAlarmTimeViewModel by activityViewModels()
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(

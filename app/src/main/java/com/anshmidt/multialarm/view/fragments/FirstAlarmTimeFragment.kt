@@ -31,7 +31,6 @@ class FirstAlarmTimeFragment : Fragment() {
             openFirstAlarmTimeDialog()
         })
 
-        firstAlarmTimeViewModel.onViewCreated()
         return view
     }
 
@@ -50,13 +49,4 @@ class FirstAlarmTimeFragment : Fragment() {
         firstAlarmTimeViewModel.onViewResumed()
     }
 
-    override fun onPause() {
-        super.onPause()
-        firstAlarmTimeViewModel.onViewPaused()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        firstAlarmTimeViewModel.onViewDestroyed()
-    }
 }

@@ -33,10 +33,6 @@ class FirstAlarmTimeViewModel(
     val openFirstAlarmTimeDialog: LiveData<Any>
         get() = _openFirstAlarmTimeDialog
 
-    fun onViewCreated() {
-
-    }
-
     fun onViewResumed() {
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getFirstAlarmTime().collect { firstAlarmTime ->
@@ -68,34 +64,32 @@ class FirstAlarmTimeViewModel(
         if (firstAlarmTimeSelectedByUser == null) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 firstAlarmTimeSelectedByUser.let { newFirstAlarmTime ->
                     val newAlarmSettings = alarmSettings.copy(firstAlarmTime = newFirstAlarmTime)
                     alarmScheduler.reschedule(newAlarmSettings)
                     scheduleSettingsRepository.saveFirstAlarmTime(newFirstAlarmTime)
                 }
+                return@first true
             }
         }
-
     }
 
     fun onCancelButtonClickInFirstAlarmDialog() {
-        //close dialog without saving selected value
-        //TODO implement
+        // Clicking Cancel effectively means that we ignore any value user set, and use a value saved
+        // in repository instead.
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getFirstAlarmTime().first { firstAlarmTimeFromRepository ->
+                firstAlarmTimeSelectedByUserFlow.emit(firstAlarmTimeFromRepository)
+                return@first true
+            }
+        }
     }
 
     fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         viewModelScope.launch(Dispatchers.Default) {
             firstAlarmTimeSelectedByUserFlow.emit(LocalTime.of(hour, minute))
         }
-    }
-
-    fun onViewPaused() {
-
-    }
-
-    fun onViewDestroyed() {
-
     }
 
     private fun tickerEverySecondFlow() = flow {
@@ -118,9 +112,5 @@ class FirstAlarmTimeViewModel(
             )
         }
     }
-
-
-
-
 
 }
