@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anshmidt.multialarm.databinding.ItemAlarmBinding
 import org.threeten.bp.LocalTime
 
-class AlarmsListAdapter(
-
-) : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
+class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
 
     var items: List<LocalTime> = listOf()
         @SuppressLint("NotifyDataSetChanged")
@@ -17,12 +15,6 @@ class AlarmsListAdapter(
             field = value
             notifyDataSetChanged()
         }
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun setItems(items: List<LocalTime>) {
-//        this.items = items
-//        notifyDataSetChanged()
-//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemAlarmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
