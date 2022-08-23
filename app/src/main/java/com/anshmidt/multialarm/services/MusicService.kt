@@ -10,13 +10,11 @@ import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
 /**
@@ -43,8 +41,9 @@ class MusicService : Service(), KoinComponent {
             }
         }
 
-        scope.launch(Dispatchers.IO) {
+        CoroutineScope(Job() + Dispatchers.Main).launch {
             ringtoneSettingRepository.getRingtoneDurationSeconds().collect { ringtoneDurationSeconds ->
+                Log.d(TAG, "Started counting down. Ringtone duration: $ringtoneDurationSeconds")
                 startCountDownTimer(
                         durationSeconds = ringtoneDurationSeconds,
                         doOnCountDownFinish = { doOnCountDownFinish() }
@@ -60,8 +59,9 @@ class MusicService : Service(), KoinComponent {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Looks like notification should be started from the service according to Android design,
             // not the other way around
-            //startForeground(1, notification)
-
+            val notificationId = LocalTime.now().minute
+            val notification = notificationHelper.buildNotification(notificationId)
+            startForeground(notificationId, notification)
         }
     }
 
@@ -84,7 +84,7 @@ class MusicService : Service(), KoinComponent {
     }
 
     private fun doOnCountDownFinish() {
-        Log.d(TAG, "Music stopped")
+        Log.d(TAG, "Counting down finished")
 //        musicPlayer.stop()
         finishView()
         stopSelf()

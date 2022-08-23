@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.receivers.NotificationDismissButtonClickedReceiver
@@ -63,7 +64,8 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
         return pendingIntent
     }
 
-    private fun buildNotification(notificationId: Int): Notification {
+    fun buildNotification(notificationId: Int): Notification {
+        Log.d(TAG, "Building notification with id=$notificationId")
         val notificationBuilder = NotificationCompat.Builder(context, NotificationParams.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_on_notification)
                 .setContentTitle(context.getString(R.string.dismiss_alarm_notification_title))
@@ -98,5 +100,8 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
         notificationManager.cancelAll()
     }
 
+    companion object {
+        val TAG = NotificationHelper::class.java.simpleName
+    }
 
 }
