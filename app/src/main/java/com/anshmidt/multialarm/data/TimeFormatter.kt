@@ -1,7 +1,5 @@
 package com.anshmidt.multialarm.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -12,18 +10,6 @@ object TimeFormatter {
         val format = DateTimeFormatter.ofPattern("HH:mm")
         val displayableTime = localTime.format(format)
         return displayableTime
-    }
-
-
-    fun getTimeLeft(alarmTime: LiveData<LocalTime>, currentTime: LocalTime): LiveData<Duration> {
-        return Transformations.map(alarmTime) {
-            /**
-             * Time left (before the alarm) must be always > 0 and no more that 24 h.
-             * Since alarmTime and currentTime are LocalTime and not LocalDateTime,
-             * normalization might be needed after performing between()
-             */
-            normalizeDurationByAddingOrSubtractingDays(Duration.between(currentTime, it))
-        }
     }
 
     fun getTimeLeft(alarmTime: LocalTime, currentTime: LocalTime): TimeLeft {
@@ -48,24 +34,10 @@ object TimeFormatter {
         return normalizedDuration
     }
 
-    fun getHours(duration: LiveData<Duration>): LiveData<Int> {
-        return Transformations.map(duration) {
-            it.toHours().toInt()
-        }
-    }
-
     fun Duration.toTimeLeft(): TimeLeft {
         val hours = this.toHours().toInt()
         val minutes = this.toMinutes().toInt() % 60
         return TimeLeft(hours = hours, minutes = minutes)
-    }
-
-    fun getMinutesPart(duration: LiveData<Duration>): LiveData<Int> {
-        return Transformations.map(duration) {
-            val allDurationInMinutes = it.toMinutes()
-            val minutesPart = allDurationInMinutes % 60
-            minutesPart.toInt()
-        }
     }
 
     fun getFirstAlarmTimeMillis(firstAlarmTime: LocalTime): Long {
