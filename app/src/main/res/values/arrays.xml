@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- duration of a ringtone -->
-    <string-array name="preferences_duration_array">
-        <item>One ringtone</item>
+    <string-array name="preferences_duration_entries">
         <item>20 seconds</item>
         <item>40 seconds</item>
         <item>60 seconds</item>
         <item>80 seconds</item>
         <item>100 seconds</item>
+    </string-array>
+
+    <string-array name="preferences_duration_entry_values">
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+        <item>80</item>
+        <item>100</item>
     </string-array>
 
     <string-array name="dismiss_button_names_array">

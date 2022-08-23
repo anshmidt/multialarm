@@ -17,6 +17,9 @@ class SettingsViewModel(
     private var _chosenRingtoneName = MutableLiveData<String?>()
     val chosenRingtoneName: LiveData<String?> = _chosenRingtoneName
 
+    private var _ringtoneDurationSeconds = MutableLiveData<Int>()
+    val ringtoneDurationSeconds: LiveData<Int> = _ringtoneDurationSeconds
+
     fun onAudioFileChosen(sourceFileUri: Uri) {
         val sourceFileName = ringtoneSettingRepository.getRingtoneFileName(sourceFileUri)
         _chosenRingtoneName.value = sourceFileName
@@ -30,11 +33,22 @@ class SettingsViewModel(
     }
 
     fun onViewCreated() {
-
         viewModelScope.launch(Dispatchers.IO) {
             ringtoneSettingRepository.getRingtoneFileName().collect { ringtoneFileName ->
                 _chosenRingtoneName.postValue(ringtoneFileName)
             }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.getRingtoneDurationSeconds().collect { ringtoneDurationSeconds ->
+                _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
+            }
+        }
+    }
+
+    fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
         }
     }
 

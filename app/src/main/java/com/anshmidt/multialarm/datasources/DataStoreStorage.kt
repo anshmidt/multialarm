@@ -102,7 +102,7 @@ class DataStoreStorage(private val context: Context) {
     }
 
     companion object {
-        private const val PREFERENCE_NAME = "AlarmDataStore"
+        const val PREFERENCE_NAME = "AlarmDataStore"
 
         private const val ALARM_SWITCH_STATE_KEY = "alarmSwitchState"
         private const val FIRST_ALARM_HOURS_KEY = "firstAlarmHours"
@@ -119,7 +119,7 @@ class DataStoreStorage(private val context: Context) {
                 numberOfAlarms = 5
         )
 
-        private const val DEFAULT_RINGTONE_DURATION_SECONDS = 90
+        private const val DEFAULT_RINGTONE_DURATION_SECONDS = 60
         private const val DEFAULT_RINGTONE_URI_STRING = ""
 
         private val TAG = DataStoreStorage::class.java.simpleName
