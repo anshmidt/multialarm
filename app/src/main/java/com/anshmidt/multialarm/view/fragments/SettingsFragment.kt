@@ -1,7 +1,7 @@
 package com.anshmidt.multialarm.view.fragments
 
 import android.Manifest
-import android.content.SharedPreferences
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -14,14 +14,14 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.anshmidt.multialarm.R
+import com.anshmidt.multialarm.services.MusicService
+import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import com.anshmidt.multialarm.viewmodel.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
-    lateinit var sharedPreferences: SharedPreferences
     private val viewModel: SettingsViewModel by sharedViewModel()
-
 
     private val ringtoneFilenamePreference: Preference? by lazy {
         val ringtonePreferenceKey = getString(R.string.key_ringtone_filename)
@@ -31,6 +31,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val ringtoneDurationPreference: ListPreference? by lazy {
         val ringtoneDurationKey = getString(R.string.key_duration)
         findPreference(ringtoneDurationKey) as ListPreference?
+    }
+
+    private val testAlarmPreference: Preference? by lazy {
+        val testAlarmPreferenceKey = getString(R.string.key_test_alarm)
+        findPreference(testAlarmPreferenceKey)
     }
 
     private val openAudioFileResult = registerForActivityResult(
@@ -57,6 +62,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             onRingtoneDurationChosen(newRingtoneDurationSeconds)
             return@setOnPreferenceChangeListener true
         }
+
+        testAlarmPreference?.setOnPreferenceClickListener {
+            onTestAlarmPreferenceClicked()
+            return@setOnPreferenceClickListener true
+        }
+    }
+
+    private fun onTestAlarmPreferenceClicked() {
+        viewModel.onTestAlarmPreferenceClicked()
     }
 
     private fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
@@ -70,6 +84,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         viewModel.ringtoneDurationSeconds.observe(viewLifecycleOwner, {
             displayRingtoneDurationSeconds(it)
+        })
+
+        viewModel.openDismissAlarmScreen.observe(viewLifecycleOwner, {
+            openDismissAlarmScreen()
+        })
+
+        viewModel.startMusicService.observe(viewLifecycleOwner, {
+            startMusicService()
         })
 
         viewModel.onViewCreated()
@@ -128,6 +150,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun displayDefaultRingtoneName() {
         val defaultRingtoneName = getString(R.string.preferences_default_ringtone_name)
         ringtoneFilenamePreference?.summary = defaultRingtoneName
+    }
+
+    private fun openDismissAlarmScreen() {
+        val activityIntent = Intent(context, DismissAlarmActivity::class.java)
+        requireContext().startActivity(activityIntent)
+    }
+
+    private fun startMusicService() {
+        // We don't show notification since we the whole DismissAlarm screen is opened
+        val intent = Intent(context, MusicService::class.java)
+        val shouldShowNotification = false
+        intent.putExtra(MusicService.INTENT_KEY_SHOULD_SHOW_NOTIFICATION, shouldShowNotification)
+        requireContext().startService(intent)
     }
 
     companion object {

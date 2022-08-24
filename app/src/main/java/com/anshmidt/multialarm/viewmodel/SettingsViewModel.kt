@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -19,6 +20,12 @@ class SettingsViewModel(
 
     private var _ringtoneDurationSeconds = MutableLiveData<Int>()
     val ringtoneDurationSeconds: LiveData<Int> = _ringtoneDurationSeconds
+
+    private var _openDismissAlarmScreen = SingleLiveEvent<Any>()
+    val openDismissAlarmScreen: LiveData<Any> = _openDismissAlarmScreen
+
+    private var _startMusicService = SingleLiveEvent<Any>()
+    val startMusicService: LiveData<Any> = _startMusicService
 
     fun onAudioFileChosen(sourceFileUri: Uri) {
         val sourceFileName = ringtoneSettingRepository.getRingtoneFileName(sourceFileUri)
@@ -50,6 +57,11 @@ class SettingsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             ringtoneSettingRepository.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
         }
+    }
+
+    fun onTestAlarmPreferenceClicked() {
+        _openDismissAlarmScreen.call()
+        _startMusicService.call()
     }
 
 }

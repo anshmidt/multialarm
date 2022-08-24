@@ -3,4 +3,5 @@
     tools:ignore="MissingTranslation">
     <item name="key_duration" type="string">duration</item>
     <item name="key_ringtone_filename" type="string">ringtone_filename</item>
+    <item name="key_test_alarm" type="string">test_alarm</item>
 </resources>

@@ -16,4 +16,9 @@
         android:title="@string/preferences_ringtone_title"
         android:defaultValue="@string/preferences_default_ringtone_name">
     </Preference>
+    <Preference
+        android:key="@string/key_test_alarm"
+        android:title="@string/preferences_test_alarm_title"
+        android:summary="@string/preferences_test_alarm_summary">
+    </Preference>
 </androidx.preference.PreferenceScreen>

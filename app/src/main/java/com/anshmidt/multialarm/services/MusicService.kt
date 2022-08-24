@@ -28,16 +28,25 @@ class MusicService : Service(), KoinComponent {
     private val notificationHelper: NotificationHelper by inject()
     private val scope = CoroutineScope(SupervisorJob())
 
+    private var shouldShowNotification = SHOULD_SHOW_NOTIFICATION_DEFAULT_VALUE
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        intent?.let {
+            shouldShowNotification = it.getBooleanExtra(INTENT_KEY_SHOULD_SHOW_NOTIFICATION,
+                SHOULD_SHOW_NOTIFICATION_DEFAULT_VALUE)
+        }
+
+        if (shouldShowNotification) {
+            showNotification()
+        }
+
         scope.launch(Dispatchers.IO) {
             ringtoneSettingRepository.getRingtoneUri().collect { ringtoneUri ->
-                Log.d(TAG, "Music started")
-                //        musicPlayer.play(ringtoneUri)
+                musicPlayer.play(ringtoneUri)
             }
         }
 
@@ -56,6 +65,9 @@ class MusicService : Service(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
+    }
+
+    private fun showNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Looks like notification should be started from the service according to Android design,
             // not the other way around
@@ -78,14 +90,13 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "Music stopped")
-//        musicPlayer.stop()
+        musicPlayer.stop()
         super.onDestroy()
     }
 
     private fun doOnCountDownFinish() {
         Log.d(TAG, "Counting down finished")
-//        musicPlayer.stop()
+        musicPlayer.stop()
         finishView()
         stopSelf()
     }
@@ -106,7 +117,9 @@ class MusicService : Service(), KoinComponent {
     }
 
     companion object {
-        val TAG = MusicService::class.java.simpleName
+        private val TAG = MusicService::class.java.simpleName
+        const val INTENT_KEY_SHOULD_SHOW_NOTIFICATION = "intent_key_should_show_notification"
+        private const val SHOULD_SHOW_NOTIFICATION_DEFAULT_VALUE = true
     }
 
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.PowerManager
+import android.util.Log
 
 
 class MusicPlayer(private val context: Context) : IMusicPlayer {
@@ -12,13 +12,14 @@ class MusicPlayer(private val context: Context) : IMusicPlayer {
     private var mediaPlayer: MediaPlayer? = null
 
     override fun play(ringtoneUri: Uri) {
-        mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(getAudioAttributes())
-            setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-            setDataSource(context, ringtoneUri)
-            prepare()
-            start()
-        }
+        Log.d(TAG, "Music started")
+//        mediaPlayer = MediaPlayer().apply {
+//            setAudioAttributes(getAudioAttributes())
+//            setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
+//            setDataSource(context, ringtoneUri)
+//            prepare()
+//            start()
+//        }
     }
 
     private fun getAudioAttributes() = AudioAttributes.Builder()
@@ -27,8 +28,13 @@ class MusicPlayer(private val context: Context) : IMusicPlayer {
         .build()
 
     override fun stop() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
+        Log.d(TAG, "Music stopped")
+//        mediaPlayer?.stop()
+//        mediaPlayer?.release()
+//        mediaPlayer = null
+    }
+
+    companion object {
+        val TAG = MusicPlayer::class.java.simpleName
     }
 }
