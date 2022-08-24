@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,6 +55,7 @@ class NumberOfAlarmsViewModel(
         _numberOfAlarms.value = selectedVariant
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
                 alarmScheduler.reschedule(newAlarmSettings)
                 scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
@@ -64,6 +66,10 @@ class NumberOfAlarmsViewModel(
 
     fun onCancelButtonClickInNumberOfAlarmsDialog() {
         //close dialog without saving selected value
+    }
+
+    companion object {
+        val TAG = NumberOfAlarmsViewModel::class.java.simpleName
     }
 
 }

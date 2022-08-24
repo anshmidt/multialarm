@@ -49,7 +49,7 @@ class ScheduleSettingsRepository(
         )
     }.distinctUntilChanged()
 
-    override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings()
+    override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings().distinctUntilChanged()
 
     companion object {
         val TAG = ScheduleSettingsRepository::class.java.simpleName
