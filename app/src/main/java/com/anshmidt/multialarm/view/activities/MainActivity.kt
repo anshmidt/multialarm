@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
     }
 
+    // Workaround to make onCheckedChanged not to trigger when switch state is set programmatically
+    private var doListenForSwitch = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
@@ -31,6 +34,22 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.displayAlarmsResetMessage.observe(this@MainActivity, {
             displayAlarmsResetToast()
         })
+
+        mainViewModel.alarmSwitchState.observe(this@MainActivity, {
+            setSwitchState(it)
+        })
+
+        binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->
+            if (doListenForSwitch) {
+                mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
+            }
+        }
+    }
+
+    private fun setSwitchState(switchState: Boolean) {
+        doListenForSwitch = false
+        binding.switchMain.isChecked = switchState
+        doListenForSwitch = true
     }
 
     override fun onStart() {
