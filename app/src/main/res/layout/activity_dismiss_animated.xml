@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:pulse_color="@color/primary"
-            app:pulse_count="5"
+            app:pulse_count="8"
             app:pulse_duration="5000"
             app:pulse_interpolator="Decelerate"
             app:pulse_repeat="0"

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -36,13 +37,10 @@ class DismissAlarmActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val COUNT_DOWN_FINISHED_ACTION = "countDownIntentKey"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displayActivityOnLockedScreen()
+        hideStatusBar()
         initBinding()
         registerCountDownFinishReceiver(countDownFinishReceiver)
         startButtonAnimation()
@@ -73,6 +71,11 @@ class DismissAlarmActivity : AppCompatActivity() {
         dismissAlarmViewModel.onViewPaused()
     }
 
+    private fun hideStatusBar() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
+    }
+
     private fun displayActivityOnLockedScreen() {
         val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
@@ -95,5 +98,9 @@ class DismissAlarmActivity : AppCompatActivity() {
         binding.dismissButton.start()
     }
 
+
+    companion object {
+        const val COUNT_DOWN_FINISHED_ACTION = "countDownIntentKey"
+    }
 
 }
