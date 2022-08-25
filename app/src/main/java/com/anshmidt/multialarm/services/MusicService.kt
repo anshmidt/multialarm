@@ -35,6 +35,7 @@ class MusicService : Service(), KoinComponent {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d(TAG, "MusicService started")
         intent?.let {
             shouldShowNotification = it.getBooleanExtra(INTENT_KEY_SHOULD_SHOW_NOTIFICATION,
                 SHOULD_SHOW_NOTIFICATION_DEFAULT_VALUE)
@@ -91,6 +92,7 @@ class MusicService : Service(), KoinComponent {
 
     override fun onDestroy() {
         musicPlayer.stop()
+        Log.d(TAG, "MusicService destroyed")
         super.onDestroy()
     }
 

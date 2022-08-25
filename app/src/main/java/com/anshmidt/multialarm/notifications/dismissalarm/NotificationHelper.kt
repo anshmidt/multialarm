@@ -97,6 +97,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
     }
 
     fun cancelNotification() {
+        Log.d(TAG, "Canceling all notifications")
         notificationManager.cancelAll()
     }
 

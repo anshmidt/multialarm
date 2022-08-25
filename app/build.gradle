@@ -11,7 +11,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "com.anshmidt.multialarm"
+        applicationId "com.anshmidt.multialarm.mvvm"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 2
