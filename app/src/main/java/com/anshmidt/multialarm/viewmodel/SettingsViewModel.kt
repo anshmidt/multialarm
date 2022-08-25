@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -41,20 +41,23 @@ class SettingsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch(Dispatchers.IO) {
-            ringtoneSettingRepository.getRingtoneFileName().collect { ringtoneFileName ->
+            ringtoneSettingRepository.getRingtoneFileName().first { ringtoneFileName ->
                 _chosenRingtoneName.postValue(ringtoneFileName)
+                return@first true
             }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            ringtoneSettingRepository.getRingtoneDurationSeconds().collect { ringtoneDurationSeconds ->
+            ringtoneSettingRepository.getRingtoneDurationSeconds().first { ringtoneDurationSeconds ->
                 _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
+                return@first true
             }
         }
     }
 
     fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
             ringtoneSettingRepository.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
         }
     }

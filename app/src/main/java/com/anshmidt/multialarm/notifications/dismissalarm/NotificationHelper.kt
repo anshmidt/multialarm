@@ -10,11 +10,11 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.anshmidt.multialarm.R
+import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.receivers.NotificationDismissButtonClickedReceiver
 import com.anshmidt.multialarm.receivers.NotificationDismissedBySwipeReceiver
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.LocalTime
 
 
 class NotificationHelper(val context: Context, val notificationParams: NotificationParams) {
@@ -22,7 +22,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     fun showNotification() {
-        setNotificationChannel()
+        createNotificationChannel()
 
         val notificationId = notificationParams.notificationId
         val notification = buildNotification(notificationId)
@@ -34,11 +34,13 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
         return context.getString(R.string.app_name)
     }
 
-    private fun setNotificationChannel() {
+    fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(NotificationParams.CHANNEL_ID, getChannelName(), importance)
+            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             notificationManager.createNotificationChannel(notificationChannel)
+            Log.d(TAG, "Notification channel created")
         }
     }
 
@@ -90,10 +92,9 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
     }
 
     private fun getCurrentTime(): String {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        val currentTime = LocalDateTime.now()
-        val formattedDateTime = currentTime.format(formatter)
-        return formattedDateTime
+        val currentTime = LocalTime.now()
+        val displayableTime = TimeFormatter.getDisplayableTime(currentTime)
+        return displayableTime
     }
 
     fun cancelNotification() {

@@ -8,7 +8,6 @@ import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -29,10 +28,11 @@ class MinutesBetweenAlarmsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getMinutesBetweenAlarms().collect { minutesBetweenAlarms ->
+            scheduleSettingsRepository.getMinutesBetweenAlarms().first { minutesBetweenAlarms ->
                 _minutesBetweenAlarms.postValue(minutesBetweenAlarms)
                 val selectedVariant = allAvailableVariants.indexOf(minutesBetweenAlarms)
                 selectedVariantIndex.postValue(selectedVariant)
+                return@first true
             }
         }
     }

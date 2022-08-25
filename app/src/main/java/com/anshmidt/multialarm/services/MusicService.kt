@@ -11,7 +11,7 @@ import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.time.LocalTime
@@ -46,18 +46,20 @@ class MusicService : Service(), KoinComponent {
         }
 
         scope.launch(Dispatchers.IO) {
-            ringtoneSettingRepository.getRingtoneUri().collect { ringtoneUri ->
+            ringtoneSettingRepository.getRingtoneUri().first { ringtoneUri ->
                 musicPlayer.play(ringtoneUri)
+                return@first true
             }
         }
 
         CoroutineScope(Job() + Dispatchers.Main).launch {
-            ringtoneSettingRepository.getRingtoneDurationSeconds().collect { ringtoneDurationSeconds ->
+            ringtoneSettingRepository.getRingtoneDurationSeconds().first { ringtoneDurationSeconds ->
                 Log.d(TAG, "Started counting down. Ringtone duration: $ringtoneDurationSeconds")
                 startCountDownTimer(
                         durationSeconds = ringtoneDurationSeconds,
                         doOnCountDownFinish = { doOnCountDownFinish() }
                 )
+                return@first true
             }
         }
 

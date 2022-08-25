@@ -1,9 +1,11 @@
 package com.anshmidt.multialarm.view.activities
 
+import android.app.KeyguardManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -16,6 +18,9 @@ import com.anshmidt.multialarm.databinding.ActivityDismissAnimatedBinding
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.viewmodel.DismissAlarmViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+
+
 
 
 
@@ -77,11 +82,21 @@ class DismissAlarmActivity : AppCompatActivity() {
     }
 
     private fun displayActivityOnLockedScreen() {
-        val window: Window = window
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+            val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+            keyguardManager.requestDismissKeyguard(this, null)
+        } else {
+            val window: Window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        }
+
+
     }
 
     private fun stopMusicService() {

@@ -7,12 +7,16 @@ import android.content.Intent
 import android.util.Log
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
+import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.receivers.AlarmBroadcastReceiver
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.concurrent.TimeUnit
 
-class AlarmScheduler(val context: Context) {
+class AlarmScheduler(val context: Context) : KoinComponent {
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val notificationHelper: NotificationHelper by inject()
 
     companion object {
         val TAG = AlarmScheduler::class.java.simpleName
@@ -27,6 +31,8 @@ class AlarmScheduler(val context: Context) {
         val intervalBetweenAlarmsMillis = TimeUnit.MINUTES.toMillis(alarmSettings.minutesBetweenAlarms.toLong())
         schedule(firstAlarmTimeMillis = firstAlarmTimeMillis, intervalBetweenAlarmsMillis = intervalBetweenAlarmsMillis)
         Log.d(TAG, "Alarm scheduled: $alarmSettings")
+
+        notificationHelper.createNotificationChannel()
     }
 
     private fun schedule(firstAlarmTimeMillis: Long, intervalBetweenAlarmsMillis: Long) {

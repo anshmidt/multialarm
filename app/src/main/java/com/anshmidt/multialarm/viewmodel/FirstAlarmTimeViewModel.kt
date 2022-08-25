@@ -35,8 +35,9 @@ class FirstAlarmTimeViewModel(
 
     fun onViewResumed() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getFirstAlarmTime().collect { firstAlarmTime ->
+            scheduleSettingsRepository.getFirstAlarmTime().first { firstAlarmTime ->
                 _firstAlarmTime.postValue(firstAlarmTime)
+                return@first true
             }
         }
 
@@ -61,18 +62,20 @@ class FirstAlarmTimeViewModel(
     fun onOkButtonClickInFirstAlarmDialog() {
         val firstAlarmTimeSelectedByUser = firstAlarmTimeSelectedByUserFlow.value
 
-        if (firstAlarmTimeSelectedByUser == null) return
+        firstAlarmTimeSelectedByUser?.let {
+            _firstAlarmTime.postValue(it)
 
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                firstAlarmTimeSelectedByUser.let { newFirstAlarmTime ->
-                    val newAlarmSettings = alarmSettings.copy(firstAlarmTime = newFirstAlarmTime)
+            viewModelScope.launch(Dispatchers.IO) {
+                scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                    val newAlarmSettings = alarmSettings.copy(firstAlarmTime = firstAlarmTimeSelectedByUser)
                     alarmScheduler.reschedule(newAlarmSettings)
-                    scheduleSettingsRepository.saveFirstAlarmTime(newFirstAlarmTime)
+                    scheduleSettingsRepository.saveFirstAlarmTime(firstAlarmTimeSelectedByUser)
+
+                    return@first true
                 }
-                return@first true
             }
         }
+
     }
 
     fun onCancelButtonClickInFirstAlarmDialog() {

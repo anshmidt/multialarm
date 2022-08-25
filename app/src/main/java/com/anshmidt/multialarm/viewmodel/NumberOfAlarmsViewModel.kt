@@ -9,7 +9,6 @@ import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -31,10 +30,11 @@ class NumberOfAlarmsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getNumberOfAlarms().collect { numberOfAlarms ->
+            scheduleSettingsRepository.getNumberOfAlarms().first { numberOfAlarms ->
                 _numberOfAlarms.postValue(numberOfAlarms)
                 val selectedVariant = allAvailableVariants.indexOf(numberOfAlarms)
                 selectedVariantIndex.postValue(selectedVariant)
+                return@first true
             }
         }
     }
