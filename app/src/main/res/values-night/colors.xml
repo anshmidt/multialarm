@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainAccent">#ef5749</color>
+    <color name="mainAccentDark">@color/mainAccent</color>
+    <color name="launcherIcon">#f73f38</color>
+    <color name="dismissActivityTextСolor">#ffffff</color>
+    <color name="dismissActivityMainAccent">#b62020</color>
+    <color name="dismissActivityBackground">#000000</color>
+<!--    <color name="mainTextColor">#deffffff</color>-->
+    <color name="mainTextColor">#f0ffffff</color>
+    <color name="mainDisabledTextColor">#61ffffff</color>
+    <color name="mainBackground">#121212</color>
+
+    <color name="primary">#212121</color>
+    <color name="primaryDark">@color/mainBackground</color>
+    <color name="textColorPrimary">@color/mainTextColor</color>
+    <color name="divider">@color/mainTextColor</color>
+</resources>

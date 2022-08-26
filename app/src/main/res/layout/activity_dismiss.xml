@@ -20,7 +20,7 @@
             android:id="@+id/button_dismiss_alarm"
             android:layout_width="0dp"
             app:layout_constraintDimensionRatio="1:1"
-            android:background="@color/primary"
+            android:background="@color/mainAccent"
             android:textSize="30sp"
             android:textAllCaps="false"
             android:textColor="@color/dismissActivityTextСolor"

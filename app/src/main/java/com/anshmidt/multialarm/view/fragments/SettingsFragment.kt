@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -87,6 +88,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun onNightModeSelected(isNightModeOn: Boolean) {
         selectAppTheme(isNightModeOn)
+        viewModel.onNightModeSelectedByUser(isNightModeOn)
     }
 
     private fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
@@ -112,7 +114,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         viewModel.isNightModeOn.observe(viewLifecycleOwner, {
             displayNightModeSwitchState(it)
-            viewModel.onNightModeSelected(it)
         })
 
         viewModel.onViewCreated()
@@ -191,7 +192,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun selectAppTheme(isNightModeOn: Boolean) {
-
+        if (isNightModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     companion object {

@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
-        <item name="colorAccent">@color/primary</item>
+        <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
 
@@ -22,12 +22,12 @@
     </style>
 
     <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
+        <item name="colorAccent">@color/mainAccent</item> <!-- colorAccent here seems to work just fine? -->
     </style>
 
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
 
-        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
+        <item name="colorAccent">@color/mainAccent</item> <!-- colorAccent here seems to work just fine? -->
 
         <item name="android:timePickerMode">clock</item>
         <item name="android:headerBackground">@color/dismissActivityTextСolor</item>
@@ -36,13 +36,13 @@
     </style>
 
     <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
-        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColor">@color/mainAccent</item>
     </style>
 
     <style name="NumberPicker" parent="@android:style/Theme.Material">
         <item name="android:textSize">30sp</item>
         <item name="android:colorControlNormal">@color/divider</item>
-        <item name="android:textColorPrimary">@color/primary</item>
+        <item name="android:textColorPrimary">@color/mainAccent</item>
     </style>
 
 </resources>

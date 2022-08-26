@@ -28,11 +28,11 @@ val appModule = module {
     factory<AlarmScheduler> { AlarmScheduler(androidContext()) }
     factory { NotificationParams() }
     factory<NotificationHelper> { NotificationHelper(androidContext(), get()) }
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
     viewModel { MinutesBetweenAlarmsViewModel(get(), get()) }
     viewModel { FirstAlarmTimeViewModel(get(), get()) }
     viewModel { NumberOfAlarmsViewModel(get(), get()) }
     viewModel { DismissAlarmViewModel() }
     viewModel { AlarmsListViewModel(get()) }
-    viewModel { SettingsViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get()) }
 }

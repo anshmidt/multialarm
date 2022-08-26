@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainBinding
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
+        mainViewModel.onViewCreated()
 
         mainViewModel.displayAlarmSwitchChangedMessage.observe(this@MainActivity, {
             displayAlarmSwitchChangedToast(it)
@@ -37,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.alarmSwitchState.observe(this@MainActivity, {
             setSwitchState(it)
+        })
+
+        mainViewModel.isNightModeOn.observe(this@MainActivity, {
+            selectAppTheme(it)
         })
 
         binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->
@@ -120,6 +126,14 @@ class MainActivity : AppCompatActivity() {
             displayAlarmsOnToast()
         } else {
             displayAlarmsOffToast()
+        }
+    }
+
+    private fun selectAppTheme(isNightModeOn: Boolean) {
+        if (isNightModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 

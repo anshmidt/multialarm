@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
         private val scheduleSettingsRepository: IScheduleSettingsRepository,
+        private val appSettingRepository: IAppSettingRepository,
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
@@ -33,6 +35,9 @@ class MainViewModel(
     private var _displayAlarmsResetMessage = SingleLiveEvent<Any>()
     val displayAlarmsResetMessage: LiveData<Any> = _displayAlarmsResetMessage
 
+    private var _isNightModeOn = MutableLiveData<Boolean>()
+    val isNightModeOn: LiveData<Boolean> = _isNightModeOn
+
     fun onAlarmSwitchChanged(switchView: View, switchState: Boolean) {
         _displayAlarmSwitchChangedMessage.value = switchState
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,6 +49,15 @@ class MainViewModel(
                 val newAlarmSettings = alarmSettings.copy(switchState = switchState)
                 Log.d(TAG, "Alarm settings changed, that's why we reschedule alarms. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
                 alarmScheduler.reschedule(newAlarmSettings)
+                return@first true
+            }
+        }
+    }
+
+    fun onViewCreated() {
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
+                _isNightModeOn.postValue(nightModeSwitchState)
                 return@first true
             }
         }

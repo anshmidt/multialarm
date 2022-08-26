@@ -79,8 +79,7 @@ class SettingsViewModel(
         _startMusicService.call()
     }
 
-    fun onNightModeSelected(isNightModeOn: Boolean) {
-        _isNightModeOn.postValue(isNightModeOn)
+    fun onNightModeSelectedByUser(isNightModeOn: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             appSettingRepository.saveNightModeSwitchState(isNightModeOn)
         }
