@@ -21,4 +21,8 @@
         android:title="@string/preferences_test_alarm_title"
         android:summary="@string/preferences_test_alarm_summary">
     </Preference>
+    <SwitchPreference
+        android:key="@string/key_night_mode"
+        android:title="@string/preferences_night_mode_title">
+    </SwitchPreference>
 </androidx.preference.PreferenceScreen>

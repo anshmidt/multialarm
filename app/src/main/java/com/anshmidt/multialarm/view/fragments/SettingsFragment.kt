@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
@@ -36,6 +37,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val testAlarmPreference: Preference? by lazy {
         val testAlarmPreferenceKey = getString(R.string.key_test_alarm)
         findPreference(testAlarmPreferenceKey)
+    }
+
+    private val nightModePreference: SwitchPreference? by lazy {
+        val nightModeKey = getString(R.string.key_night_mode)
+        findPreference(nightModeKey)
     }
 
     private val openAudioFileResult = registerForActivityResult(
@@ -67,10 +73,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             onTestAlarmPreferenceClicked()
             return@setOnPreferenceClickListener true
         }
+
+        nightModePreference?.setOnPreferenceChangeListener { preference, newValue ->
+            val isNightModeOn = newValue as Boolean
+            onNightModeSelected(isNightModeOn)
+            return@setOnPreferenceChangeListener true
+        }
     }
 
     private fun onTestAlarmPreferenceClicked() {
         viewModel.onTestAlarmPreferenceClicked()
+    }
+
+    private fun onNightModeSelected(isNightModeOn: Boolean) {
+        selectAppTheme(isNightModeOn)
     }
 
     private fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
@@ -94,6 +110,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startMusicService()
         })
 
+        viewModel.isNightModeOn.observe(viewLifecycleOwner, {
+            displayNightModeSwitchState(it)
+            viewModel.onNightModeSelected(it)
+        })
+
         viewModel.onViewCreated()
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -101,6 +122,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun displayRingtoneDurationSeconds(ringtoneDurationSeconds: Int) {
         ringtoneDurationPreference?.value = ringtoneDurationSeconds.toString()
+    }
+
+    private fun displayNightModeSwitchState(nightModeSwitchState: Boolean) {
+        nightModePreference?.setDefaultValue(nightModeSwitchState)
     }
 
     private fun onRingtonePreferenceClicked() {
@@ -163,6 +188,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val shouldShowNotification = false
         intent.putExtra(MusicService.INTENT_KEY_SHOULD_SHOW_NOTIFICATION, shouldShowNotification)
         requireContext().startService(intent)
+    }
+
+    private fun selectAppTheme(isNightModeOn: Boolean) {
+
     }
 
     companion object {

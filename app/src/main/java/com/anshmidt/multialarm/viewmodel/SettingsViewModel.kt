@@ -6,13 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
-        private val ringtoneSettingRepository: IRingtoneSettingRepository
+        private val ringtoneSettingRepository: IRingtoneSettingRepository,
+        private val appSettingRepository: IAppSettingRepository
 ) : ViewModel() {
 
     private var _chosenRingtoneName = MutableLiveData<String?>()
@@ -26,6 +28,9 @@ class SettingsViewModel(
 
     private var _startMusicService = SingleLiveEvent<Any>()
     val startMusicService: LiveData<Any> = _startMusicService
+
+    private var _isNightModeOn = MutableLiveData<Boolean>()
+    val isNightModeOn: LiveData<Boolean> = _isNightModeOn
 
     fun onAudioFileChosen(sourceFileUri: Uri) {
         val sourceFileName = ringtoneSettingRepository.getRingtoneFileName(sourceFileUri)
@@ -53,6 +58,13 @@ class SettingsViewModel(
                 return@first true
             }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
+                _isNightModeOn.postValue(nightModeSwitchState)
+                return@first true
+            }
+        }
     }
 
     fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
@@ -66,5 +78,13 @@ class SettingsViewModel(
         _openDismissAlarmScreen.call()
         _startMusicService.call()
     }
+
+    fun onNightModeSelected(isNightModeOn: Boolean) {
+        _isNightModeOn.postValue(isNightModeOn)
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettingRepository.saveNightModeSwitchState(isNightModeOn)
+        }
+    }
+
 
 }

@@ -10,10 +10,7 @@ import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationParams
-import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
-import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import com.anshmidt.multialarm.repository.RingtoneSettingRepository
-import com.anshmidt.multialarm.repository.ScheduleSettingsRepository
+import com.anshmidt.multialarm.repository.*
 import com.anshmidt.multialarm.viewmodel.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -22,6 +19,7 @@ import org.koin.dsl.module.module
 val appModule = module {
     single<IScheduleSettingsRepository> { ScheduleSettingsRepository(get()) }
     single<IRingtoneSettingRepository> { RingtoneSettingRepository(get(), get()) }
+    single<IAppSettingRepository> { AppSettingRepository(get()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
     single<SharedPreferencesStorage> { SharedPreferencesStorage(androidContext()) }
     single<FileStorage> { FileStorage(androidContext()) }

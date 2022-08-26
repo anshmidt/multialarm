@@ -101,6 +101,16 @@ class DataStoreStorage(private val context: Context) {
         pref[stringPreferencesKey(RINGTONE_URI_KEY)] ?: DEFAULT_RINGTONE_URI_STRING
     }
 
+    suspend fun saveNightModeSwitchState(nightModeSwitchState: Boolean) {
+        dataStore.edit { pref ->
+            pref[booleanPreferencesKey(NIGHT_MODE_KEY)] = nightModeSwitchState
+        }
+    }
+
+    fun getNightModeSwitchState() = dataStore.data.map { pref ->
+        pref[booleanPreferencesKey(NIGHT_MODE_KEY)] ?: DEFAULT_NIGHT_MODE_SWITCH_STATE
+    }
+
     companion object {
         const val PREFERENCE_NAME = "AlarmDataStore"
 
@@ -111,6 +121,7 @@ class DataStoreStorage(private val context: Context) {
         private const val NUMBER_OF_ALARMS_KEY = "numberOfAlarms"
         private const val RINGTONE_DURATION_SECONDS_KEY = "ringtoneDurationSeconds"
         private const val RINGTONE_URI_KEY = "ringtoneUri"
+        private const val NIGHT_MODE_KEY = "nightMode"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
                 switchState = false,
@@ -121,6 +132,7 @@ class DataStoreStorage(private val context: Context) {
 
         private const val DEFAULT_RINGTONE_DURATION_SECONDS = 60
         private const val DEFAULT_RINGTONE_URI_STRING = ""
+        private const val DEFAULT_NIGHT_MODE_SWITCH_STATE = false
 
         private val TAG = DataStoreStorage::class.java.simpleName
     }

@@ -30,7 +30,7 @@
         <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
 
         <item name="android:timePickerMode">clock</item>
-        <item name="android:headerBackground">@color/dismissActivityTextcolor</item>
+        <item name="android:headerBackground">@color/dismissActivityTextСolor</item>
         <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
 
     </style>

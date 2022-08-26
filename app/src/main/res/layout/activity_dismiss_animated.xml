@@ -43,7 +43,7 @@
             android:format12Hour="k:mm"
             android:format24Hour="k:mm"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/dismissActivityTextcolor"
+            android:textColor="@color/dismissActivityTextСolor"
             android:textSize="100sp"
             tools:text="7:01"
             app:layout_constraintEnd_toEndOf="parent"

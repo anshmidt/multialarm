@@ -4,4 +4,5 @@
     <item name="key_duration" type="string">duration</item>
     <item name="key_ringtone_filename" type="string">ringtone_filename</item>
     <item name="key_test_alarm" type="string">test_alarm</item>
+    <item name="key_night_mode" type="string">night_mode</item>
 </resources>

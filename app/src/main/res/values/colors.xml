@@ -3,7 +3,7 @@
     <color name="primary">#b62020</color>
     <color name="primaryDark">#8e0b0b</color>
     <color name="launcherIcon">#f73f38</color>
-    <color name="dismissActivityTextcolor">#ffffff</color>
+    <color name="dismissActivityTextСolor">#ffffff</color>
     <color name="dismissActivityBackground">#000000</color>
     <color name="mainTextColor">#777777</color>
     <color name="mainBackground">#ffffff</color>
