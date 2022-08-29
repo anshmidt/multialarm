@@ -11,6 +11,7 @@ import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationParams
 import com.anshmidt.multialarm.repository.*
+import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.anshmidt.multialarm.viewmodel.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -21,6 +22,7 @@ val appModule = module {
     single<IRingtoneSettingRepository> { RingtoneSettingRepository(get(), get()) }
     single<IAppSettingRepository> { AppSettingRepository(get()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
+    single<AppThemeSelector> { AppThemeSelector(get()) }
     single<SharedPreferencesStorage> { SharedPreferencesStorage(androidContext()) }
     single<FileStorage> { FileStorage(androidContext()) }
     single<DataStoreStorage> { DataStoreStorage(androidContext()) }
