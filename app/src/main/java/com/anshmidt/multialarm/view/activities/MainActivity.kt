@@ -40,10 +40,6 @@ class MainActivity : AppCompatActivity() {
             setSwitchState(it)
         })
 
-        mainViewModel.isNightModeOn.observe(this@MainActivity, {
-            selectAppTheme(it)
-        })
-
         binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->
             if (doListenForSwitch) {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
@@ -126,14 +122,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             displayAlarmsOffToast()
         }
-    }
-
-    private fun selectAppTheme(isNightModeOn: Boolean) {
-//        if (isNightModeOn) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        } else {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//        }
     }
 
 

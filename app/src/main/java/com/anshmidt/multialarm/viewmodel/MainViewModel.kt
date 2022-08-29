@@ -35,9 +35,6 @@ class MainViewModel(
     private var _displayAlarmsResetMessage = SingleLiveEvent<Any>()
     val displayAlarmsResetMessage: LiveData<Any> = _displayAlarmsResetMessage
 
-    private var _isNightModeOn = MutableLiveData<Boolean>()
-    val isNightModeOn: LiveData<Boolean> = _isNightModeOn
-
     fun onAlarmSwitchChanged(switchView: View, switchState: Boolean) {
         _displayAlarmSwitchChangedMessage.value = switchState
         viewModelScope.launch(Dispatchers.IO) {
@@ -55,12 +52,7 @@ class MainViewModel(
     }
 
     fun onViewCreated() {
-        viewModelScope.launch(Dispatchers.IO) {
-            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
-                _isNightModeOn.postValue(nightModeSwitchState)
-                return@first true
-            }
-        }
+
     }
 
     fun onViewStarted() {
