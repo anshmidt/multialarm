@@ -23,17 +23,14 @@
     </style>
 
     <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/mainAccent</item> <!-- colorAccent here seems to work just fine? -->
+        <item name="colorAccent">@color/mainAccent</item>
     </style>
 
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
-
-        <item name="colorAccent">@color/mainAccent</item> <!-- colorAccent here seems to work just fine? -->
-
+        <item name="colorAccent">@color/mainAccent</item>
         <item name="android:timePickerMode">clock</item>
         <item name="android:headerBackground">@color/dismissActivityTextСolor</item>
         <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
-
     </style>
 
     <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
@@ -58,6 +55,10 @@
         <item name="android:textColor">@color/settingsMainText</item>
         <item name="android:textColorPrimary">@color/settingsMainText</item>
         <item name="android:textColorSecondary">@color/settingsSecondaryText</item>
+    </style>
+
+    <style name="FirstAlarmTimeDialogTheme">
+        <item name="android:textColorPrimary">@color/mainTextColor</item>
     </style>
 
 </resources>

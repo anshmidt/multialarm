@@ -21,6 +21,7 @@ class FirstAlarmTimeDialogFragment : DialogFragment() {
     private val viewModel: FirstAlarmTimeViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        requireContext().getTheme().applyStyle(R.style.FirstAlarmTimeDialogTheme, true)
 
         val binding = DataBindingUtil.inflate<DialogFirstAlarmTimeBinding>(
                 requireActivity().layoutInflater,
