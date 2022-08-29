@@ -96,6 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
         viewModel.chosenRingtoneName.observe(viewLifecycleOwner, {
             displayRingtoneName(it)
         })

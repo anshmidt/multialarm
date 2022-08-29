@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
@@ -51,6 +52,12 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="SettingsFragmentTheme">
+        <item name="android:textColor">@color/settingsMainText</item>
+        <item name="android:textColorPrimary">@color/settingsMainText</item>
+        <item name="android:textColorSecondary">@color/settingsSecondaryText</item>
     </style>
 
 </resources>
