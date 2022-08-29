@@ -40,13 +40,13 @@
         <activity
             android:name=".view.activities.DismissAlarmActivity"
             android:screenOrientation="sensorPortrait"
-            android:launchMode="singleTop"
             android:showOnLockScreen="true"
             android:theme="@style/AppFullScreenTheme">
         </activity>
 
         <activity
             android:name=".view.activities.SettingsActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".view.activities.MainActivity">
         </activity>
 
