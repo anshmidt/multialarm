@@ -24,6 +24,12 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".view.activities.SplashScreenActivity"
+            android:theme="@style/SplashTheme">
+
+        </activity>
+
+        <activity
             android:name=".view.activities.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
