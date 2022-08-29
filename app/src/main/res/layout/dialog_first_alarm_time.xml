@@ -15,7 +15,8 @@
             android:id="@+id/textview_title_firstalarmdialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginVertical="@dimen/margin_vertical_title_dialogs"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_title_dialogs"
             android:text="@string/timepicker_dialog_title"
             android:textColor="@color/mainTextColor"
             android:textSize="18sp"
@@ -35,8 +36,6 @@
             app:layout_constraintTop_toBottomOf="@id/textview_title_firstalarmdialog"
             displayAllTimeLeft="@{viewModel.timeLeft ?? null}"
             tools:text="21 h 17 min left"/>
-
-<!--        android:text="@{@string/all_time_left(viewModel.timeLeftHours, viewModel.timeLeftMinutesPart)}"-->
 
         <TimePicker
             android:id="@+id/timepicker_firstalarmdialog"
