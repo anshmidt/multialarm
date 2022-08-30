@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="mainViewModel"
@@ -9,12 +11,10 @@
             type="com.anshmidt.multialarm.viewmodel.MinutesBetweenAlarmsViewModel" />
     </data>
 
-    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mainBackground"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_main"
@@ -103,9 +103,11 @@
                 android:name="com.anshmidt.multialarm.view.fragments.NumberOfAlarmsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/divider_3"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/divider_3" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
