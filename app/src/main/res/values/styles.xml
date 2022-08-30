@@ -6,7 +6,8 @@
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/mainAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
 
@@ -59,6 +60,15 @@
 
     <style name="FirstAlarmTimeDialogTheme">
         <item name="android:textColorPrimary">@color/mainTextColor</item>
+    </style>
+
+    <!-- fontFamily is applied only for some views in order to avoid crash on displaying toast on API 23-->
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
 </resources>
