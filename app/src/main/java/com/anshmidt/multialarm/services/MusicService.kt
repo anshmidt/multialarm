@@ -2,7 +2,6 @@ package com.anshmidt.multialarm.services
 
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
@@ -14,7 +13,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.time.LocalTime
+import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 
 /**
@@ -71,13 +70,13 @@ class MusicService : Service(), KoinComponent {
     }
 
     private fun showNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Looks like notification should be started from the service according to Android design,
             // not the other way around
             val notificationId = LocalTime.now().minute
             val notification = notificationHelper.buildNotification(notificationId)
             startForeground(notificationId, notification)
-        }
+//        }
     }
 
     private fun startCountDownTimer(durationSeconds: Int, doOnCountDownFinish: () -> Unit) {
@@ -92,8 +91,12 @@ class MusicService : Service(), KoinComponent {
         countDownTimer.start()
     }
 
+    /**
+     * Is called when user dismisses the alarm from notification or from DismissAlarmActivity
+     */
     override fun onDestroy() {
         musicPlayer.stop()
+        countDownTimer.cancel()
         Log.d(TAG, "MusicService destroyed")
         super.onDestroy()
     }
