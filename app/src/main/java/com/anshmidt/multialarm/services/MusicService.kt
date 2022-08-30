@@ -65,18 +65,12 @@ class MusicService : Service(), KoinComponent {
         return START_NOT_STICKY
     }
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
     private fun showNotification() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Looks like notification should be started from the service according to Android design,
-            // not the other way around
-            val notificationId = LocalTime.now().minute
-            val notification = notificationHelper.buildNotification(notificationId)
-            startForeground(notificationId, notification)
-//        }
+        // Looks like notification should be started from the service according to guidelines,
+        // not the other way around
+        val notificationId = LocalTime.now().minute
+        val notification = notificationHelper.buildNotification(notificationId)
+        startForeground(notificationId, notification)
     }
 
     private fun startCountDownTimer(durationSeconds: Int, doOnCountDownFinish: () -> Unit) {

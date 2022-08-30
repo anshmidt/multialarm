@@ -9,7 +9,6 @@ import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
-import com.anshmidt.multialarm.notifications.dismissalarm.NotificationParams
 import com.anshmidt.multialarm.repository.*
 import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.anshmidt.multialarm.viewmodel.*
@@ -28,8 +27,7 @@ val appModule = module {
     single<DataStoreStorage> { DataStoreStorage(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
     factory<AlarmScheduler> { AlarmScheduler(androidContext()) }
-    factory { NotificationParams() }
-    factory<NotificationHelper> { NotificationHelper(androidContext(), get()) }
+    factory<NotificationHelper> { NotificationHelper(androidContext()) }
     viewModel { MainViewModel(get(), get(), get()) }
     viewModel { MinutesBetweenAlarmsViewModel(get(), get()) }
     viewModel { FirstAlarmTimeViewModel(get(), get()) }

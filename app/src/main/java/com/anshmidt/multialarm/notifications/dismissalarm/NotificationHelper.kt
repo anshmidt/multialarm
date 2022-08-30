@@ -17,18 +17,9 @@ import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import org.threeten.bp.LocalTime
 
 
-class NotificationHelper(val context: Context, val notificationParams: NotificationParams) {
+class NotificationHelper(val context: Context) {
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    fun showNotification() {
-        createNotificationChannel()
-
-        val notificationId = notificationParams.notificationId
-        val notification = buildNotification(notificationId)
-
-        notificationManager.notify(notificationId, notification)
-    }
 
     private fun getChannelName(): String {
         return context.getString(R.string.app_name)
@@ -37,7 +28,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
     fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val notificationChannel = NotificationChannel(NotificationParams.CHANNEL_ID, getChannelName(), importance)
+            val notificationChannel = NotificationChannel(CHANNEL_ID, getChannelName(), importance)
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             notificationManager.createNotificationChannel(notificationChannel)
             Log.d(TAG, "Notification channel created")
@@ -68,7 +59,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
 
     fun buildNotification(notificationId: Int): Notification {
         Log.d(TAG, "Building notification with id=$notificationId")
-        val notificationBuilder = NotificationCompat.Builder(context, NotificationParams.CHANNEL_ID)
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_on_notification)
                 .setContentTitle(context.getString(R.string.dismiss_alarm_notification_title))
                 .setContentText(context.getString(R.string.dismiss_alarm_notification_text, getCurrentTime()))
@@ -104,6 +95,7 @@ class NotificationHelper(val context: Context, val notificationParams: Notificat
 
     companion object {
         val TAG = NotificationHelper::class.java.simpleName
+        const val CHANNEL_ID = "alarm"
     }
 
 }

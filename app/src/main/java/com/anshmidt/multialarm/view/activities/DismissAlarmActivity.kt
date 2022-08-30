@@ -95,8 +95,6 @@ class DismissAlarmActivity : AppCompatActivity() {
 //            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         }
-
-
     }
 
     private fun stopMusicService() {

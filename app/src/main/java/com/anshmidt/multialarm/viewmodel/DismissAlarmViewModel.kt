@@ -25,8 +25,6 @@ class DismissAlarmViewModel : ViewModel() {
 
 
     fun onViewPaused() {
-//        _stopMusicService.call()
-//        _finishView.call()
     }
 
     fun onCountDownFinished() {
