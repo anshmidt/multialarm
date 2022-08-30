@@ -8,13 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
+import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
         private val ringtoneSettingRepository: IRingtoneSettingRepository,
-        private val appSettingRepository: IAppSettingRepository
+        private val appSettingRepository: IAppSettingRepository,
+        private val appThemeSelector: AppThemeSelector
 ) : ViewModel() {
 
     private var _chosenRingtoneName = MutableLiveData<String?>()
@@ -80,6 +82,7 @@ class SettingsViewModel(
     }
 
     fun onNightModeSelectedByUser(isNightModeOn: Boolean) {
+        appThemeSelector.showTheme(isNightModeOn)
         viewModelScope.launch(Dispatchers.IO) {
             appSettingRepository.saveNightModeSwitchState(isNightModeOn)
         }

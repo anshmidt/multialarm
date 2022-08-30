@@ -36,5 +36,5 @@ val appModule = module {
     viewModel { NumberOfAlarmsViewModel(get(), get()) }
     viewModel { DismissAlarmViewModel() }
     viewModel { AlarmsListViewModel(get()) }
-    viewModel { SettingsViewModel(get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get()) }
 }

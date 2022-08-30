@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -87,7 +86,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun onNightModeSelected(isNightModeOn: Boolean) {
-        selectAppTheme(isNightModeOn)
         viewModel.onNightModeSelectedByUser(isNightModeOn)
     }
 
@@ -190,14 +188,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val shouldShowNotification = false
         intent.putExtra(MusicService.INTENT_KEY_SHOULD_SHOW_NOTIFICATION, shouldShowNotification)
         requireContext().startService(intent)
-    }
-
-    private fun selectAppTheme(isNightModeOn: Boolean) {
-        if (isNightModeOn) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
     }
 
     companion object {

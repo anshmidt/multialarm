@@ -6,18 +6,22 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 
 class AppThemeSelector(
-        val appSettingRepository: IAppSettingRepository
+        private val appSettingRepository: IAppSettingRepository
 ) {
 
     fun checkAndShowTheme() {
-//        CoroutineScope(SupervisorJob()).launch(Dispatchers.Main) {
         runBlocking {
             appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
                 selectAppTheme(nightModeSwitchState)
                 return@first true
             }
         }
-//        }
+    }
+
+    fun showTheme(isNightModeOn: Boolean) {
+        runBlocking {
+            selectAppTheme(isNightModeOn)
+        }
     }
 
     private fun selectAppTheme(isNightModeOn: Boolean) {
