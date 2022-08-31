@@ -1,11 +1,12 @@
 package com.anshmidt.multialarm.repository
 
+import com.anshmidt.multialarm.data.Alarm
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
 import com.anshmidt.multialarm.datasources.DataStoreStorage
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalTime
 
@@ -41,13 +42,23 @@ class ScheduleSettingsRepository(
                 LocalTime.of(hours, minutes)
             }
 
-    override fun getAlarmsList(): Flow<List<LocalTime>> = dataStoreStorage.getAlarmSettings().map {
-        AlarmsConverter.getAlarmsList(
-                firstAlarmTime = it.firstAlarmTime,
-                minutesBetweenAlarms = it.minutesBetweenAlarms,
-                numberOfAlarms = it.numberOfAlarms
-        )
-    }.distinctUntilChanged()
+//    override fun getAlarmsList(): Flow<List<Alarm>> = dataStoreStorage.getAlarmSettings().map {
+//        AlarmsConverter.getAlarmsList(
+//                firstAlarmTime = it.firstAlarmTime,
+//                minutesBetweenAlarms = it.minutesBetweenAlarms,
+//                numberOfAlarms = it.numberOfAlarms
+//        )
+//    }.distinctUntilChanged()
+
+    override fun getAlarmsList(): Flow<List<Alarm>> = dataStoreStorage.getNumberOfAlreadyRangAlarms()
+            .combine(dataStoreStorage.getAlarmSettings()) { numberOfAlreadyRangAlarms, alarmSettings ->
+                AlarmsConverter.getAlarmsList(
+                        firstAlarmTime = alarmSettings.firstAlarmTime,
+                        minutesBetweenAlarms = alarmSettings.minutesBetweenAlarms,
+                        numberOfAlarms = alarmSettings.numberOfAlarms,
+                        numberOfAlreadyRangAlarms = numberOfAlreadyRangAlarms
+                )
+            }
 
     override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings().distinctUntilChanged()
 

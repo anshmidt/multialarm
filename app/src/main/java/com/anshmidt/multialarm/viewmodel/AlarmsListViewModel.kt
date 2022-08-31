@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anshmidt.multialarm.data.Alarm
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalTime
 
 class AlarmsListViewModel(
         private val scheduleSettingsRepository: IScheduleSettingsRepository
 ) : ViewModel() {
 
-    private var _alarms = MutableLiveData<List<LocalTime>>()
-    val alarms: LiveData<List<LocalTime>> = _alarms
+    private var _alarms = MutableLiveData<List<Alarm>>()
+    val alarms: LiveData<List<Alarm>> = _alarms
 
     private var _alarmTurnedOn = MutableLiveData<Boolean>()
     val alarmTurnedOn: LiveData<Boolean> = _alarmTurnedOn
@@ -35,7 +35,7 @@ class AlarmsListViewModel(
 
     }
 
-    private fun onAlarmsListChanged(alarmsList: List<LocalTime>) {
+    private fun onAlarmsListChanged(alarmsList: List<Alarm>) {
         _alarms.postValue(alarmsList)
     }
 

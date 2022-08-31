@@ -2,10 +2,11 @@
 
 <layout>
     <data>
+        <import type="android.view.View"/>
         <import type="com.anshmidt.multialarm.data.TimeFormatter"/>
         <variable
             name="item"
-            type="org.threeten.bp.LocalTime" />
+            type="com.anshmidt.multialarm.data.Alarm" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,15 +25,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/mainAccent"
+            android:visibility="@{item.enabled ? View.VISIBLE : View.INVISIBLE}"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/textview_item_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{TimeFormatter.getDisplayableTime(item)}"
+            android:text="@{TimeFormatter.getDisplayableTime(item.time)}"
             tools:text="07:38"
-            android:textColor="@color/mainAccent"
+            android:textColor="@{item.enabled ? @color/mainAccent : @color/mainDisabledTextColor}"
             android:textSize="14sp"
             android:layout_margin="8dp"
             app:layout_constraintStart_toEndOf="@id/image_item_alarm"

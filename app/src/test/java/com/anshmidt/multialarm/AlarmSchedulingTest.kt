@@ -33,8 +33,7 @@ class AlarmSchedulingTest {
                 switchState = true,
                 firstAlarmTime = firstAlarmTime,
                 minutesBetweenAlarms = 5,
-                numberOfAlarms = 5,
-                ringtoneDurationSeconds = 60
+                numberOfAlarms = 5
         )
     }
 
@@ -121,8 +120,7 @@ class AlarmSchedulingTest {
                 switchState = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
-                numberOfAlarms = 5,
-                ringtoneDurationSeconds = 60
+                numberOfAlarms = 5
         )
 
         //when
@@ -144,8 +142,7 @@ class AlarmSchedulingTest {
                 switchState = true,
                 firstAlarmTime = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
-                numberOfAlarms = 5,
-                ringtoneDurationSeconds = 60
+                numberOfAlarms = 5
         )
 
         //when
@@ -166,8 +163,7 @@ class AlarmSchedulingTest {
                 switchState = false,
                 firstAlarmTime = LocalTime.MIDNIGHT,
                 minutesBetweenAlarms = 5,
-                numberOfAlarms = 5,
-                ringtoneDurationSeconds = 60
+                numberOfAlarms = 5
         )
 
         //when

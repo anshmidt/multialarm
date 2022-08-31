@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.anshmidt.multialarm.data.Alarm
 import com.anshmidt.multialarm.databinding.ItemAlarmBinding
-import org.threeten.bp.LocalTime
 
 class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
 
-    var items: List<LocalTime> = listOf()
+    var items: List<Alarm> = listOf()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
@@ -28,7 +28,7 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
     }
 
     class ViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LocalTime) {
+        fun bind(item: Alarm) {
             binding.item = item
         }
     }
