@@ -4,9 +4,9 @@
         android:drawable="@color/splashScreenBackground"/>
 
     <item
-        android:width="100dp"
-        android:height="100dp"
-        android:bottom="200dp"
+        android:width="200dp"
+        android:height="200dp"
+        android:bottom="2dp"
         android:drawable="@drawable/ic_splash_screen"
         android:gravity="center" />
 
