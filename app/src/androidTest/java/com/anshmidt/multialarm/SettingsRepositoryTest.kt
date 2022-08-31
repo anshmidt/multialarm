@@ -1,7 +1,6 @@
 package com.anshmidt.multialarm
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import com.anshmidt.multialarm.repository.ScheduleSettingsRepository
 import org.junit.Assert
 import org.junit.Before
