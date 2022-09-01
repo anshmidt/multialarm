@@ -4,13 +4,16 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
+import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.zip
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.threeten.bp.LocalTime
@@ -23,8 +26,10 @@ class MusicService : Service(), KoinComponent {
 
     private val musicPlayer: IMusicPlayer by inject()
     private val ringtoneSettingRepository: IRingtoneSettingRepository by inject()
+    private val scheduleSettingsRepository: IScheduleSettingsRepository by inject()
     private val countDownTimer: ICountDownTimer by inject()
     private val notificationHelper: NotificationHelper by inject()
+    private val alarmScheduler: AlarmScheduler by inject()
     private val scope = CoroutineScope(SupervisorJob())
 
     private var shouldShowNotification = SHOULD_SHOW_NOTIFICATION_DEFAULT_VALUE
@@ -62,7 +67,33 @@ class MusicService : Service(), KoinComponent {
             }
         }
 
+        // Alarm is considered as already rang at the moment when it starts ringing
+        checkNumberOfAlreadyRangAlarms()
+
         return START_NOT_STICKY
+    }
+
+    private fun checkNumberOfAlreadyRangAlarms() {
+        scope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getNumberOfAlreadyRangAlarms()
+                .zip(scheduleSettingsRepository.getNumberOfAlarms()) { numberOfAlreadyRangAlarms, numberOfAlarms ->
+                    val newNumberOfAlreadyRangAlarms = numberOfAlreadyRangAlarms + 1
+                    scheduleSettingsRepository.saveNumberOfAlreadyRangAlarms(newNumberOfAlreadyRangAlarms)
+
+                    cancelAlarmsIfAllHaveRung(
+                        numberOfAlreadyRangAlarms = newNumberOfAlreadyRangAlarms,
+                        numberOfAlarms = numberOfAlarms
+                    )
+                }
+                .first()
+        }
+    }
+
+    private suspend fun cancelAlarmsIfAllHaveRung(numberOfAlreadyRangAlarms: Int, numberOfAlarms: Int) {
+        if (numberOfAlreadyRangAlarms >= numberOfAlarms) {
+            alarmScheduler.cancel()
+            scheduleSettingsRepository.saveAlarmSwitchState(false)
+        }
     }
 
     private fun showNotification() {
