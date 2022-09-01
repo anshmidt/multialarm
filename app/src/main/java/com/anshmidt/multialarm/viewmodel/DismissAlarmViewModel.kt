@@ -14,6 +14,8 @@ class DismissAlarmViewModel : ViewModel() {
     val stopMusicService: LiveData<Any>
         get() = _stopMusicService
 
+    var reasonWhyFinishView = ReasonWhyFinishView.VIEW_PAUSED_BY_SYSTEM
+
     fun onViewCreated() {
 
     }
@@ -22,6 +24,7 @@ class DismissAlarmViewModel : ViewModel() {
      * When MusicService is destroyed, it doesn't finish the view.
      */
     fun onDismissButtonClicked() {
+        reasonWhyFinishView = ReasonWhyFinishView.DISMISS_BUTTON_CLICKED
         _stopMusicService.call()
         _finishView.call()
     }
@@ -32,6 +35,10 @@ class DismissAlarmViewModel : ViewModel() {
      * Remember that this is also called after user clicks Dismiss, or count down finishes.
      */
     fun onViewPaused() {
+        if (reasonWhyFinishView == ReasonWhyFinishView.VIEW_PAUSED_BY_SYSTEM) {
+            _stopMusicService.call()
+            _finishView.call()
+        }
     }
 
     /**
@@ -40,8 +47,14 @@ class DismissAlarmViewModel : ViewModel() {
      * this method is triggered.
      */
     fun onCountDownFinished() {
+        reasonWhyFinishView = ReasonWhyFinishView.COUNT_DOWN_FINISHED
         _finishView.call()
     }
 
+    enum class ReasonWhyFinishView {
+        COUNT_DOWN_FINISHED,
+        DISMISS_BUTTON_CLICKED,
+        VIEW_PAUSED_BY_SYSTEM
+    }
 
 }
