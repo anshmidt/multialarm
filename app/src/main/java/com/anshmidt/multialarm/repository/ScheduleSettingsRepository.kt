@@ -62,6 +62,10 @@ class ScheduleSettingsRepository(
 
     override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings().distinctUntilChanged()
 
+    override suspend fun incrementNumberOfAlreadyRangAlarms() {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         val TAG = ScheduleSettingsRepository::class.java.simpleName
     }
