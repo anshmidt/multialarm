@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.data.SingleLiveEvent
@@ -14,7 +15,7 @@ class DismissAlarmViewModel : ViewModel() {
     val stopMusicService: LiveData<Any>
         get() = _stopMusicService
 
-    var reasonWhyFinishView = ReasonWhyFinishView.VIEW_PAUSED_BY_SYSTEM
+    private var reasonWhyFinishView: ReasonWhyFinishView? = null
 
     fun onViewCreated() {
 
@@ -30,11 +31,21 @@ class DismissAlarmViewModel : ViewModel() {
     }
 
     /**
+     * Method onPause() was called during the process of DismissAlarmActivity creation.
+     * That's why we use other methods to check if view is in active state.
+     */
+    fun onViewGainedFocus() {
+        Log.d(TAG, "onViewGainedFocus")
+        reasonWhyFinishView = ReasonWhyFinishView.VIEW_PAUSED_BY_SYSTEM
+    }
+
+    /**
      * If something appears on top of DismissAlarm screen (for example incoming call screen or another app),
      * then we stop the music and close the DismissAlarm screen.
      * Remember that this is also called after user clicks Dismiss, or count down finishes.
      */
-    fun onViewPaused() {
+    fun onViewLostFocus() {
+        Log.d(TAG, "onViewLostFocus. reasonWhyFinishView: $reasonWhyFinishView")
         if (reasonWhyFinishView == ReasonWhyFinishView.VIEW_PAUSED_BY_SYSTEM) {
             _stopMusicService.call()
             _finishView.call()
@@ -55,6 +66,10 @@ class DismissAlarmViewModel : ViewModel() {
         COUNT_DOWN_FINISHED,
         DISMISS_BUTTON_CLICKED,
         VIEW_PAUSED_BY_SYSTEM
+    }
+
+    companion object {
+        val TAG = DismissAlarmViewModel::class.java.simpleName
     }
 
 }

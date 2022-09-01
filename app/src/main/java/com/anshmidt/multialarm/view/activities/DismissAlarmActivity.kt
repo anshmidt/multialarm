@@ -71,9 +71,13 @@ class DismissAlarmActivity : AppCompatActivity() {
         binding.dismissAlarmViewModel = dismissAlarmViewModel
     }
 
-    override fun onPause() {
-        super.onPause()
-        dismissAlarmViewModel.onViewPaused()
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            dismissAlarmViewModel.onViewGainedFocus()
+        } else {
+            dismissAlarmViewModel.onViewLostFocus()
+        }
     }
 
     private fun hideStatusBar() {
@@ -113,6 +117,7 @@ class DismissAlarmActivity : AppCompatActivity() {
 
     companion object {
         const val COUNT_DOWN_FINISHED_ACTION = "countDownIntentKey"
+        val TAG = DismissAlarmActivity::class.java.simpleName
     }
 
 }
