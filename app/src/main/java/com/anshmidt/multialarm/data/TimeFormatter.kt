@@ -12,7 +12,7 @@ object TimeFormatter {
         return displayableTime
     }
 
-    fun getTimeLeft(alarmTime: LocalTime, currentTime: LocalTime): TimeLeft {
+    fun getDisplayableTimeLeft(alarmTime: LocalTime, currentTime: LocalTime): TimeLeft {
         val timeLeftDuration = Duration.between(currentTime, alarmTime)
         /**
          * Time left (before the alarm) must be always > 0 and no more that 24 h.
@@ -21,6 +21,18 @@ object TimeFormatter {
          */
         val normalizedTimeLeftDuration = normalizeDurationByAddingOrSubtractingDays(timeLeftDuration)
         return normalizedTimeLeftDuration.toTimeLeft()
+    }
+
+    /**
+     * The precision of AlarmManager is ±2-3 minutes. That's why sometimes first alarm is 2-3 minutes
+     * late. In these cases, the expected behavior is to show "0 minutes left" (and not a negative duration).
+     */
+    private fun normalizeDurationForDisplaying(duration: Duration): Duration {
+        return if (duration.isNegative) {
+            Duration.ZERO
+        } else {
+            duration
+        }
     }
 
     fun normalizeDurationByAddingOrSubtractingDays(duration: Duration): Duration {
@@ -46,12 +58,12 @@ object TimeFormatter {
         val zoneId = ZoneId.systemDefault()
         val zonedDateTime = localTimeDate.atZone(zoneId)
         val normalizedZonedDateTime = normalizeAlarmTimeByAddingOrSubtractingDays(zonedDateTime)
-        val millis = getMillisFromZonedDateTime(normalizedZonedDateTime)
+        val millis = normalizedZonedDateTime.getMillis()
         return millis
     }
 
-    private fun getMillisFromZonedDateTime(zonedDateTime: ZonedDateTime): Long {
-        val seconds = zonedDateTime.toEpochSecond()
+    private fun ZonedDateTime.getMillis(): Long {
+        val seconds = this.toEpochSecond()
         val millis = seconds * 1000
         return millis
     }

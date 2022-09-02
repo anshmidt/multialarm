@@ -27,6 +27,9 @@ class FirstAlarmTimeViewModel(
     private var _timeLeft = MutableLiveData<TimeLeft>()
     val timeLeft: LiveData<TimeLeft> = _timeLeft
 
+    private var _shouldShowTimeLeftOnMainScreen = MutableLiveData<Boolean>()
+    val shouldShowTimeLeftOnMainScreen: LiveData<Boolean> = _shouldShowTimeLeftOnMainScreen
+
     private val firstAlarmTimeSelectedByUserFlow = MutableStateFlow<LocalTime?>(null)
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
@@ -52,6 +55,28 @@ class FirstAlarmTimeViewModel(
             ).collect { timeLeft ->
                 _timeLeft.postValue(timeLeft)
             }
+        }
+
+        /**
+         * Time left to the first alarm doesn't make sense if it's already off. That's why we hide
+         * time left in this case.
+         */
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getNumberOfAlreadyRangAlarms().combine(
+                scheduleSettingsRepository.getAlarmSwitchState()
+            ) { numberOfAlreadyRangAlarms, switchState ->
+                return@combine shouldShowTimeLeftOnMainScreen(numberOfAlreadyRangAlarms, switchState)
+            }.collect { shouldShowTimeLeftOnMainScreen ->
+                _shouldShowTimeLeftOnMainScreen.postValue(shouldShowTimeLeftOnMainScreen)
+            }
+        }
+    }
+
+    private fun shouldShowTimeLeftOnMainScreen(numberOfAlreadyRangAlarms: Int, switchState: Boolean): Boolean {
+        return if ((numberOfAlreadyRangAlarms > 0) && (switchState == true)) {
+            false
+        } else {
+            true
         }
     }
 
@@ -109,7 +134,7 @@ class FirstAlarmTimeViewModel(
         return firstAlarmTimeFlow.combine(tickerFlow) { firstAlarmTime, _ ->
             firstAlarmTime
         }.map { firstAlarmTime ->
-            TimeFormatter.getTimeLeft(
+            TimeFormatter.getDisplayableTimeLeft(
                     alarmTime = firstAlarmTime,
                     currentTime = LocalTime.now()
             )
