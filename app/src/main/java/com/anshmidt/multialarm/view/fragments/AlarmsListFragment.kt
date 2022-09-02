@@ -29,19 +29,7 @@ class AlarmsListFragment : Fragment() {
             adapter.items = alarms
         })
 
-        viewModel.alarmTurnedOn.observe(viewLifecycleOwner, Observer { alarmTurnedOn ->
-            onAlarmTurnedOn(alarmTurnedOn)
-        })
-
         return binding.root
-    }
-
-    private fun onAlarmTurnedOn(alarmTurnedOn: Boolean) {
-        binding.recyclerviewMainAlarmslist.visibility = if (alarmTurnedOn) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
     }
 
     override fun onStart() {

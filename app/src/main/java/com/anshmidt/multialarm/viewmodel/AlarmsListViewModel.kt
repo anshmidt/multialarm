@@ -8,6 +8,7 @@ import com.anshmidt.multialarm.data.Alarm
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class AlarmsListViewModel(
@@ -17,30 +18,28 @@ class AlarmsListViewModel(
     private var _alarms = MutableLiveData<List<Alarm>>()
     val alarms: LiveData<List<Alarm>> = _alarms
 
-    private var _alarmTurnedOn = MutableLiveData<Boolean>()
-    val alarmTurnedOn: LiveData<Boolean> = _alarmTurnedOn
-
     fun onViewStarted() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
-                onAlarmSwitchChanged(switchState)
-            }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmsList().collect { alarmsList ->
-                onAlarmsListChanged(alarmsList)
+            scheduleSettingsRepository.getAlarmSwitchState().combine(
+                scheduleSettingsRepository.getAlarmsList()
+            ) { switchState, alarmsList ->
+                if (switchState) {
+                    return@combine alarmsList
+                } else {
+                    // If switch is turned off, all alarms are displayed as disabled
+                    return@combine getDisabledAlarms(alarmsList)
+                }
+            }.collect { alarmsList ->
+                _alarms.postValue(alarmsList)
             }
         }
 
     }
 
-    private fun onAlarmsListChanged(alarmsList: List<Alarm>) {
-        _alarms.postValue(alarmsList)
-    }
-
-    private fun onAlarmSwitchChanged(alarmTurnedOn: Boolean) {
-        _alarmTurnedOn.postValue(alarmTurnedOn)
+    private fun getDisabledAlarms(alarmsList: List<Alarm>): List<Alarm> {
+        return alarmsList.map { alarm ->
+            alarm.copy(isEnabled = false)
+        }
     }
 
     fun onViewStopped() {
