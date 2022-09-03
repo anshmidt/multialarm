@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
             }
         }
+
     }
 
     private fun setSwitchState(switchState: Boolean) {
