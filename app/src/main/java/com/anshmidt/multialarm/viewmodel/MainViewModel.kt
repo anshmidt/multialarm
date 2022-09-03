@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -64,6 +65,7 @@ class MainViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmsList()
+                    .map { alarmsList -> alarmsList.map {it.time} }
                     .drop(1) // ignore initial value since we're only interested when alarm list changes
                     .collect {
                 onAlarmsListChanged()
