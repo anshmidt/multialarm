@@ -24,8 +24,7 @@
             android:src="@drawable/ic_alarm_on_notification"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/mainAccent"
-            android:visibility="@{item.enabled ? View.VISIBLE : View.INVISIBLE}"
+            app:tint="@{item.enabled ? @color/mainAccent : @color/mainDisabledTextColor}"
             tools:ignore="ContentDescription" />
 
         <TextView
