@@ -57,18 +57,24 @@ class NotificationHelper(val context: Context) {
         return pendingIntent
     }
 
-    fun buildNotification(notificationId: Int): Notification {
+    fun buildNotification(notificationId: Int, alarmTime: LocalTime): Notification {
         Log.d(TAG, "Building notification with id=$notificationId")
+        val displayableAlarmTime = TimeFormatter.getDisplayableTime(alarmTime)
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_on_notification)
                 .setContentTitle(context.getString(R.string.dismiss_alarm_notification_title))
-                .setContentText(context.getString(R.string.dismiss_alarm_notification_text, getCurrentTime()))
+                .setContentText(context.getString(R.string.dismiss_alarm_notification_text, displayableAlarmTime))
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setAutoCancel(true)
                 .addAction(getDismissNotificationAction(notificationId = notificationId))
                 .setFullScreenIntent(createFullScreenIntent(), true)
                 .setDeleteIntent(createOnNotificationDismissedIntent())
         return notificationBuilder.build()
+    }
+
+    fun getNotificationId(alarmTime: LocalTime): Int {
+        // Notification id shouldn't be 0
+        return alarmTime.hour + alarmTime.minute + 1
     }
 
     private fun getDismissNotificationAction(notificationId: Int): NotificationCompat.Action? {
@@ -80,12 +86,6 @@ class NotificationHelper(val context: Context) {
                 context.getString(R.string.dismiss_alarm_notification_dismiss_button_title),
                 dismissNotificationPendingIntent
         ).build()
-    }
-
-    private fun getCurrentTime(): String {
-        val currentTime = LocalTime.now()
-        val displayableTime = TimeFormatter.getDisplayableTime(currentTime)
-        return displayableTime
     }
 
     fun cancelNotification() {

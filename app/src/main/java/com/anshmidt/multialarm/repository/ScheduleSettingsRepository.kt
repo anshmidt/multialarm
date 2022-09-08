@@ -60,6 +60,11 @@ class ScheduleSettingsRepository(
 
     override fun getNumberOfAlreadyRangAlarms() = sharedPreferencesStorage.getNumberOfAlreadyRangAlarms()
 
+    override fun getUpcomingAlarmTime(): Flow<LocalTime> = getAlarmsList()
+            .combine(getNumberOfAlreadyRangAlarms()) { alarmsList, numberOfAlreadyRangAlarms ->
+                alarmsList.get(numberOfAlreadyRangAlarms).time
+            }
+
     companion object {
         val TAG = ScheduleSettingsRepository::class.java.simpleName
     }

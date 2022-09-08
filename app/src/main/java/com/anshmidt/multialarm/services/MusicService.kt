@@ -46,7 +46,15 @@ class MusicService : Service(), KoinComponent {
         }
 
         if (shouldShowNotification) {
-            showNotification()
+            scope.launch(Dispatchers.IO) {
+                scheduleSettingsRepository.getUpcomingAlarmTime().first { upcomingAlarmTime ->
+                    showNotification(upcomingAlarmTime)
+                    // Alarm is considered as already rang at the moment when it starts ringing
+                    checkNumberOfAlreadyRangAlarms()
+                    return@first true
+                }
+            }
+
         }
 
         scope.launch(Dispatchers.IO) {
@@ -66,9 +74,6 @@ class MusicService : Service(), KoinComponent {
                 return@first true
             }
         }
-
-        // Alarm is considered as already rang at the moment when it starts ringing
-        checkNumberOfAlreadyRangAlarms()
 
         return START_NOT_STICKY
     }
@@ -96,11 +101,11 @@ class MusicService : Service(), KoinComponent {
         }
     }
 
-    private fun showNotification() {
+    private fun showNotification(alarmTime: LocalTime) {
         // Looks like notification should be started from the service according to guidelines,
         // not the other way around
-        val notificationId = LocalTime.now().minute
-        val notification = notificationHelper.buildNotification(notificationId)
+        val notificationId = notificationHelper.getNotificationId(alarmTime)
+        val notification = notificationHelper.buildNotification(notificationId, alarmTime)
         startForeground(notificationId, notification)
     }
 

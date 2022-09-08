@@ -19,4 +19,5 @@ interface IScheduleSettingsRepository {
     fun getAlarmSettings(): Flow<AlarmSettings>
     suspend fun saveNumberOfAlreadyRangAlarms(numberOfAlreadyRangAlarms: Int)
     fun getNumberOfAlreadyRangAlarms(): Flow<Int>
+    fun getUpcomingAlarmTime(): Flow<LocalTime>
 }
