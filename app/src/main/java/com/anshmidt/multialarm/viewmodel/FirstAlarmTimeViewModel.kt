@@ -30,6 +30,9 @@ class FirstAlarmTimeViewModel(
     private var _shouldShowTimeLeftOnMainScreen = MutableLiveData<Boolean>()
     val shouldShowTimeLeftOnMainScreen: LiveData<Boolean> = _shouldShowTimeLeftOnMainScreen
 
+    private var _isTimeLeftEnabled = MutableLiveData<Boolean>()
+    val isTimeLeftEnabled: LiveData<Boolean> = _isTimeLeftEnabled
+
     private val firstAlarmTimeSelectedByUserFlow = MutableStateFlow<LocalTime?>(null)
 
     private val _openFirstAlarmTimeDialog = SingleLiveEvent<Any>()
@@ -68,6 +71,12 @@ class FirstAlarmTimeViewModel(
                 return@combine shouldShowTimeLeftOnMainScreen(numberOfAlreadyRangAlarms, switchState)
             }.collect { shouldShowTimeLeftOnMainScreen ->
                 _shouldShowTimeLeftOnMainScreen.postValue(shouldShowTimeLeftOnMainScreen)
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
+                _isTimeLeftEnabled.postValue(switchState)
             }
         }
     }
