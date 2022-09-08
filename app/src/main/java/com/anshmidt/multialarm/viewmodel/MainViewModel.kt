@@ -11,6 +11,7 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -60,29 +61,23 @@ class MainViewModel(
             }
         }
 
-//        viewModelScope.launch(Dispatchers.IO) {
-//            scheduleSettingsRepository.getAlarmsList()
-//                    .map { alarmsList -> alarmsList.map {it.time} }
-//                    .drop(1) // ignore initial value since we're only interested when alarm list changes
-//                    .collect {
-//                onAlarmSettingsChanged()
-//            }
-//        }
-
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getFirstAlarmTime().collect {
-                onAlarmSettingsChanged()
-            }
+            scheduleSettingsRepository
+                    .getFirstAlarmTime()
+                    .drop(1) // ignore initial value since we're only interested in changes
+                    .collect { onAlarmSettingsChanged() }
         }
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getNumberOfAlarms().collect {
-                onAlarmSettingsChanged()
-            }
+            scheduleSettingsRepository
+                    .getNumberOfAlarms()
+                    .drop(1) // ignore initial value since we're only interested in changes
+                    .collect { onAlarmSettingsChanged() }
         }
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getMinutesBetweenAlarms().collect {
-                onAlarmSettingsChanged()
-            }
+            scheduleSettingsRepository
+                    .getMinutesBetweenAlarms()
+                    .drop(1) // ignore initial value since we're only interested in changes
+                    .collect { onAlarmSettingsChanged() }
         }
     }
 

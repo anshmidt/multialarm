@@ -7,7 +7,6 @@ import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalTime
 
 class ScheduleSettingsRepository(
@@ -38,7 +37,7 @@ class ScheduleSettingsRepository(
     }
 
     override fun getFirstAlarmTime(): Flow<LocalTime> = sharedPreferencesStorage.getFirstAlarmHours()
-            .zip(sharedPreferencesStorage.getFirstAlarmMinutes()) { hours, minutes ->
+            .combine(sharedPreferencesStorage.getFirstAlarmMinutes()) { hours, minutes ->
                 LocalTime.of(hours, minutes)
             }
 
