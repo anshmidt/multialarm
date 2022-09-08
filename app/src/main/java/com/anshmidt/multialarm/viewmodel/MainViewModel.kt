@@ -11,10 +11,7 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -63,12 +60,28 @@ class MainViewModel(
             }
         }
 
+//        viewModelScope.launch(Dispatchers.IO) {
+//            scheduleSettingsRepository.getAlarmsList()
+//                    .map { alarmsList -> alarmsList.map {it.time} }
+//                    .drop(1) // ignore initial value since we're only interested when alarm list changes
+//                    .collect {
+//                onAlarmSettingsChanged()
+//            }
+//        }
+
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmsList()
-                    .map { alarmsList -> alarmsList.map {it.time} }
-                    .drop(1) // ignore initial value since we're only interested when alarm list changes
-                    .collect {
-                onAlarmsListChanged()
+            scheduleSettingsRepository.getFirstAlarmTime().collect {
+                onAlarmSettingsChanged()
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getNumberOfAlarms().collect {
+                onAlarmSettingsChanged()
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            scheduleSettingsRepository.getMinutesBetweenAlarms().collect {
+                onAlarmSettingsChanged()
             }
         }
     }
@@ -81,9 +94,9 @@ class MainViewModel(
 
     }
 
-    private fun onAlarmsListChanged() {
+    private fun onAlarmSettingsChanged() {
         _alarmSwitchState.value?.let {
-            if (it) {
+            if (it) { // Makes no sense to show the reset message if alarms are turned off
                 _displayAlarmsResetMessage.postCall()
             }
         }
