@@ -1,14 +1,14 @@
 package com.anshmidt.multialarm.repository
 
-import com.anshmidt.multialarm.datasources.DataStoreStorage
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 
 class AppSettingRepository(
-        val dataStoreStorage: DataStoreStorage
+        val sharedPreferencesStorage: SharedPreferencesStorage
 ) : IAppSettingRepository {
 
     override suspend fun saveNightModeSwitchState(nightModeSwitchState: Boolean) {
-        dataStoreStorage.saveNightModeSwitchState(nightModeSwitchState)
+        sharedPreferencesStorage.saveNightModeSwitchState(nightModeSwitchState)
     }
 
-    override fun getNightModeSwitchState() = dataStoreStorage.getNightModeSwitchState()
+    override fun getNightModeSwitchState() = sharedPreferencesStorage.getNightModeSwitchState()
 }

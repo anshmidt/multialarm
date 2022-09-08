@@ -3,7 +3,7 @@ package com.anshmidt.multialarm.repository
 import com.anshmidt.multialarm.data.Alarm
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.AlarmsConverter
-import com.anshmidt.multialarm.datasources.DataStoreStorage
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -11,47 +11,39 @@ import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalTime
 
 class ScheduleSettingsRepository(
-        private val dataStoreStorage: DataStoreStorage
+        private val sharedPreferencesStorage: SharedPreferencesStorage
 ) : IScheduleSettingsRepository {
 
     override suspend fun saveAlarmSwitchState(switchState: Boolean) {
-        dataStoreStorage.saveAlarmSwitchState(switchState)
+        sharedPreferencesStorage.saveAlarmSwitchState(switchState)
     }
 
-    override fun getAlarmSwitchState(): Flow<Boolean> = dataStoreStorage.getAlarmSwitchState()
+    override fun getAlarmSwitchState(): Flow<Boolean> = sharedPreferencesStorage.getAlarmSwitchState()
 
     override suspend fun saveMinutesBetweenAlarms(minutesBetweenAlarms: Int) {
-        dataStoreStorage.saveMinutesBetweenAlarms(minutesBetweenAlarms)
+        sharedPreferencesStorage.saveMinutesBetweenAlarms(minutesBetweenAlarms)
     }
 
-    override fun getMinutesBetweenAlarms(): Flow<Int> = dataStoreStorage.getMinutesBetweenAlarms()
+    override fun getMinutesBetweenAlarms(): Flow<Int> = sharedPreferencesStorage.getMinutesBetweenAlarms()
 
     override suspend fun saveNumberOfAlarms(numberOfAlarms: Int) {
-        dataStoreStorage.saveNumberOfAlarms(numberOfAlarms)
+        sharedPreferencesStorage.saveNumberOfAlarms(numberOfAlarms)
     }
 
-    override fun getNumberOfAlarms(): Flow<Int> = dataStoreStorage.getNumberOfAlarms()
+    override fun getNumberOfAlarms(): Flow<Int> = sharedPreferencesStorage.getNumberOfAlarms()
 
     override suspend fun saveFirstAlarmTime(firstAlarmTime: LocalTime) {
-        dataStoreStorage.saveFirstAlarmHours(firstAlarmTime.hour)
-        dataStoreStorage.saveFirstAlarmMinutes(firstAlarmTime.minute)
+        sharedPreferencesStorage.saveFirstAlarmHours(firstAlarmTime.hour)
+        sharedPreferencesStorage.saveFirstAlarmMinutes(firstAlarmTime.minute)
     }
 
-    override fun getFirstAlarmTime(): Flow<LocalTime> = dataStoreStorage.getFirstAlarmHours()
-            .zip(dataStoreStorage.getFirstAlarmMinutes()) { hours, minutes ->
+    override fun getFirstAlarmTime(): Flow<LocalTime> = sharedPreferencesStorage.getFirstAlarmHours()
+            .zip(sharedPreferencesStorage.getFirstAlarmMinutes()) { hours, minutes ->
                 LocalTime.of(hours, minutes)
             }
 
-//    override fun getAlarmsList(): Flow<List<Alarm>> = dataStoreStorage.getAlarmSettings().map {
-//        AlarmsConverter.getAlarmsList(
-//                firstAlarmTime = it.firstAlarmTime,
-//                minutesBetweenAlarms = it.minutesBetweenAlarms,
-//                numberOfAlarms = it.numberOfAlarms
-//        )
-//    }.distinctUntilChanged()
-
-    override fun getAlarmsList(): Flow<List<Alarm>> = dataStoreStorage.getNumberOfAlreadyRangAlarms()
-            .combine(dataStoreStorage.getAlarmSettings()) { numberOfAlreadyRangAlarms, alarmSettings ->
+    override fun getAlarmsList(): Flow<List<Alarm>> = sharedPreferencesStorage.getNumberOfAlreadyRangAlarms()
+            .combine(sharedPreferencesStorage.getAlarmSettings()) { numberOfAlreadyRangAlarms, alarmSettings ->
                 AlarmsConverter.getAlarmsList(
                         firstAlarmTime = alarmSettings.firstAlarmTime,
                         minutesBetweenAlarms = alarmSettings.minutesBetweenAlarms,
@@ -60,13 +52,13 @@ class ScheduleSettingsRepository(
                 )
             }
 
-    override fun getAlarmSettings(): Flow<AlarmSettings> = dataStoreStorage.getAlarmSettings().distinctUntilChanged()
+    override fun getAlarmSettings(): Flow<AlarmSettings> = sharedPreferencesStorage.getAlarmSettings().distinctUntilChanged()
 
     override suspend fun saveNumberOfAlreadyRangAlarms(numberOfAlreadyRangAlarms: Int) {
-        dataStoreStorage.saveNumberOfAlreadyRangAlarms(numberOfAlreadyRangAlarms)
+        sharedPreferencesStorage.saveNumberOfAlreadyRangAlarms(numberOfAlreadyRangAlarms)
     }
 
-    override fun getNumberOfAlreadyRangAlarms() = dataStoreStorage.getNumberOfAlreadyRangAlarms()
+    override fun getNumberOfAlreadyRangAlarms() = sharedPreferencesStorage.getNumberOfAlreadyRangAlarms()
 
     companion object {
         val TAG = ScheduleSettingsRepository::class.java.simpleName

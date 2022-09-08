@@ -2,33 +2,33 @@ package com.anshmidt.multialarm.repository
 
 import android.media.RingtoneManager
 import android.net.Uri
-import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.FileStorage
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RingtoneSettingRepository(
-        private val dataStoreStorage: DataStoreStorage,
+        private val sharedPreferencesStorage: SharedPreferencesStorage,
         private val fileStorage: FileStorage
 ) : IRingtoneSettingRepository {
 
     override suspend fun saveRingtoneDurationSeconds(ringtoneDurationSeconds: Int) {
-        dataStoreStorage.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
+        sharedPreferencesStorage.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
     }
 
     override fun getRingtoneDurationSeconds(): Flow<Int> {
-        return dataStoreStorage.getRingtoneDurationSeconds()
+        return sharedPreferencesStorage.getRingtoneDurationSeconds()
     }
 
     override suspend fun saveRingtoneUri(uri: Uri) {
         val uriString = uri.toString()
-        dataStoreStorage.saveRingtoneUriString(uriString)
+        sharedPreferencesStorage.saveRingtoneUriString(uriString)
     }
 
     override fun getRingtoneUri(): Flow<Uri> {
         val defaultUriString = getDefaultRingtoneUri().toString()
 
-        return dataStoreStorage.getRingtoneUriString().map { uriString ->
+        return sharedPreferencesStorage.getRingtoneUriString().map { uriString ->
             if (uriString.isEmpty()) {
                 Uri.parse(defaultUriString)
             } else {

@@ -5,6 +5,7 @@ import com.anshmidt.multialarm.countdowntimer.DefaultCountDownTimer
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.datasources.DataStoreStorage
 import com.anshmidt.multialarm.datasources.FileStorage
+import com.anshmidt.multialarm.datasources.SharedPreferencesStorage
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.musicplayer.MusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
@@ -23,6 +24,7 @@ val appModule = module {
     single<AppThemeSelector> { AppThemeSelector(get()) }
     single<FileStorage> { FileStorage(androidContext()) }
     single<DataStoreStorage> { DataStoreStorage(androidContext()) }
+    single<SharedPreferencesStorage> { SharedPreferencesStorage(androidContext()) }
     factory<ICountDownTimer> { DefaultCountDownTimer() }
     factory<AlarmScheduler> { AlarmScheduler(androidContext()) }
     factory<NotificationHelper> { NotificationHelper(androidContext()) }
