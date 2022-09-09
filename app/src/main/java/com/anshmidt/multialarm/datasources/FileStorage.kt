@@ -3,14 +3,20 @@ package com.anshmidt.multialarm.datasources
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.RuntimeException
 
 class FileStorage(private val context: Context) {
+
+    private val fileContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        context.createDeviceProtectedStorageContext()
+    } else {
+        context
+    }
 
     fun getFileName(uri: Uri): String? =
             when(uri.scheme) {
@@ -19,17 +25,17 @@ class FileStorage(private val context: Context) {
             }
 
     fun clearFilesDir() {
-        context.filesDir.deleteRecursively()
+        fileContext.filesDir.deleteRecursively()
     }
 
     fun copyToAppDir(sourceUri: Uri): Uri {
         val newFileName = getFileName(sourceUri) ?: generateFileName(sourceUri)
 
-        val destinationDir = context.filesDir
+        val destinationDir = fileContext.filesDir
         val destinationFile = File(destinationDir, newFileName)
 
         FileOutputStream(destinationFile).use { outputStream ->
-            context.contentResolver.openInputStream(sourceUri).use { inputStream ->
+            fileContext.contentResolver.openInputStream(sourceUri).use { inputStream ->
                 inputStream?.copyTo(outputStream)
             }
 
@@ -39,7 +45,7 @@ class FileStorage(private val context: Context) {
     }
 
     private fun getContentFileName(uri: Uri): String? = runCatching {
-        context.contentResolver.query(
+        fileContext.contentResolver.query(
                 uri,
                 null,
                 null,
@@ -64,7 +70,7 @@ class FileStorage(private val context: Context) {
     }
 
     private fun getFileExtension(uri: Uri): String? {
-        val mimeType = context.contentResolver.getType(uri)
+        val mimeType = fileContext.contentResolver.getType(uri)
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
     }
 
