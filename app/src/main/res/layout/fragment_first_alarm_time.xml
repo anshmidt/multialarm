@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
         <variable
@@ -26,7 +26,8 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:displayMainFirstAlarmTime="@{viewModel.firstAlarmTime ?? null}"/>
+            app:displayMainFirstAlarmTime="@{viewModel.firstAlarmTime ?? null}"
+            tools:text="First alarm time: 12:34"/>
 
         <TextView
             android:id="@+id/textview_main_timeleft"
@@ -38,7 +39,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_main_firstalarm_time"
             app:displayAllTimeLeft="@{viewModel.timeLeft ?? null}"
-            android:visibility="@{viewModel.shouldShowTimeLeftOnMainScreen ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.shouldShowTimeLeftOnMainScreen ? View.VISIBLE : View.GONE}"
+            tools:text="23 hr 19 min left"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

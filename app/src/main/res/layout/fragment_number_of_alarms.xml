@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewModel"
@@ -27,7 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:fullText="@{viewModel.numberOfAlarms != null ? @plurals/main_number_of_alarms(viewModel.numberOfAlarms, viewModel.numberOfAlarms) : ``}"
-            app:partOfTextToResize="@{Integer.toString(viewModel.numberOfAlarms)}"/>
+            app:partOfTextToResize="@{Integer.toString(viewModel.numberOfAlarms)}"
+            tools:text="10 alarms"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

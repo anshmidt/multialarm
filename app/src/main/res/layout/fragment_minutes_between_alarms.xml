@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
         <variable
@@ -29,7 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:fullText="@{@string/main_interval(viewModel.minutesBetweenAlarms)}"
-            app:partOfTextToResize="@{viewModel.minutesBetweenAlarms != null ? Integer.toString(viewModel.minutesBetweenAlarms) : ``}"/>
+            app:partOfTextToResize="@{viewModel.minutesBetweenAlarms != null ? Integer.toString(viewModel.minutesBetweenAlarms) : ``}"
+            tools:text="2 minutes between alarms"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
