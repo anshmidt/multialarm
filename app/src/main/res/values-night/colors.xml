@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Private color palette-->
+    <color name="accentOverWhite">#b62020</color>
+    <color name="accentOverBlack">#ff5252</color>
+    <color name="accentDark">#8e0b0b</color>
+    <color name="black">#000000</color>
+    <color name="grey">#888888</color>
+    <color name="lightGrey">#aaaaaa</color>
+    <color name="white">#ffffff</color>
+    <color name="notContrastingWhiteOverBlack">#f0ffffff</color>
+    <color name="semitransparentNotContrastingWhiteOverBlack">#61ffffff</color>
+    <color name="almostBlack">#121212</color>
+    <color name="darkGrey">#212121</color>
+
+    <!--    Public color values-->
+    <color name="mainAccent">@color/accentOverBlack</color>
+    <color name="mainAccentDark">@color/mainAccent</color>
+
+    <color name="mainTextColor">@color/notContrastingWhiteOverBlack</color>
+    <color name="mainDisabledTextColor">@color/semitransparentNotContrastingWhiteOverBlack</color>
+    <color name="mainBackground">@color/almostBlack</color>
+
+    <color name="primary">@color/darkGrey</color>
+    <color name="primaryDark">@color/mainBackground</color>
+    <color name="textColorPrimary">@color/mainTextColor</color>
+    <color name="divider">@color/mainTextColor</color>
+
+    <color name="settingsMainText">@color/mainTextColor</color>
+    <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
+
+    <color name="dismissActivityTextСolor">@color/white</color>
+    <color name="dismissActivityMainAccent">@color/mainAccent</color>
+    <color name="dismissActivityBackground">@color/black</color>
+
+    <color name="splashScreenIcon">@color/accentOverBlack</color>
+    <color name="splashScreenBackground">@color/black</color>
+</resources>

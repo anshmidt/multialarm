@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_main_activity">20dp</dimen>
+    <dimen name="margin_horizontal_title_dialogs">16dp</dimen>
+    <dimen name="margin_vertical_title_dialogs">10dp</dimen>
+</resources>

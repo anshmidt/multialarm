@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/multialarm.iml" filepath="$PROJECT_DIR$/multialarm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects.multialarm.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects.multialarm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/multialarm.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/multialarm.app.iml" />
     </modules>
   </component>
 </project>

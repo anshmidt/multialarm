@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.anshmidt.multialarm">
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -8,48 +9,89 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".application.BaseApplication"
+        tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".activities.MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:name=".view.activities.SplashScreenActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmBroadcastReceiver">
+        <activity
+            android:name=".view.activities.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+
+        <activity
+            android:name=".view.activities.DismissAlarmActivity"
+            android:screenOrientation="sensorPortrait"
+            android:showOnLockScreen="true"
+            android:directBootAware="true"
+            android:theme="@style/AppFullScreenTheme">
+        </activity>
+
+        <activity
+            android:name=".view.activities.SettingsActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.activities.MainActivity">
+        </activity>
+
+        <receiver
+            android:name=".receivers.AlarmBroadcastReceiver"
+            android:directBootAware="true">
         </receiver>
 
-        <receiver android:name=".BootCompletedIntentReceiver">
+        <receiver android:name=".receivers.DeviceBootReceiver"
+            android:exported="true"
+            android:directBootAware="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        
-        <receiver android:name=".DismissNotificationReceiver">
+
+        <receiver android:name=".receivers.TimeChangeReceiver"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receivers.NotificationDismissButtonClickedReceiver">
             <intent-filter android:priority="999" >
                 <action android:name="com.anshmidt.multialarm.dismissNotification" />
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activities.DismissAlarmActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppFullScreenTheme"></activity>
-        <activity
-            android:name=".activities.PrefActivity"
-            android:label="@string/preferences_title"
-            android:parentActivityName=".activities.MainActivity"></activity>
+        <receiver
+            android:name=".receivers.NotificationDismissedBySwipeReceiver"
+            android:exported="false">
+        </receiver>
+
+        <service
+            android:name=".services.MusicService"
+            android:enabled="true"
+            android:directBootAware="true">
+        </service>
+
+
     </application>
 
 </manifest>

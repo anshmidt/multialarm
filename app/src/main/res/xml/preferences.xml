@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <ListPreference
         android:key="@string/key_duration"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/preferences_duration_title"
-        android:defaultValue="@string/preferences_default_duration"
-        android:entries="@array/preferences_duration_array"
-        android:entryValues="@array/preferences_duration_array">
+        android:entries="@array/preferences_duration_entries"
+        android:entryValues="@array/preferences_duration_entry_values">
     </ListPreference>
     <Preference
         android:key="@string/key_ringtone_filename"
         android:title="@string/preferences_ringtone_title"
         android:defaultValue="@string/preferences_default_ringtone_name">
     </Preference>
-</PreferenceScreen>
+    <SeekBarPreference
+        android:key="@string/key_music_volume"
+        android:title="@string/preferences_music_volume_title"
+        app:min="0"
+        android:max="100"
+        app:showSeekBarValue="true">
+    </SeekBarPreference>
+
+    <Preference
+        android:key="@string/key_test_alarm"
+        android:title="@string/preferences_test_alarm_title"
+        android:summary="@string/preferences_test_alarm_summary">
+    </Preference>
+    <SwitchPreference
+        android:key="@string/key_night_mode"
+        android:title="@string/preferences_night_mode_title">
+    </SwitchPreference>
+</androidx.preference.PreferenceScreen>

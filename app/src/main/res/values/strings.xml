@@ -1,32 +1,35 @@
 <resources>
     <string name="app_name">MultiAlarm</string>
     <string name="main_interval">%1$s minutes between alarms</string>
-    <string name="interval_dialog_title">Enter interval between alarms:</string>
+    <string name="interval_dialog_title">How many minutes should be between alarms?</string>
     <string name="all_minutes">minutes</string>
-    <string name="number_dialog_title">Enter number of alarms:</string>
+    <string name="number_dialog_title">Select number of alarms:</string>
     <string name="preferences_title">Settings</string>
     <string name="preferences_duration_title">Duration of a ringtone</string>
     <string name="preferences_ringtone_title">Choose ringtone</string>
-    <string name="preferences_default_duration">60 seconds</string>
     <string name="preferences_default_ringtone_name">Default</string>
+    <string name="preferences_music_volume_title">Music volume</string>
+    <string name="preferences_test_alarm_title">Test alarm</string>
+    <string name="preferences_test_alarm_summary">Trigger alarm right now</string>
+    <string name="preferences_night_mode_title">Night mode</string>
     <string name="main_alarm_turned_off_toast">All alarms turned off</string>
     <string name="main_alarm_turned_on_toast">All alarms turned on</string>
     <string name="main_alarm_reset_toast">All alarms reset</string>
     <string name="timepicker_dialog_title">Set time of the first alarm:</string>
-    <string name="all_time_left">%1$s hr %2$s min left</string>
+    <string name="all_time_left">%1$d hr %2$d min left</string>
     <string name="notification_icon_title">Alarms turned on</string>
     <string name="main_firstalarm_time">First alarm time: %1$s</string>
     <string name="chooseringtone_chooser_title">Select a file</string>
+    <string name="empty" />
 
     <string name="dismiss_alarm_notification_title">Alarm!</string>
-    <string name="dismiss_alarm_notification_body">You\'ve set an alarm to %1$s</string>
+    <string name="dismiss_alarm_notification_text">You\'ve set an alarm to %1$s</string>
     <string name="dismiss_alarm_notification_dismiss_button_title">Dismiss</string>
 
-    <string name="interval_dialog_ok_button_name">OK</string>
-    <string name="interval_dialog_cancel_button_name">Cancel</string>
-    <string name="number_of_alarms_dialog_ok_button_name">OK</string>
-    <string name="number_of_alarms_dialog_cancel_button_name">Cancel</string>
+    <string name="dialog_ok_button_name">OK</string>
+    <string name="dialog_cancel_button_name">Cancel</string>
 
+    <string name="temp_number_of_alarms">%1$s alarms</string>
 
     <plurals name="main_number_of_alarms">
         <item quantity="one">%1$s alarm</item>

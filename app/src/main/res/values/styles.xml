@@ -1,11 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
-        <item name="colorAccent">@color/primary</item>
+        <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
 
@@ -14,41 +16,59 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="MainScreenDividerTheme" parent="AppTheme">
+        <item name="android:layout_margin">@dimen/margin_main_activity</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
     <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
-        <!--<item name="android:timePickerStyle">@style/TimePickerStyle</item>-->
-
-
-
-        <!--<item name="showTitle">true</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--<item name="colorAccent">@color/white</item>-->
-        <!--<item name="android:headerBackground">#ffee6073</item>-->
-        <!--<item name="android:numbersTextColor">#ff000000</item>-->
-        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
-        <!--<item name="android:numbersBackgroundColor">#ffdddd00</item>-->
-        <!--<item name="android:colorPrimary">#ff2d0073</item>-->
-        <!--<item name="android:colorPrimaryDark">#ff2d60ff</item>-->
-        <!--<item name="android:headerTimeTextAppearance">@style/TimePickerDialogTheme.TimeLabel</item> &lt;!&ndash; TimePicker Time *TextAppearance* &ndash;&gt;-->
+        <item name="colorAccent">@color/mainAccent</item>
     </style>
 
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
-
-        <item name="colorAccent">@color/primary</item> <!-- colorAccent here seems to work just fine? -->
-
+        <item name="colorAccent">@color/mainAccent</item>
         <item name="android:timePickerMode">clock</item>
-        <item name="android:headerBackground">@color/dismiss_activity_textcolor</item>
+        <item name="android:headerBackground">@color/dismissActivityTextСolor</item>
         <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
-        <!--<item name="android:numbersTextColor">#ff000000</item>-->
-        <!--<item name="android:numbersSelectorColor">#ff2d6073</item>-->
-        <!--<item name="android:numbersBackgroundColor">#ffdddddd</item>-->
-
     </style>
 
     <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
+        <item name="android:textColor">@color/mainAccent</item>
+    </style>
 
-        <item name="android:textColor">@color/primary</item>
+    <style name="NumberPicker" parent="@android:style/Theme.Material">
+        <item name="android:textSize">30sp</item>
+        <item name="android:colorControlNormal">@color/divider</item>
+        <item name="android:textColorPrimary">@color/mainAccent</item>
+    </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash_screen</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="SettingsFragmentTheme">
+        <item name="android:textColor">@color/settingsMainText</item>
+        <item name="android:textColorPrimary">@color/settingsMainText</item>
+        <item name="android:textColorSecondary">@color/settingsSecondaryText</item>
+    </style>
+
+    <style name="FirstAlarmTimeDialogTheme">
+        <item name="android:textColorPrimary">@color/mainTextColor</item>
+    </style>
+
+    <!-- fontFamily is applied only for some views in order to avoid crash on displaying toast on API 23-->
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
 </resources>

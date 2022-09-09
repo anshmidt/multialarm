@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.onNumberOfAlarmsClicked()}">
+
+        <TextView
+            android:id="@+id/textview_main_numberofalarms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_main_activity"
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:fullText="@{viewModel.numberOfAlarms != null ? @plurals/main_number_of_alarms(viewModel.numberOfAlarms, viewModel.numberOfAlarms) : ``}"
+            app:partOfTextToResize="@{Integer.toString(viewModel.numberOfAlarms)}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
