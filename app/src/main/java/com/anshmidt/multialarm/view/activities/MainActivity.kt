@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
-import com.anshmidt.multialarm.databinding.ActivityMainBinding
+import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
 
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    private val binding: ActivityMainCardsBinding by lazy {
+        DataBindingUtil.setContentView<ActivityMainCardsBinding>(this, R.layout.activity_main_cards)
     }
 
     // Workaround to make onCheckedChanged not to trigger when switch state is set programmatically
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBinding() {
         binding.lifecycleOwner = this
-        binding.mainViewModel = mainViewModel
+        binding.viewModel = mainViewModel
     }
 
     private fun openSettingsScreen() {

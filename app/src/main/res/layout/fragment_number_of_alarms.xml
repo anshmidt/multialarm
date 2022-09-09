@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_main_activity"
             android:textColor="@color/mainTextColor"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_main"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:fullText="@{viewModel.numberOfAlarms != null ? @plurals/main_number_of_alarms(viewModel.numberOfAlarms, viewModel.numberOfAlarms) : ``}"
             app:partOfTextToResize="@{Integer.toString(viewModel.numberOfAlarms)}"
             tools:text="10 alarms"/>

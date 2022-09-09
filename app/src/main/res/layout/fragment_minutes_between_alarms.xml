@@ -25,9 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_main_activity"
             android:textColor="@color/mainTextColor"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_main"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:fullText="@{@string/main_interval(viewModel.minutesBetweenAlarms)}"
             app:partOfTextToResize="@{viewModel.minutesBetweenAlarms != null ? Integer.toString(viewModel.minutesBetweenAlarms) : ``}"
             tools:text="2 minutes between alarms"/>

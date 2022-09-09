@@ -20,7 +20,7 @@
             android:layout_marginHorizontal="@dimen/margin_horizontal_title_dialogs"
             android:text="@string/number_dialog_title"
             android:textColor="@color/mainTextColor"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

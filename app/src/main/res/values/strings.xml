@@ -4,6 +4,7 @@
     <string name="interval_dialog_title">How many minutes should be between alarms?</string>
     <string name="all_minutes">minutes</string>
     <string name="number_dialog_title">Select number of alarms:</string>
+    <string name="alarms_list_title">Your alarms:</string>
     <string name="preferences_title">Settings</string>
     <string name="preferences_duration_title">Duration of a ringtone</string>
     <string name="preferences_ringtone_title">Choose ringtone</string>

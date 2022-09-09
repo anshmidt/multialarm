@@ -12,6 +12,7 @@
     <color name="semitransparentNotContrastingWhiteOverBlack">#61ffffff</color>
     <color name="almostBlack">#121212</color>
     <color name="darkGrey">#212121</color>
+    <color name="blackElevated">#242424</color>
 
     <!--    Public color values-->
     <color name="mainAccent">@color/accentOverBlack</color>
@@ -20,6 +21,7 @@
     <color name="mainTextColor">@color/notContrastingWhiteOverBlack</color>
     <color name="mainDisabledTextColor">@color/semitransparentNotContrastingWhiteOverBlack</color>
     <color name="mainBackground">@color/almostBlack</color>
+    <color name="cardsBackground">@color/blackElevated</color>
 
     <color name="primary">@color/darkGrey</color>
     <color name="primaryDark">@color/mainBackground</color>
