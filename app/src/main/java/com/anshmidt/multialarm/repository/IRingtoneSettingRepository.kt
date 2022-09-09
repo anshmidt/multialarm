@@ -9,6 +9,8 @@ interface IRingtoneSettingRepository {
 
     suspend fun saveRingtoneDurationSeconds(ringtoneDurationSeconds: Int)
     fun getRingtoneDurationSeconds(): Flow<Int>
+    suspend fun saveMusicVolume(musicVolumePercents: Int)
+    fun getMusicVolumePercents(): Flow<Int>
     suspend fun saveRingtoneUri(uri: Uri)
     fun getRingtoneUri(): Flow<Uri>
 

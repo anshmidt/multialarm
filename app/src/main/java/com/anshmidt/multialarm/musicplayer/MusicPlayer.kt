@@ -11,11 +11,11 @@ import android.util.Log
 class MusicPlayer(private val context: Context) : IMusicPlayer {
 
     private var mediaPlayer: MediaPlayer? = null
-    private val musicVolume = MUSIC_VOLUME_MIN //TODO change to max
 
 
-    override fun play(ringtoneUri: Uri) {
+    override fun play(ringtoneUri: Uri, musicVolumePercents: Int) {
         Log.d(TAG, "Music started")
+        val musicVolume: Float = VolumeConverter.percentsToFloat(musicVolumePercents)
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(getAudioAttributes())
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
@@ -40,7 +40,11 @@ class MusicPlayer(private val context: Context) : IMusicPlayer {
 
     companion object {
         val TAG = MusicPlayer::class.java.simpleName
-        const val MUSIC_VOLUME_MAX = 1f
-        const val MUSIC_VOLUME_MIN = 0f
+    }
+
+    object VolumeConverter {
+        fun percentsToFloat(musicVolumePercents: Int): Float {
+            return musicVolumePercents.toFloat() / 100
+        }
     }
 }

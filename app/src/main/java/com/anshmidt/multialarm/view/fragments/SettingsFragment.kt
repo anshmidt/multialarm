@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
+import androidx.preference.*
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
@@ -44,6 +41,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference(nightModeKey)
     }
 
+    private val musicVolumePreference: SeekBarPreference? by lazy {
+        val musicVolumeKey = getString(R.string.key_music_volume)
+        findPreference(musicVolumeKey)
+    }
+
     private val openAudioFileResult = registerForActivityResult(
             ActivityResultContracts.GetContent()
     ) { uri ->
@@ -66,6 +68,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         ringtoneDurationPreference?.setOnPreferenceChangeListener { preference, newValue ->
             val newRingtoneDurationSeconds = (newValue as String).toInt()
             onRingtoneDurationChosen(newRingtoneDurationSeconds)
+            return@setOnPreferenceChangeListener true
+        }
+
+        musicVolumePreference?.setOnPreferenceChangeListener { preference, newValue ->
+            val newMusicVolumePercents = newValue as Int
+            viewModel.onMusicVolumeChosen(newMusicVolumePercents)
             return@setOnPreferenceChangeListener true
         }
 
@@ -113,6 +121,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         viewModel.isNightModeOn.observe(viewLifecycleOwner, {
             displayNightModeSwitchState(it)
+        })
+        viewModel.musicVolumePercents.observe(viewLifecycleOwner, {
+            displayMusicVolume(it)
         })
 
         viewModel.onViewCreated()
@@ -188,6 +199,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val shouldShowNotification = false
         intent.putExtra(MusicService.INTENT_KEY_SHOULD_SHOW_NOTIFICATION, shouldShowNotification)
         requireContext().startService(intent)
+    }
+
+    private fun displayMusicVolume(musicVolumePercents: Int) {
+        musicVolumePreference?.value = musicVolumePercents
     }
 
     companion object {

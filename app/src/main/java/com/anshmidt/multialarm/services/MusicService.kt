@@ -58,10 +58,10 @@ class MusicService : Service(), KoinComponent {
         }
 
         scope.launch(Dispatchers.IO) {
-            ringtoneSettingRepository.getRingtoneUri().first { ringtoneUri ->
-                musicPlayer.play(ringtoneUri)
-                return@first true
-            }
+            ringtoneSettingRepository.getRingtoneUri()
+                .zip(ringtoneSettingRepository.getMusicVolumePercents()) { ringtoneUri, musicVolumePercents ->
+                    musicPlayer.play(ringtoneUri, musicVolumePercents)
+                }.first()
         }
 
         CoroutineScope(Job() + Dispatchers.Main).launch {

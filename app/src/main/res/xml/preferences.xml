@@ -16,6 +16,14 @@
         android:title="@string/preferences_ringtone_title"
         android:defaultValue="@string/preferences_default_ringtone_name">
     </Preference>
+    <SeekBarPreference
+        android:key="@string/key_music_volume"
+        android:title="@string/preferences_music_volume_title"
+        app:min="0"
+        android:max="100"
+        app:showSeekBarValue="true">
+    </SeekBarPreference>
+
     <Preference
         android:key="@string/key_test_alarm"
         android:title="@string/preferences_test_alarm_title"

@@ -7,8 +7,8 @@
     <string name="preferences_title">Settings</string>
     <string name="preferences_duration_title">Duration of a ringtone</string>
     <string name="preferences_ringtone_title">Choose ringtone</string>
-    <string name="preferences_default_duration">60 seconds</string>
     <string name="preferences_default_ringtone_name">Default</string>
+    <string name="preferences_music_volume_title">Music volume</string>
     <string name="preferences_test_alarm_title">Test alarm</string>
     <string name="preferences_test_alarm_summary">Trigger alarm right now</string>
     <string name="preferences_night_mode_title">Night mode</string>

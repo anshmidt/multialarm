@@ -25,6 +25,9 @@ class SettingsViewModel(
     private var _ringtoneDurationSeconds = MutableLiveData<Int>()
     val ringtoneDurationSeconds: LiveData<Int> = _ringtoneDurationSeconds
 
+    private var _musicVolumePercents = MutableLiveData<Int>()
+    val musicVolumePercents: LiveData<Int> = _musicVolumePercents
+
     private var _openDismissAlarmScreen = SingleLiveEvent<Any>()
     val openDismissAlarmScreen: LiveData<Any> = _openDismissAlarmScreen
 
@@ -67,6 +70,13 @@ class SettingsViewModel(
                 return@first true
             }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.getMusicVolumePercents().first { musicVolumePercents ->
+                _musicVolumePercents.postValue(musicVolumePercents)
+                return@first true
+            }
+        }
     }
 
     fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
@@ -85,6 +95,12 @@ class SettingsViewModel(
         appThemeSelector.showTheme(isNightModeOn)
         viewModelScope.launch(Dispatchers.IO) {
             appSettingRepository.saveNightModeSwitchState(isNightModeOn)
+        }
+    }
+
+    fun onMusicVolumeChosen(musicVolumePercents: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            ringtoneSettingRepository.saveMusicVolume(musicVolumePercents)
         }
     }
 

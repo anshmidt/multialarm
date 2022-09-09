@@ -47,6 +47,12 @@ class RingtoneSettingRepository(
         return fileStorage.getFileName(uri)
     }
 
+    override suspend fun saveMusicVolume(musicVolumePercents: Int) {
+        sharedPreferencesStorage.saveMusicVolume(musicVolumePercents)
+    }
+
+    override fun getMusicVolumePercents() = sharedPreferencesStorage.getMusicVolumePercents()
+
     override fun clearAllRingtones() {
         fileStorage.clearFilesDir()
     }

@@ -45,6 +45,8 @@ class SharedPreferencesStorage(private val context: Context) {
             .getString(key = RINGTONE_URI_KEY, defaultValue = DEFAULT_RINGTONE_URI_STRING)
     private val nightModeSwitchStatePreference = flowSharedPreferences
             .getBoolean(key = NIGHT_MODE_KEY, defaultValue = DEFAULT_NIGHT_MODE_SWITCH_STATE)
+    private val musicVolumePreference = flowSharedPreferences
+            .getInt(key = MUSIC_VOLUME_KEY, defaultValue = DEFAULT_MUSIC_VOLUME)
 
     private fun getFlowSharedPreferences(context: Context): FlowSharedPreferences {
         val preferencesContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -125,6 +127,12 @@ class SharedPreferencesStorage(private val context: Context) {
 
     fun getNumberOfAlreadyRangAlarms() = numberOfAlreadyRangAlarmsPreference.asFlow()
 
+    suspend fun saveMusicVolume(musicVolumePercents: Int) {
+        musicVolumePreference.set(musicVolumePercents)
+    }
+
+    fun getMusicVolumePercents() = musicVolumePreference.asFlow()
+
     companion object {
         const val PREFERENCE_NAME = "AlarmSharedPreferences"
 
@@ -137,6 +145,7 @@ class SharedPreferencesStorage(private val context: Context) {
         private const val RINGTONE_URI_KEY = "ringtoneUri"
         private const val NIGHT_MODE_KEY = "nightMode"
         private const val NUMBER_OF_ALREADY_RANG_ALARMS_KEY = "numberOfAlreadyRangAlarms"
+        private const val MUSIC_VOLUME_KEY = "musicVolume"
 
         private val DEFAULT_SETTINGS = AlarmSettings(
                 switchState = false,
@@ -149,6 +158,7 @@ class SharedPreferencesStorage(private val context: Context) {
         private const val DEFAULT_RINGTONE_URI_STRING = ""
         private const val DEFAULT_NIGHT_MODE_SWITCH_STATE = false
         private const val DEFAULT_NUMBER_OF_ALREADY_RANG_ALARMS = 0
+        private const val DEFAULT_MUSIC_VOLUME = 100
 
         private val TAG = DataStoreStorage::class.java.simpleName
 
