@@ -4,13 +4,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import com.anshmidt.multialarm.services.MusicService
 
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (context == null) return
+        Log.d(TAG, "onReceive")
+        if (context == null) {
+            Log.d(TAG, "context is null")
+            return
+        }
 
         // music starts playing when view appears, and stops playing when notification dismissed or clicked, or button clicked on activity
         startMusicService(context)

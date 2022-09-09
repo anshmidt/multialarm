@@ -41,6 +41,7 @@
             android:name=".view.activities.DismissAlarmActivity"
             android:screenOrientation="sensorPortrait"
             android:showOnLockScreen="true"
+            android:directBootAware="true"
             android:theme="@style/AppFullScreenTheme">
         </activity>
 
@@ -51,7 +52,8 @@
         </activity>
 
         <receiver
-            android:name=".receivers.AlarmBroadcastReceiver">
+            android:name=".receivers.AlarmBroadcastReceiver"
+            android:directBootAware="true">
         </receiver>
 
         <receiver android:name=".receivers.DeviceBootReceiver"
@@ -64,7 +66,8 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.TimeChangeReceiver">
+        <receiver android:name=".receivers.TimeChangeReceiver"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
@@ -84,7 +87,8 @@
 
         <service
             android:name=".services.MusicService"
-            android:enabled="true">
+            android:enabled="true"
+            android:directBootAware="true">
         </service>
 
 
