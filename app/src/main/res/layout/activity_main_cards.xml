@@ -23,7 +23,8 @@
                 android:name="com.anshmidt.multialarm.view.fragments.AlarmsListFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="160dp"
-                android:layout_margin="@dimen/margin_main_activity"
+                android:layout_marginHorizontal="@dimen/margin_main_activity"
+                android:layout_marginVertical="@dimen/margin_vertical_alarms_list"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout="@layout/fragment_alarms_list"/>
@@ -48,7 +49,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_alarms_list"
-                android:layout_margin="@dimen/margin_main_activity"
+                android:layout_marginBottom="@dimen/margin_main_activity"
+                android:layout_marginHorizontal="@dimen/margin_main_activity"
+                android:layout_marginTop="@dimen/margin_vertical_alarms_list"
                 android:elevation="@dimen/cards_elevation"
                 app:cardCornerRadius="@dimen/cards_corner_radius"
                 android:backgroundTint="@color/cardsBackground">
