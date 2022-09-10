@@ -9,10 +9,11 @@
     <color name="lightGrey">#aaaaaa</color>
     <color name="white">#ffffff</color>
     <color name="notContrastingWhiteOverBlack">#f0ffffff</color>
-    <color name="semitransparentNotContrastingWhiteOverBlack">#61ffffff</color>
+    <color name="semitransparentNotContrastingWhiteOverBlack">#787878</color>
     <color name="almostBlack">#121212</color>
     <color name="darkGrey">#212121</color>
     <color name="blackElevated">#242424</color>
+    <color name="imageAccent">#7192aa</color>
 
     <!--    Public color values-->
     <color name="mainAccent">@color/accentOverWhite</color>
@@ -22,6 +23,9 @@
     <color name="mainDisabledTextColor">@color/lightGrey</color>
     <color name="mainBackground">@color/white</color>
     <color name="cardsBackground">@color/white</color>
+    <color name="alarmsListBackground">#aa242424</color>
+    <color name="actionBarBackground">#99242424</color>
+    <color name="backgroundImageTint">#55000000</color>
 
     <color name="primary">@color/mainAccent</color>
     <color name="primaryDark">@color/mainAccentDark</color>
@@ -35,6 +39,5 @@
     <color name="dismissActivityMainAccent">@color/mainAccent</color>
     <color name="dismissActivityBackground">@color/black</color>
 
-    <color name="splashScreenIcon">@color/accentOverBlack</color>
     <color name="splashScreenBackground">@color/black</color>
 </resources>

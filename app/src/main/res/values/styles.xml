@@ -11,6 +11,18 @@
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
 
+    <style name="MainActivityTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/actionBarBackground</item>
+        <item name="android:displayOptions">showHome|useLogo</item>
+        <item name="displayOptions">showHome|useLogo</item>
+        <item name="elevation">0dp</item>
+    </style>
+
     <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -69,6 +81,14 @@
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="MainCardStyle" parent="CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_main_activity</item>
+        <item name="android:layout_marginEnd">@dimen/margin_main_activity</item>
+        <item name="cardCornerRadius">@dimen/cards_corner_radius</item>
+        <item name="cardBackgroundColor">@color/cardsBackground</item>
     </style>
 
 </resources>

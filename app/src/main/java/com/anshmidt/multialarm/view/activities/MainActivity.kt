@@ -12,6 +12,9 @@ import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
 import com.anshmidt.multialarm.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
+
+
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
@@ -45,6 +48,9 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
             }
         }
+
+//        val myDrawable = ContextCompat.getDrawable(this, R.drawable.green_cropped)
+//        myDrawable?.setColorFilter(getColor(R.color.backgroundImageTint), PorterDuff.Mode.SRC_OVER)
     }
 
     private fun setSwitchState(switchState: Boolean) {

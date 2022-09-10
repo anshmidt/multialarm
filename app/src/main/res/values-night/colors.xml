@@ -9,19 +9,36 @@
     <color name="lightGrey">#aaaaaa</color>
     <color name="white">#ffffff</color>
     <color name="notContrastingWhiteOverBlack">#f0ffffff</color>
-    <color name="semitransparentNotContrastingWhiteOverBlack">#61ffffff</color>
+    <color name="semitransparentNotContrastingWhiteOverBlack">#787878</color>
     <color name="almostBlack">#121212</color>
     <color name="darkGrey">#212121</color>
     <color name="blackElevated">#242424</color>
+<!--    <color name="imageAccent">#a1c2dc</color>-->
+<!--    <color name="imageAccent">#ffffff</color>-->
+<!--    <color name="imageAccent">#7095c8</color>-->
+<!--    <color name="imageAccent">#b0caff</color>-->
+<!--    <color name="imageAccent">#b7bfe1</color>-->
+<!--    <color name="imageAccent">#b3c2ff</color>-->
+<!--    <color name="imageAccent">#a8c2ff</color>-->
+<!--    <color name="imageAccent">#99b8ff</color>-->
+    <color name="imageAccent">#99b4ff</color>
+
+<!--    <color name="imageAccent">#ef9a9a</color>-->
 
     <!--    Public color values-->
-    <color name="mainAccent">@color/accentOverBlack</color>
+    <color name="mainAccent">@color/imageAccent</color>
     <color name="mainAccentDark">@color/mainAccent</color>
 
     <color name="mainTextColor">@color/notContrastingWhiteOverBlack</color>
     <color name="mainDisabledTextColor">@color/semitransparentNotContrastingWhiteOverBlack</color>
     <color name="mainBackground">@color/almostBlack</color>
-    <color name="cardsBackground">@color/blackElevated</color>
+<!--    <color name="cardsBackground">#99000000</color>-->
+    <color name="cardsBackground">#77000000</color>
+<!--    <color name="alarmsListBackground">#99000000</color>-->
+    <color name="alarmsListBackground">#77000000</color>
+<!--    <color name="actionBarBackground">#33000000</color>-->
+    <color name="actionBarBackground">#00000000</color>
+    <color name="backgroundImageTint">#22000000</color>
 
     <color name="primary">@color/darkGrey</color>
     <color name="primaryDark">@color/mainBackground</color>
@@ -35,6 +52,5 @@
     <color name="dismissActivityMainAccent">@color/mainAccent</color>
     <color name="dismissActivityBackground">@color/black</color>
 
-    <color name="splashScreenIcon">@color/accentOverBlack</color>
     <color name="splashScreenBackground">@color/black</color>
 </resources>
