@@ -34,17 +34,18 @@ class MainViewModel(
     private var _displayAlarmsResetMessage = SingleLiveEvent<Any>()
     val displayAlarmsResetMessage: LiveData<Any> = _displayAlarmsResetMessage
 
-    fun onAlarmSwitchChanged(switchView: View, switchState: Boolean) {
-        _displayAlarmSwitchChangedMessage.value = switchState
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.saveAlarmSwitchState(switchState)
-        }
+    fun onAlarmSwitchChanged(switchView: View, newSwitchState: Boolean) {
+        _displayAlarmSwitchChangedMessage.value = newSwitchState
 
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                val newAlarmSettings = alarmSettings.copy(switchState = switchState)
+                if (newSwitchState == alarmSettings.switchState) return@first true
+
+                val newAlarmSettings = alarmSettings.copy(switchState = newSwitchState)
                 Log.d(TAG, "Alarm settings changed, that's why we reschedule alarms. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
                 alarmScheduler.reschedule(newAlarmSettings)
+
+                scheduleSettingsRepository.saveAlarmSwitchState(newSwitchState)
                 return@first true
             }
         }
