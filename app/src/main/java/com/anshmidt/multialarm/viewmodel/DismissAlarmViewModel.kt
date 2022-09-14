@@ -25,6 +25,7 @@ class DismissAlarmViewModel : ViewModel() {
      * When MusicService is destroyed, it doesn't finish the view.
      */
     fun onDismissButtonClicked() {
+        Log.d(TAG, "Dismiss button clicked")
         reasonWhyFinishView = ReasonWhyFinishView.DISMISS_BUTTON_CLICKED
         _stopMusicService.call()
         _finishView.call()

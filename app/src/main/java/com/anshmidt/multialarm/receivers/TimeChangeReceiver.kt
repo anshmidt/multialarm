@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ class TimeChangeReceiver : BroadcastReceiver(), KoinComponent {
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action
 
+        Log.d(TAG, "onReceive: ${intent?.action}")
         if (Intent.ACTION_TIME_CHANGED == action || Intent.ACTION_TIMEZONE_CHANGED == action) {
             rescheduleAlarm()
         }
@@ -30,9 +32,14 @@ class TimeChangeReceiver : BroadcastReceiver(), KoinComponent {
     private fun rescheduleAlarm() {
         scope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                Log.d(TAG, "Rescheduling alarm because time changed")
                 alarmScheduler.reschedule(alarmSettings)
                 return@first true
             }
         }
+    }
+
+    companion object {
+        private val TAG = TimeChangeReceiver::class.java.simpleName
     }
 }

@@ -3,9 +3,9 @@ package com.anshmidt.multialarm.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
@@ -75,7 +75,8 @@ class MusicService : Service(), KoinComponent {
             }
         }
 
-        return START_NOT_STICKY
+//        return START_NOT_STICKY
+        return START_STICKY
     }
 
     private fun checkNumberOfAlreadyRangAlarms() {
@@ -83,6 +84,7 @@ class MusicService : Service(), KoinComponent {
             scheduleSettingsRepository.getNumberOfAlreadyRangAlarms()
                 .zip(scheduleSettingsRepository.getNumberOfAlarms()) { numberOfAlreadyRangAlarms, numberOfAlarms ->
                     val newNumberOfAlreadyRangAlarms = numberOfAlreadyRangAlarms + 1
+                    Log.d(TAG, "Saving number of already rang alarms: $newNumberOfAlreadyRangAlarms")
                     scheduleSettingsRepository.saveNumberOfAlreadyRangAlarms(newNumberOfAlreadyRangAlarms)
 
                     cancelAlarmsIfAllHaveRung(
@@ -96,6 +98,7 @@ class MusicService : Service(), KoinComponent {
 
     private suspend fun cancelAlarmsIfAllHaveRung(numberOfAlreadyRangAlarms: Int, numberOfAlarms: Int) {
         if (numberOfAlreadyRangAlarms >= numberOfAlarms) {
+            Log.d(TAG, "Canceling alarms because all of them have rung. numberOfAlreadyRangAlarms=$numberOfAlreadyRangAlarms, numberOfAlarms=$numberOfAlarms")
             alarmScheduler.cancel()
             scheduleSettingsRepository.saveAlarmSwitchState(false)
         }

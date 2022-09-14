@@ -4,9 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.receivers.AlarmBroadcastReceiver
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
@@ -39,6 +39,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
         Log.d(TAG, "Alarm scheduled: $alarmSettings")
 
         CoroutineScope(SupervisorJob()).launch(Dispatchers.IO) {
+            Log.d(TAG, "Saving number of already rang alarms: 0")
             scheduleSettingsRepository.saveNumberOfAlreadyRangAlarms(0)
         }
 
@@ -54,6 +55,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
                 intervalBetweenAlarmsMillis,
                 alarmIntent
         )
+        Log.d(TAG, "Scheduling alarm via setRepeating(firstAlarmTimeMillis=$firstAlarmTimeMillis, intervalBetweenAlarmsMillis=$intervalBetweenAlarmsMillis)")
     }
 
     private fun getAlarmIntent(): PendingIntent {
@@ -65,6 +67,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
     }
 
     fun reschedule(alarmSettings: AlarmSettings) {
+        Log.d(TAG, "Alarm is canceled because it's rescheduled")
         cancel()
         schedule(alarmSettings)
     }

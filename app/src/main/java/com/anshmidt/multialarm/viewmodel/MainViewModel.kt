@@ -1,6 +1,5 @@
 package com.anshmidt.multialarm.viewmodel
 
-import com.anshmidt.multialarm.logging.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +42,7 @@ class MainViewModel(
                 if (newSwitchState == alarmSettings.switchState) return@first true
 
                 val newAlarmSettings = alarmSettings.copy(switchState = newSwitchState)
-                Log.d(TAG, "Alarm settings changed, that's why we reschedule alarms. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
+                Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
                 alarmScheduler.reschedule(newAlarmSettings)
 
                 scheduleSettingsRepository.saveAlarmSwitchState(newSwitchState)

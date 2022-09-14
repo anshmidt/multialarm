@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -55,6 +56,7 @@ class MinutesBetweenAlarmsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
+                Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")
                 alarmScheduler.reschedule(newAlarmSettings)
                 scheduleSettingsRepository.saveMinutesBetweenAlarms(selectedVariant)
                 return@first true
@@ -64,6 +66,10 @@ class MinutesBetweenAlarmsViewModel(
 
     fun onCancelButtonClickInMinutesBetweenAlarmsDialog() {
         //close dialog without saving selected value
+    }
+
+    companion object {
+        private val TAG = MinutesBetweenAlarmsViewModel::class.java.simpleName
     }
 
 }
