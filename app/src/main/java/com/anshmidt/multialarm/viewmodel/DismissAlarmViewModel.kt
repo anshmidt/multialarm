@@ -1,9 +1,9 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 
 class DismissAlarmViewModel : ViewModel() {
 

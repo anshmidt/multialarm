@@ -7,7 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.PowerManager
-import android.util.Log
+import com.anshmidt.multialarm.logging.Log
 
 
 class MusicPlayer(private val context: Context) : IMusicPlayer {

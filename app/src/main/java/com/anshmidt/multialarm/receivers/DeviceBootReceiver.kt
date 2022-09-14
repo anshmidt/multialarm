@@ -3,7 +3,7 @@ package com.anshmidt.multialarm.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.CoroutineScope

@@ -1,6 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
+import com.anshmidt.multialarm.logging.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

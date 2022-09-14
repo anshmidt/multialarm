@@ -3,7 +3,7 @@ package com.anshmidt.multialarm.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer

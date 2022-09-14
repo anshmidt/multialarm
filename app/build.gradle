@@ -130,6 +130,10 @@ dependencies {
     //Cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //Logging to file
+    implementation 'org.tinylog:tinylog-api:2.4.1'
+    runtimeOnly 'org.tinylog:tinylog-impl:2.4.1'
+
 }
 repositories {
     mavenCentral()
