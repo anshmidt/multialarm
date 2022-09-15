@@ -13,6 +13,7 @@
     <color name="almostBlack">#121212</color>
     <color name="darkGrey">#212121</color>
     <color name="blackElevated">#242424</color>
+    <color name="almostTransparentWhite">#22ffffff</color>
     <color name="imageAccent">#7192aa</color>
 
     <!--    Public color values-->
@@ -26,6 +27,8 @@
     <color name="alarmsListBackground">#aa242424</color>
     <color name="actionBarBackground">#99242424</color>
     <color name="backgroundImageTint">#55000000</color>
+
+    <color name="timePickerHeaderBackground">@color/almostTransparentWhite</color>
 
     <color name="primary">@color/mainAccent</color>
     <color name="primaryDark">@color/mainAccentDark</color>

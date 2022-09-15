@@ -13,6 +13,7 @@
     <color name="almostBlack">#121212</color>
     <color name="darkGrey">#212121</color>
     <color name="blackElevated">#242424</color>
+    <color name="almostTransparentWhite">#22ffffff</color>
 <!--    <color name="imageAccent">#a1c2dc</color>-->
 <!--    <color name="imageAccent">#ffffff</color>-->
 <!--    <color name="imageAccent">#7095c8</color>-->
@@ -39,6 +40,8 @@
 <!--    <color name="actionBarBackground">#33000000</color>-->
     <color name="actionBarBackground">#00000000</color>
     <color name="backgroundImageTint">#22000000</color>
+
+    <color name="timePickerHeaderBackground">@color/almostTransparentWhite</color>
 
     <color name="primary">@color/darkGrey</color>
     <color name="primaryDark">@color/mainBackground</color>
