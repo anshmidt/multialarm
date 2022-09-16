@@ -10,6 +10,11 @@
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
         <item name="android:timePickerStyle">@style/TimePickerStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+    </style>
+
+    <style name="OverflowButtonStyle">
+        <item name="android:src">@drawable/ic_more</item>
     </style>
 
     <style name="MainActivityTheme" parent="AppTheme">
