@@ -10,14 +10,15 @@
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
         <item name="android:timePickerStyle">@style/TimePickerStyle</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="MainActivityTheme" parent="AppTheme">
         <item name="actionBarStyle">@style/ActionBarTheme</item>
         <item name="windowActionBarOverlay">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:windowTranslucentNavigation">true</item>
-<!--        <item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="ActionBarTheme" parent="Widget.AppCompat.Light.ActionBar.Solid">

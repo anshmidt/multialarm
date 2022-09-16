@@ -1,5 +1,6 @@
 package com.anshmidt.multialarm.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +34,9 @@ class MainViewModel(
 
     private var _displayAlarmsResetMessage = SingleLiveEvent<Any>()
     val displayAlarmsResetMessage: LiveData<Any> = _displayAlarmsResetMessage
+
+    private var _isNightModeOn = MutableLiveData<Boolean>()
+    val isNightModeOn: LiveData<Boolean> = _isNightModeOn
 
     fun onAlarmSwitchChanged(switchView: View, newSwitchState: Boolean) {
         _displayAlarmSwitchChangedMessage.value = newSwitchState
@@ -79,6 +83,14 @@ class MainViewModel(
                     .getMinutesBetweenAlarms()
                     .drop(1) // ignore initial value since we're only interested in changes
                     .collect { onAlarmSettingsChanged() }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettingRepository
+                    .getNightModeSwitchState()
+                    .collect {
+                        _isNightModeOn.postValue(it)
+                    }
+
         }
     }
 

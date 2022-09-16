@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
@@ -43,6 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.alarmSwitchState.observe(this@MainActivity, {
             setSwitchState(it)
+        })
+
+        mainViewModel.isNightModeOn.observe(this@MainActivity, {
+            setStatusBarTextColor(it)
         })
 
         binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->
@@ -134,7 +139,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun setStatusBarTextColor(isNightModeOn: Boolean) {
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = isNightModeOn.not()
+    }
 
 
 }

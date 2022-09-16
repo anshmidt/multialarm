@@ -35,19 +35,19 @@
     <color name="mainAccent">@color/accentOverWhite</color>
     <color name="mainAccentDark">@color/accentDark</color>
 
-    <color name="mainTextColor">@color/grey88</color>
+    <color name="mainTextColor">#333333</color>
     <color name="mainDisabledTextColor">@color/lightGrey</color>
     <color name="mainBackground">@color/white</color>
-    <color name="cardsBackground">@color/white</color>
-    <color name="alarmsListBackground">#aa242424</color>
-    <color name="actionBarBackground">#99242424</color>
-    <color name="backgroundImageTint">#55000000</color>
+    <color name="cardsBackground">#99ffffff</color>
+    <color name="alarmsListBackground">#99ffffff</color>
+    <color name="actionBarBackground">@android:color/transparent</color>
+    <color name="backgroundImageTint">@android:color/transparent</color>
 
-    <color name="timePickerHeaderBackground">@color/whiteTransparent22</color>
+    <color name="timePickerHeaderBackground">@color/accentOverWhite</color>
 
     <color name="primary">@color/mainAccent</color>
     <color name="primaryDark">@color/mainAccentDark</color>
-    <color name="textColorPrimary">@color/mainBackground</color>
+    <color name="textColorPrimary">@color/mainTextColor</color>
     <color name="divider">@color/mainTextColor</color>
 
     <color name="settingsMainText">@color/mainTextColor</color>
