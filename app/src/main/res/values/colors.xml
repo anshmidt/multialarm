@@ -4,23 +4,38 @@
     <color name="accentOverWhite">#b62020</color>
     <color name="accentOverBlack">#ff5252</color>
     <color name="accentDark">#8e0b0b</color>
-    <color name="black">#000000</color>
-    <color name="grey">#888888</color>
-    <color name="lightGrey">#aaaaaa</color>
+
     <color name="white">#ffffff</color>
-    <color name="notContrastingWhiteOverBlack">#f0ffffff</color>
-    <color name="semitransparentNotContrastingWhiteOverBlack">#787878</color>
-    <color name="almostBlack">#121212</color>
-    <color name="darkGrey">#212121</color>
-    <color name="blackElevated">#242424</color>
-    <color name="almostTransparentWhite">#22ffffff</color>
-    <color name="imageAccent">#7192aa</color>
+    <color name="whiteTransparentF0">#f0ffffff</color>
+    <color name="whiteTransparent22">#22ffffff</color>
+
+    <color name="grey88">#888888</color>
+    <color name="lightGrey">#aaaaaa</color>
+    <color name="grey78">#787878</color>
+
+    <color name="black">#000000</color>
+    <color name="black12">#121212</color>
+    <color name="black21">#212121</color>
+    <color name="black24">#242424</color>
+    <color name="blackTransparent77">#77000000</color>
+
+    <!--    <color name="imageAccent">#ef9a9a</color>-->
+    <!--    <color name="imageAccent">#a1c2dc</color>-->
+    <!--    <color name="imageAccent">#ffffff</color>-->
+    <!--    <color name="imageAccent">#7095c8</color>-->
+    <!--    <color name="imageAccent">#b0caff</color>-->
+    <!--    <color name="imageAccent">#b7bfe1</color>-->
+    <!--    <color name="imageAccent">#b3c2ff</color>-->
+    <!--    <color name="imageAccent">#a8c2ff</color>-->
+    <!--    <color name="imageAccent">#99b8ff</color>-->
+    <!--    <color name="imageAccent">#99b4ff</color>-->
+    <color name="imageAccent">#a3c2ff</color>
 
     <!--    Public color values-->
     <color name="mainAccent">@color/accentOverWhite</color>
     <color name="mainAccentDark">@color/accentDark</color>
 
-    <color name="mainTextColor">@color/grey</color>
+    <color name="mainTextColor">@color/grey88</color>
     <color name="mainDisabledTextColor">@color/lightGrey</color>
     <color name="mainBackground">@color/white</color>
     <color name="cardsBackground">@color/white</color>
@@ -28,7 +43,7 @@
     <color name="actionBarBackground">#99242424</color>
     <color name="backgroundImageTint">#55000000</color>
 
-    <color name="timePickerHeaderBackground">@color/almostTransparentWhite</color>
+    <color name="timePickerHeaderBackground">@color/whiteTransparent22</color>
 
     <color name="primary">@color/mainAccent</color>
     <color name="primaryDark">@color/mainAccentDark</color>
