@@ -51,7 +51,7 @@
                     android:scaleY="2"
                     app:layout_constraintBottom_toBottomOf="@id/fragment_alarms_list"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintHorizontal_bias="0.65"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/fragment_alarms_list" />
 

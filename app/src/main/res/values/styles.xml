@@ -51,13 +51,11 @@
         <item name="android:timePickerMode">clock</item>
         <item name="android:headerBackground">@color/timePickerHeaderBackground</item>
         <item name="android:numbersBackgroundColor">@color/timePickerHeaderBackground</item>
-        <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
+        <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item>
     </style>
 
     <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
         <item name="android:textColor">@color/mainAccent</item>
-        <item name="android:textColorSecondary">@android:color/holo_blue_light</item>j
-        <item name="android:textColorPrimary">@android:color/holo_green_light</item>
     </style>
 
     <style name="NumberPicker" parent="@android:style/Theme.Material">
