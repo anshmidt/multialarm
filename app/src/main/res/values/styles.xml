@@ -15,6 +15,9 @@
     <style name="MainActivityTheme" parent="AppTheme">
         <item name="actionBarStyle">@style/ActionBarTheme</item>
         <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+<!--        <item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="ActionBarTheme" parent="Widget.AppCompat.Light.ActionBar.Solid">
