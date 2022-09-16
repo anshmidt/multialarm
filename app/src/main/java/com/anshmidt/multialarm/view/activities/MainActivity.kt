@@ -1,11 +1,13 @@
 package com.anshmidt.multialarm.view.activities
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
@@ -48,9 +50,11 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
             }
         }
+    }
 
-//        val myDrawable = ContextCompat.getDrawable(this, R.drawable.green_cropped)
-//        myDrawable?.setColorFilter(getColor(R.color.backgroundImageTint), PorterDuff.Mode.SRC_OVER)
+    private fun addTintToBackgroundImage() {
+        val myDrawable = ContextCompat.getDrawable(this, R.drawable.img_background_main)
+        myDrawable?.setColorFilter(getColor(R.color.backgroundImageTint), PorterDuff.Mode.SRC_OVER)
     }
 
     private fun setSwitchState(switchState: Boolean) {
