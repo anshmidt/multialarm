@@ -82,7 +82,8 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/mainAccent</item>
-        <item name="android:textColorPrimary">@color/settingsMainText</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
     </style>
 
     <style name="FirstAlarmTimeDialogTheme">
