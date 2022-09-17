@@ -99,4 +99,10 @@
         <item name="cardBackgroundColor">@color/cardsBackground</item>
     </style>
 
+    <style name="DialogStyle" parent="@style/Theme.AppCompat.Dialog.MinWidth">
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:colorAccent">@color/mainAccent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
 </resources>

@@ -55,7 +55,7 @@ class MinutesBetweenAlarmsDialogFragment : DialogFragment(){
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {
-        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
 
         dialogBuilder.setView(dialogView)
 

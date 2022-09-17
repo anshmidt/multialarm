@@ -14,6 +14,8 @@
     <color name="lightGrey">#aaaaaa</color>
     <color name="greyEE">#EEEEEE</color>
     <color name="grey78">#787878</color>
+    <color name="grey42">#424242</color>
+    <color name="grey55">#555555</color>
 
     <color name="black">#000000</color>
     <color name="black12">#121212</color>
@@ -47,7 +49,8 @@
     <color name="actionBarBackground">@android:color/transparent</color>
     <color name="backgroundImageTint">@android:color/transparent</color>
 
-    <color name="timePickerHeaderBackground">@color/whiteTransparent22</color>
+    <color name="dialogBackground">@color/grey42</color>
+    <color name="timePickerHeaderBackground">@color/grey55</color>
 
     <color name="primary">@color/black21</color>
     <color name="primaryDark">@color/mainBackground</color>
