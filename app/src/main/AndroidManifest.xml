@@ -53,6 +53,7 @@
             android:name=".view.activities.SettingsActivity"
             android:launchMode="singleTop"
             android:label="@string/preferences_title"
+            android:theme="@style/SettingsActivityTheme"
             android:parentActivityName=".view.activities.MainActivity">
         </activity>
 

@@ -51,8 +51,8 @@
     <color name="dialogBackground">@color/greyEE</color>
     <color name="timePickerHeaderBackground">@color/greyDD</color>
 
-    <color name="primary">@color/mainAccent</color>
-    <color name="primaryDark">@color/mainAccentDark</color>
+    <color name="primary">@color/white</color>
+    <color name="primaryDark">@color/greyEE</color>
     <color name="textColorPrimary">@color/mainTextColor</color>
     <color name="divider">@color/mainTextColor</color>
 
