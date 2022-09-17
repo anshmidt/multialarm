@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.isNightModeOn.observe(this@MainActivity, {
             setStatusBarTextColor(it)
-
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)
         })
 
         binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->

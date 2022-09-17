@@ -46,7 +46,7 @@
             android:showOnLockScreen="true"
             android:exported="true"
             android:directBootAware="true"
-            android:theme="@style/AppFullScreenTheme">
+            android:theme="@style/DismissAlarmActivityTheme">
         </activity>
 
         <activity

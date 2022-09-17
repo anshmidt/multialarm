@@ -30,7 +30,7 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DismissAlarmActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
