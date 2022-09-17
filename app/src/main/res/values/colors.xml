@@ -56,6 +56,7 @@
     <color name="textColorPrimary">@color/mainTextColor</color>
     <color name="divider">@color/mainTextColor</color>
 
+    <color name="settingsBackground">@color/greyEE</color>
     <color name="settingsMainText">@color/mainTextColor</color>
     <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
 
