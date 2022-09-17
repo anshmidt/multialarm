@@ -62,7 +62,7 @@
     <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
 
     <color name="dismissActivityTextСolor">@color/white</color>
-    <color name="dismissActivityMainAccent">@color/mainAccent</color>
+    <color name="dismissActivityMainAccent">@color/accentOverWhite</color>
     <color name="dismissActivityBackground">@color/black</color>
 
     <color name="splashScreenBackground">@color/black</color>

@@ -23,6 +23,7 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.framelayout_settings, SettingsFragment())
                 .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.elevation = 2f
 
         viewModel.isNightModeOn.observe(this, {
             setStatusBarTextColor(it)
