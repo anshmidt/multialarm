@@ -79,11 +79,12 @@
     </style>
 
     <style name="SettingsActivityTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimary">@color/settingsTitleBackground</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/mainAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="FirstAlarmTimeDialogTheme">

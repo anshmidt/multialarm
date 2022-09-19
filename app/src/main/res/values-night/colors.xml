@@ -58,6 +58,7 @@
     <color name="divider">@color/mainTextColor</color>
 
     <color name="settingsBackground">@color/black12</color>
+    <color name="settingsTitleBackground">@color/black21</color>
     <color name="settingsMainText">@color/mainTextColor</color>
     <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
 

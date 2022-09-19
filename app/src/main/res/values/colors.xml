@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    Private color palette-->
-    <color name="accentOverWhite">#b62020</color>
+<!--    <color name="accentOverWhite">#A86F00</color>-->
+<!--    <color name="accentOverWhite">#b62020</color>-->
+    <color name="accentOverWhite">#b62a20</color>
+<!--    <color name="accentOverWhite">#b64b20</color>-->
+<!--    <color name="accentOverWhite">#aab2c0</color>-->
+<!--    <color name="accentOverWhite">#7689b7</color>-->
     <color name="accentOverBlack">#ff5252</color>
     <color name="accentDark">#8e0b0b</color>
 
@@ -45,12 +50,13 @@
     <color name="mainDisabledTextColor">@color/lightGrey</color>
     <color name="mainBackground">@color/white</color>
     <color name="cardsBackground">#99ffffff</color>
-    <color name="alarmsListBackground">#99ffffff</color>
+    <color name="alarmsListBackground">@color/cardsBackground</color>
     <color name="actionBarBackground">@android:color/transparent</color>
+<!--    <color name="backgroundImageTint">#11000000</color>-->
     <color name="backgroundImageTint">@android:color/transparent</color>
 
-    <color name="dialogBackground">@color/greyEE</color>
-    <color name="timePickerHeaderBackground">@color/greyDD</color>
+    <color name="dialogBackground">@color/greyF8</color>
+    <color name="timePickerHeaderBackground">@color/greyEE</color>
 
     <color name="primary">@color/white</color>
     <color name="primaryDark">@color/greyF8</color>
@@ -58,6 +64,7 @@
     <color name="divider">@color/mainTextColor</color>
 
     <color name="settingsBackground">@color/greyF8</color>
+    <color name="settingsTitleBackground">@color/greyEE</color>
     <color name="settingsMainText">@color/mainTextColor</color>
     <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
 
