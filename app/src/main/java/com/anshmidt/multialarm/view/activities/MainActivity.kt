@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addTintToBackgroundImage() {
-        val myDrawable = ContextCompat.getDrawable(this, R.drawable.white_mountain_7)
+        val myDrawable = ContextCompat.getDrawable(this, R.drawable.img_background_main)
         myDrawable?.setColorFilter(getColor(R.color.backgroundImageTint), PorterDuff.Mode.SRC_OVER)
     }
 
