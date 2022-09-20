@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/alarmsListBackground">
+                android:background="@drawable/card_gradient">
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_alarms_list"
@@ -78,7 +78,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout="@layout/fragment_first_alarm_time" />
+                    tools:layout="@layout/fragment_first_alarm_time"
+                    android:background="@drawable/card_gradient"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -100,7 +101,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout="@layout/fragment_minutes_between_alarms"/>
+                    tools:layout="@layout/fragment_minutes_between_alarms"
+                    android:background="@drawable/card_gradient"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -123,7 +125,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout="@layout/fragment_number_of_alarms"/>
+                    tools:layout="@layout/fragment_number_of_alarms"
+                    android:background="@drawable/card_gradient"/>
             </androidx.cardview.widget.CardView>
 
 
