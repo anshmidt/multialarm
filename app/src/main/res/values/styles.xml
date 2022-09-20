@@ -106,6 +106,7 @@
         <item name="android:layout_marginEnd">@dimen/margin_main_activity</item>
         <item name="cardCornerRadius">@dimen/cards_corner_radius</item>
         <item name="cardBackgroundColor">@android:color/transparent</item>
+<!--        <item name="android:foreground">@drawable/card_border</item>-->
 <!--        <item name="cardBackgroundColor">@color/cardsBackground</item>-->
     </style>
 
