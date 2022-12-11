@@ -13,7 +13,9 @@ import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
+import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.anshmidt.multialarm.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -22,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
+    private val appThemeSelector: AppThemeSelector by inject()
 
     private val binding: ActivityMainCardsBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainCardsBinding>(this, R.layout.activity_main_cards)
@@ -56,6 +59,9 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
             }
         }
+
+        val moreIcon = ContextCompat.getDrawable(this, R.drawable.ic_more)
+        moreIcon?.setTint(ContextCompat.getColor(this, R.color.mainTextColor))
     }
 
     private fun addTintToBackgroundImage() {
