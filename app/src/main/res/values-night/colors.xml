@@ -39,8 +39,8 @@
     <color name="actionBarBackground">@android:color/transparent</color>
     <color name="backgroundImageTint">@android:color/transparent</color>
 
-    <color name="dialogBackground">@color/grey42</color>
-    <color name="timePickerHeaderBackground">@color/grey55</color>
+    <color name="dialogBackground">@color/black21</color>
+    <color name="timePickerHeaderBackground">@color/black33</color>
 
     <color name="primary">@color/black21</color>
     <color name="primaryDark">@color/mainBackground</color>
