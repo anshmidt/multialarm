@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_main_activity">20dp</dimen>
+    <dimen name="margin_main_activity">26dp</dimen>
+    <dimen name="margin_vertical_alarms_list">70dp</dimen>
     <dimen name="margin_horizontal_title_dialogs">16dp</dimen>
     <dimen name="margin_vertical_title_dialogs">10dp</dimen>
+    <dimen name="text_size_main">18sp</dimen>
+    <dimen name="cards_elevation">1dp</dimen>
+    <dimen name="cards_corner_radius">8dp</dimen>
 </resources>

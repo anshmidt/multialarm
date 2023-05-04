@@ -1,6 +1,5 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
@@ -34,17 +34,21 @@ class MainViewModel(
     private var _displayAlarmsResetMessage = SingleLiveEvent<Any>()
     val displayAlarmsResetMessage: LiveData<Any> = _displayAlarmsResetMessage
 
-    fun onAlarmSwitchChanged(switchView: View, switchState: Boolean) {
-        _displayAlarmSwitchChangedMessage.value = switchState
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.saveAlarmSwitchState(switchState)
-        }
+    private var _isNightModeOn = MutableLiveData<Boolean>()
+    val isNightModeOn: LiveData<Boolean> = _isNightModeOn
+
+    fun onAlarmSwitchChanged(switchView: View, newSwitchState: Boolean) {
+        _displayAlarmSwitchChangedMessage.value = newSwitchState
 
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                val newAlarmSettings = alarmSettings.copy(switchState = switchState)
-                Log.d(TAG, "Alarm settings changed, that's why we reschedule alarms. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
+                if (newSwitchState == alarmSettings.switchState) return@first true
+
+                val newAlarmSettings = alarmSettings.copy(switchState = newSwitchState)
+                Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
                 alarmScheduler.reschedule(newAlarmSettings)
+
+                scheduleSettingsRepository.saveAlarmSwitchState(newSwitchState)
                 return@first true
             }
         }
@@ -78,6 +82,14 @@ class MainViewModel(
                     .getMinutesBetweenAlarms()
                     .drop(1) // ignore initial value since we're only interested in changes
                     .collect { onAlarmSettingsChanged() }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettingRepository
+                    .getNightModeSwitchState()
+                    .collect {
+                        _isNightModeOn.postValue(it)
+                    }
+
         }
     }
 

@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    Private color palette-->
-    <color name="accentOverWhite">#b62020</color>
-    <color name="accentOverBlack">#ff5252</color>
-    <color name="accentDark">#8e0b0b</color>
-    <color name="black">#000000</color>
-    <color name="grey">#888888</color>
-    <color name="lightGrey">#aaaaaa</color>
+    <color name="darkRed42">#b62a20</color>
+    <color name="darkRed30">#8e0b0b</color>
+
+    <color name="blue">#a3c2ff</color>
+    <color name="darkBlueTransparent99">#993864bc</color>
+    <color name="lightBlueTransparent99">#99dde6f3</color>
+
     <color name="white">#ffffff</color>
-    <color name="notContrastingWhiteOverBlack">#f0ffffff</color>
-    <color name="semitransparentNotContrastingWhiteOverBlack">#61ffffff</color>
-    <color name="almostBlack">#121212</color>
-    <color name="darkGrey">#212121</color>
+    <color name="whiteTransparentF0">#f0ffffff</color>
+    <color name="whiteTransparentBB">#bbffffff</color>
+
+    <color name="lightGrey">#aaaaaa</color>
+    <color name="greyEE">#EEEEEE</color>
+    <color name="greyF8">#F8F8F8</color>
+    <color name="greyCC">#CCCCCC</color>
+    <color name="grey78">#787878</color>
+    <color name="grey42">#424242</color>
+    <color name="grey55">#555555</color>
+
+    <color name="black">#000000</color>
+    <color name="black12">#121212</color>
+    <color name="black21">#212121</color>
+    <color name="black33">#333333</color>
+    <color name="blackTransparentBB">#bb121212</color>
+
+
 
     <!--    Public color values-->
-    <color name="mainAccent">@color/accentOverWhite</color>
-    <color name="mainAccentDark">@color/accentDark</color>
+    <color name="mainAccent">@color/darkRed42</color>
 
-    <color name="mainTextColor">@color/grey</color>
+    <color name="mainTextColor">@color/black33</color>
     <color name="mainDisabledTextColor">@color/lightGrey</color>
     <color name="mainBackground">@color/white</color>
+    <color name="cardBackgroundGradientStart">@color/whiteTransparentBB</color>
+    <color name="cardBackgroundGradientEnd">@color/lightBlueTransparent99</color>
+    <color name="actionBarBackground">@android:color/transparent</color>
+    <color name="backgroundImageTint">@android:color/transparent</color>
 
-    <color name="primary">@color/mainAccent</color>
-    <color name="primaryDark">@color/mainAccentDark</color>
-    <color name="textColorPrimary">@color/mainBackground</color>
+    <color name="dialogBackground">@color/greyF8</color>
+    <color name="timePickerHeaderBackground">@color/greyEE</color>
+
+    <color name="primary">@color/white</color>
+    <color name="primaryDark">@color/greyF8</color>
+    <color name="textColorPrimary">@color/mainTextColor</color>
     <color name="divider">@color/mainTextColor</color>
 
+    <color name="settingsBackground">@color/greyF8</color>
+    <color name="settingsTitleBackground">@color/greyEE</color>
     <color name="settingsMainText">@color/mainTextColor</color>
     <color name="settingsSecondaryText">@color/mainDisabledTextColor</color>
 
@@ -33,6 +56,5 @@
     <color name="dismissActivityMainAccent">@color/mainAccent</color>
     <color name="dismissActivityBackground">@color/black</color>
 
-    <color name="splashScreenIcon">@color/accentOverBlack</color>
     <color name="splashScreenBackground">@color/black</color>
 </resources>

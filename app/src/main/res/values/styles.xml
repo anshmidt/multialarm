@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -9,9 +9,28 @@
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
+        <item name="android:timePickerStyle">@style/TimePickerStyle</item>
     </style>
 
-    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="OverflowButtonStyle">
+        <item name="android:src">@drawable/ic_more</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/actionBarBackground</item>
+        <item name="android:displayOptions">showHome|useLogo</item>
+        <item name="displayOptions">showHome|useLogo</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="DismissAlarmActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
@@ -23,15 +42,16 @@
         <item name="android:background">@color/divider</item>
     </style>
 
-    <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/mainAccent</item>
+    <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Dialog">
+<!--        <item name="colorAccent">@color/mainAccent</item>-->
     </style>
 
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
         <item name="colorAccent">@color/mainAccent</item>
         <item name="android:timePickerMode">clock</item>
-        <item name="android:headerBackground">@color/dismissActivityTextСolor</item>
-        <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item> <!-- TimePicker Time *TextAppearance* -->
+        <item name="android:headerBackground">@color/timePickerHeaderBackground</item>
+        <item name="android:numbersBackgroundColor">@color/timePickerHeaderBackground</item>
+        <item name="android:headerTimeTextAppearance">@style/TimePickerStyle.TimeLabel</item>
     </style>
 
     <style name="TimePickerStyle.TimeLabel" parent="@android:style/TextAppearance.Material">
@@ -58,6 +78,15 @@
         <item name="android:textColorSecondary">@color/settingsSecondaryText</item>
     </style>
 
+    <style name="SettingsActivityTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/settingsTitleBackground</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
     <style name="FirstAlarmTimeDialogTheme">
         <item name="android:textColorPrimary">@color/mainTextColor</item>
     </style>
@@ -68,6 +97,22 @@
     </style>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="MainCardStyle" parent="CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_main_activity</item>
+        <item name="android:layout_marginEnd">@dimen/margin_main_activity</item>
+        <item name="cardCornerRadius">@dimen/cards_corner_radius</item>
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+<!--        <item name="android:foreground">@drawable/card_border</item>-->
+<!--        <item name="cardBackgroundColor">@color/cardsBackground</item>-->
+    </style>
+
+    <style name="DialogStyle" parent="@style/Theme.AppCompat.Dialog.MinWidth">
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:colorAccent">@color/mainAccent</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

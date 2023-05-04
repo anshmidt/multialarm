@@ -25,7 +25,8 @@
 
         <activity
             android:name=".view.activities.SplashScreenActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,6 +35,8 @@
 
         <activity
             android:name=".view.activities.MainActivity"
+            android:theme="@style/MainActivityTheme"
+            android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
 
@@ -41,13 +44,16 @@
             android:name=".view.activities.DismissAlarmActivity"
             android:screenOrientation="sensorPortrait"
             android:showOnLockScreen="true"
+            android:exported="true"
             android:directBootAware="true"
-            android:theme="@style/AppFullScreenTheme">
+            android:theme="@style/DismissAlarmActivityTheme">
         </activity>
 
         <activity
             android:name=".view.activities.SettingsActivity"
             android:launchMode="singleTop"
+            android:label="@string/preferences_title"
+            android:theme="@style/SettingsActivityTheme"
             android:parentActivityName=".view.activities.MainActivity">
         </activity>
 
@@ -67,6 +73,7 @@
         </receiver>
 
         <receiver android:name=".receivers.TimeChangeReceiver"
+            android:exported="true"
             android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET"/>
@@ -74,7 +81,8 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.NotificationDismissButtonClickedReceiver">
+        <receiver android:name=".receivers.NotificationDismissButtonClickedReceiver"
+            android:exported="true">
             <intent-filter android:priority="999" >
                 <action android:name="com.anshmidt.multialarm.dismissNotification" />
             </intent-filter>

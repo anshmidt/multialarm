@@ -8,12 +8,12 @@ kapt {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.anshmidt.multialarm.mvvm"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 3
         versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -123,6 +123,16 @@ dependencies {
 
     //SharedPreferences to Flow
     implementation 'com.fredporciuncula:flow-preferences:1.8.0'
+
+    //Material
+    //implementation 'com.google.android.material:material:1.6.1'
+
+    //Cardview
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //Logging to file
+    implementation 'org.tinylog:tinylog-api:2.4.1'
+    runtimeOnly 'org.tinylog:tinylog-impl:2.4.1'
 
 }
 repositories {

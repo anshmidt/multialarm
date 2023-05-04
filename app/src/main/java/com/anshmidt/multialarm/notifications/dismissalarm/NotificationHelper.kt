@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
+import com.anshmidt.multialarm.logging.Log
 import androidx.core.app.NotificationCompat
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.data.TimeFormatter

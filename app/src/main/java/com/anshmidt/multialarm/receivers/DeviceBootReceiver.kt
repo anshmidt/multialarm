@@ -3,8 +3,8 @@ package com.anshmidt.multialarm.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +31,7 @@ class DeviceBootReceiver : BroadcastReceiver(), KoinComponent {
     private fun rescheduleAlarm() {
         scope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                Log.d(TAG, "current settings: $alarmSettings")
+                Log.d(TAG, "Rescheduling alarm because device rebooted")
                 alarmScheduler.reschedule(alarmSettings)
                 return@first true
             }

@@ -1,23 +1,33 @@
 package com.anshmidt.multialarm.view.activities
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import com.anshmidt.multialarm.R
-import com.anshmidt.multialarm.databinding.ActivityMainBinding
+import com.anshmidt.multialarm.databinding.ActivityMainCardsBinding
+import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.anshmidt.multialarm.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
+    private val appThemeSelector: AppThemeSelector by inject()
 
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    private val binding: ActivityMainCardsBinding by lazy {
+        DataBindingUtil.setContentView<ActivityMainCardsBinding>(this, R.layout.activity_main_cards)
     }
 
     // Workaround to make onCheckedChanged not to trigger when switch state is set programmatically
@@ -40,11 +50,23 @@ class MainActivity : AppCompatActivity() {
             setSwitchState(it)
         })
 
+        mainViewModel.isNightModeOn.observe(this@MainActivity, {
+            setStatusBarTextColor(it)
+        })
+
         binding.switchMain.setOnCheckedChangeListener { switchView, isChecked ->
             if (doListenForSwitch) {
                 mainViewModel.onAlarmSwitchChanged(switchView, isChecked)
             }
         }
+
+        val moreIcon = ContextCompat.getDrawable(this, R.drawable.ic_more)
+        moreIcon?.setTint(ContextCompat.getColor(this, R.color.mainTextColor))
+    }
+
+    private fun addTintToBackgroundImage() {
+        val myDrawable = ContextCompat.getDrawable(this, R.drawable.img_background_main)
+        myDrawable?.setColorFilter(getColor(R.color.backgroundImageTint), PorterDuff.Mode.SRC_OVER)
     }
 
     private fun setSwitchState(switchState: Boolean) {
@@ -84,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBinding() {
         binding.lifecycleOwner = this
-        binding.mainViewModel = mainViewModel
+        binding.viewModel = mainViewModel
     }
 
     private fun openSettingsScreen() {
@@ -124,7 +146,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
+    private fun setStatusBarTextColor(isNightModeOn: Boolean) {
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = isNightModeOn.not()
+        window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
 }

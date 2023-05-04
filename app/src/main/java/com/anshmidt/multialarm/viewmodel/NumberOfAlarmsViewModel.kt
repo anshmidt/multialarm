@@ -1,12 +1,12 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -57,6 +57,7 @@ class NumberOfAlarmsViewModel(
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
+                Log.d(TAG, "Rescheduling alarm because numberOfAlarms changed by user")
                 alarmScheduler.reschedule(newAlarmSettings)
                 scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
                 return@first true

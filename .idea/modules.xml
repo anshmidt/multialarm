@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects.multialarm.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects.multialarm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/multialarm.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/multialarm.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/StudioProjects.multialarm.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/StudioProjects.multialarm.app.iml" />
     </modules>
   </component>
 </project>

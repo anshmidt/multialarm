@@ -43,7 +43,8 @@
                     android:layout_margin="@dimen/margin_main_activity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:layout="@layout/fragment_alarms_list"/>
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_main"
@@ -73,7 +74,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout="@layout/fragment_first_alarm_time"/>
 
 
             <View
@@ -89,7 +91,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider_2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout="@layout/fragment_minutes_between_alarms"/>
 
 
             <View
@@ -107,7 +110,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider_3" />
+                app:layout_constraintTop_toBottomOf="@id/divider_3"
+                tools:layout="@layout/fragment_number_of_alarms"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ package com.anshmidt.multialarm.data;
  *  limitations under the License.
  */
 
+
 import android.util.Log;
 
 import androidx.annotation.MainThread;

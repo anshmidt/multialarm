@@ -1,9 +1,9 @@
 package com.anshmidt.multialarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.anshmidt.multialarm.data.SingleLiveEvent
+import com.anshmidt.multialarm.logging.Log
 
 class DismissAlarmViewModel : ViewModel() {
 
@@ -25,6 +25,7 @@ class DismissAlarmViewModel : ViewModel() {
      * When MusicService is destroyed, it doesn't finish the view.
      */
     fun onDismissButtonClicked() {
+        Log.d(TAG, "Dismiss button clicked")
         reasonWhyFinishView = ReasonWhyFinishView.DISMISS_BUTTON_CLICKED
         _stopMusicService.call()
         _finishView.call()

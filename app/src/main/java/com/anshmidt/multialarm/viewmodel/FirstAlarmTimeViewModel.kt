@@ -8,6 +8,7 @@ import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.data.TimeLeft
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -102,6 +103,7 @@ class FirstAlarmTimeViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                     val newAlarmSettings = alarmSettings.copy(firstAlarmTime = firstAlarmTimeSelectedByUser)
+                    Log.d(TAG, "Rescheduling alarm because first alarm time changed by user")
                     alarmScheduler.reschedule(newAlarmSettings)
                     scheduleSettingsRepository.saveFirstAlarmTime(firstAlarmTimeSelectedByUser)
 
@@ -148,6 +150,10 @@ class FirstAlarmTimeViewModel(
                     currentTime = LocalTime.now()
             )
         }
+    }
+
+    companion object {
+        private val TAG = FirstAlarmTimeViewModel::class.java.simpleName
     }
 
 }

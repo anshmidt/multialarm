@@ -11,15 +11,21 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable-night/background_splash_activity.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/drawable/background_splash_screen.xml" value="0.34739583333333335" />
+        <entry key="app/src/main/res/drawable/card_border.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/drawable/card_gradient.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/drawable/gradient_splash_activity.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/drawable/ic_alarm_on_notification.xml" value="0.19114583333333332" />
+        <entry key="app/src/main/res/drawable/ic_alarm_on_notification_2.xml" value="0.23385416666666667" />
+        <entry key="app/src/main/res/drawable/ic_more.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/drawable/ic_splash_screen.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/drawable/ic_splash_screen_foreground.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.19114583333333332" />
+        <entry key="app/src/main/res/drawable/tinted_background_image.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/activity_dismiss.xml" value="0.2857789855072464" />
         <entry key="app/src/main/res/layout/activity_dismiss_animated.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_dismiss_new.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2857789855072464" />
+        <entry key="app/src/main/res/layout/activity_main_cards.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/layout/dialog_first_alarm_time.xml" value="0.24452554744525548" />
         <entry key="app/src/main/res/layout/dialog_interval.xml" value="0.18854166666666666" />

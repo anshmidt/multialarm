@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.application
 
 import android.app.Application
 import com.anshmidt.multialarm.di.appModule
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.android.startKoin
@@ -20,5 +21,9 @@ class BaseApplication : Application(), KoinComponent {
         Koin.logger = EmptyLogger()
         AndroidThreeTen.init(this)
         appThemeSelector.checkAndShowTheme()
+        Log.initializeLogging(applicationContext)
+        Log.d("Application","Application created")
     }
+
+
 }
