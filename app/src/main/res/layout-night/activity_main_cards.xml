@@ -13,7 +13,7 @@
         android:id="@+id/scrollview_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_background_main">
+        android:background="@drawable/img_background_main_night">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_main"
@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/card_gradient">
+                android:background="@drawable/card_gradient_night">
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_alarms_list"
@@ -79,7 +79,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:layout="@layout/fragment_first_alarm_time"
-                    android:background="@drawable/card_gradient"/>
+                    android:background="@drawable/card_gradient_night"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -102,7 +102,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:layout="@layout/fragment_minutes_between_alarms"
-                    android:background="@drawable/card_gradient"/>
+                    android:background="@drawable/card_gradient_night"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -126,7 +126,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:layout="@layout/fragment_number_of_alarms"
-                    android:background="@drawable/card_gradient"/>
+                    android:background="@drawable/card_gradient_night"/>
             </androidx.cardview.widget.CardView>
 
 

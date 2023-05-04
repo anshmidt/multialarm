@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.anshmidt.multialarm.R
-import com.anshmidt.multialarm.databinding.DialogIntervalBinding
 import com.anshmidt.multialarm.databinding.DialogNumberOfAlarmsBinding
 import com.anshmidt.multialarm.view.helpers.NumberPickerHelper
 import com.anshmidt.multialarm.viewmodel.NumberOfAlarmsViewModel
@@ -56,7 +55,7 @@ class NumberOfAlarmsDialogFragment : DialogFragment() {
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {
-        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
 
         dialogBuilder.setView(dialogView)
 
