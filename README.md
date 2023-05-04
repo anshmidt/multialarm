@@ -1,11 +1,12 @@
 # MultiAlarm
-MultiAlarm is an alarm clock app for Android. It is designed to help users who likes to set multiple alarm clocks. It provides simple and effective way to manage them all at once. 
-
-Unlike most alarm apps, MultiAlarm doesn’t force you to choose between “snooze” and “dismiss” when you've just woken up and all you want is to shut down that annoying ringing thing. It's not possible to turn off all the alarms accidentally when you try to dismiss ringing alarm. Alarms simply ring according to schedule until you turn them off from the main menu.
+MultiAlarm is an alarm clock app for Android. It is designed to help users who likes to set multiple alarm clocks for waking up in the morning. It provides simple and effective way to manage them all at once.
 
 ![multialarm screenshots](https://user-images.githubusercontent.com/12444628/236220779-4f383ccc-a2a8-4774-a21a-d8743cc0a098.png)
+<br/><br/>
+Unlike most alarm apps, MultiAlarm doesn’t force you to choose between “snooze” and “dismiss” when you've just woken up and only want to stop that annoying thing ringing. It's not possible to accidentally turn off all the alarms when trying to dismiss a ringing alarm.<br/><br/>
+Alarms simply ring according to schedule until you turn them off from the main menu.
 
-![ringing_alarm_gif](https://user-images.githubusercontent.com/12444628/236221916-f7caa908-7436-4c1a-96f9-0a59f7e224f6.gif)
+<img src="https://user-images.githubusercontent.com/12444628/236221916-f7caa908-7436-4c1a-96f9-0a59f7e224f6.gif" width="280"/>
 
 Minimum Android SDK version: 23 (6.0).
 
