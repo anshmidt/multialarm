@@ -14,8 +14,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.concurrent.TimeUnit
 
 class AlarmScheduler(val context: Context) : KoinComponent {
@@ -49,6 +49,18 @@ class AlarmScheduler(val context: Context) : KoinComponent {
     private fun schedule(firstAlarmTimeMillis: Long, intervalBetweenAlarmsMillis: Long) {
         val alarmIntent = getAlarmIntent()
         val alarmType = AlarmManager.RTC_WAKEUP
+        /**
+         * setExactAndAllowWhileIdle() limitations:
+         * - Can only trigger at least 15 minutes apart while the device is in Doze mode.
+         * If you try to schedule alarms closer together, they will not be triggered during Doze.
+         * However, when the device is not in Doze mode, there’s no such interval limitation,
+         * and you can schedule alarms with shorter intervals.
+         *
+         * setAlarmClock() limitations:
+         * - only works with the RTC_WAKEUP timebase
+         *
+         * Starting with Android 12, I need SCHEDULE_EXACT_ALARM permission.
+         */
         alarmManager.setRepeating(
                 alarmType,
                 firstAlarmTimeMillis,

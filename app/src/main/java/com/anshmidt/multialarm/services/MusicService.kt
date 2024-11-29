@@ -11,11 +11,15 @@ import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.zip
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 

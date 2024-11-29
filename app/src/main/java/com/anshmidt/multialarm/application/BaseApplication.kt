@@ -5,11 +5,11 @@ import com.anshmidt.multialarm.di.appModule
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.jakewharton.threetenabp.AndroidThreeTen
-import org.koin.android.ext.android.startKoin
-import org.koin.core.Koin
-import org.koin.log.EmptyLogger
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.context.startKoin
+import org.koin.core.logger.EmptyLogger
 
 class BaseApplication : Application(), KoinComponent {
 
@@ -17,8 +17,12 @@ class BaseApplication : Application(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this@BaseApplication, listOf(appModule))
-        Koin.logger = EmptyLogger()
+        startKoin {
+            logger(EmptyLogger())
+            androidContext(this@BaseApplication)
+            modules(listOf(appModule))
+        }
+
         AndroidThreeTen.init(this)
         appThemeSelector.checkAndShowTheme()
         Log.initializeLogging(applicationContext)

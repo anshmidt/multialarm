@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.anshmidt.multialarm">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -53,6 +52,7 @@
             android:name=".view.activities.SettingsActivity"
             android:launchMode="singleTop"
             android:label="@string/preferences_title"
+            android:exported="false"
             android:theme="@style/SettingsActivityTheme"
             android:parentActivityName=".view.activities.MainActivity">
         </activity>

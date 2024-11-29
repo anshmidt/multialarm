@@ -13,8 +13,8 @@ import com.anshmidt.multialarm.repository.*
 import com.anshmidt.multialarm.view.helpers.AppThemeSelector
 import com.anshmidt.multialarm.viewmodel.*
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.dsl.module
+import org.koin.androidx.viewmodel.dsl.viewModel
 
 val appModule = module {
     single<IScheduleSettingsRepository> { ScheduleSettingsRepository(get()) }
