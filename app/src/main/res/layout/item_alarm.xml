@@ -6,7 +6,7 @@
         <import type="com.anshmidt.multialarm.data.TimeFormatter"/>
         <variable
             name="item"
-            type="com.anshmidt.multialarm.data.Alarm" />
+            type="com.anshmidt.multialarm.data.AlarmListEntry" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

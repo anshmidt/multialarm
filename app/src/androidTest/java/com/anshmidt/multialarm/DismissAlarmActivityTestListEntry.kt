@@ -20,7 +20,7 @@ import org.koin.test.KoinTest
 
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class DismissAlarmActivityTest : KoinTest {
+class DismissAlarmActivityTestListEntry : KoinTest {
 
     val uiDevice = UiDevice.getInstance(getInstrumentation())
     val deviceStateController = DeviceStateController()

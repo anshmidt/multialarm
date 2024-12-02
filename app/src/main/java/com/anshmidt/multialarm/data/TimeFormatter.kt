@@ -1,6 +1,12 @@
 package com.anshmidt.multialarm.data
 
-import org.threeten.bp.*
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 object TimeFormatter {
@@ -12,54 +18,43 @@ object TimeFormatter {
         return displayableTime
     }
 
-    fun getDisplayableTimeLeft(alarmTime: LocalTime, currentTime: LocalTime): TimeLeft {
-        val timeLeftDuration = Duration.between(currentTime, alarmTime)
-        /**
-         * Time left (before the alarm) must be always > 0 and no more that 24 h.
-         * Since alarmTime and currentTime are LocalTime and not LocalDateTime,
-         * normalization might be needed after performing between()
-         */
-        val normalizedTimeLeftDuration = normalizeDurationByAddingOrSubtractingDays(timeLeftDuration)
-        return normalizedTimeLeftDuration.toTimeLeft()
+    fun getDisplayableTimeLeft(alarmTimeMillis: Long, currentTimeMillis: Long): TimeLeft {
+        val timeLeftDuration = Duration.ofMillis(alarmTimeMillis - currentTimeMillis)
+        return timeLeftDuration.toTimeLeft()
     }
 
-    /**
-     * The precision of AlarmManager is ±2-3 minutes. That's why sometimes first alarm is 2-3 minutes
-     * late. In these cases, the expected behavior is to show "0 minutes left" (and not a negative duration).
-     */
-    private fun normalizeDurationForDisplaying(duration: Duration): Duration {
-        return if (duration.isNegative) {
-            Duration.ZERO
-        } else {
-            duration
-        }
-    }
+//    /**
+//     * The precision of AlarmManager is ±2-3 minutes. That's why sometimes first alarm is 2-3 minutes
+//     * late. In these cases, the expected behavior is to show "0 minutes left" (and not a negative duration).
+//     */
+//    private fun normalizeDurationForDisplaying(duration: Duration): Duration {
+//        return if (duration.isNegative) {
+//            Duration.ZERO
+//        } else {
+//            duration
+//        }
+//    }
 
-    fun normalizeDurationByAddingOrSubtractingDays(duration: Duration): Duration {
-        var normalizedDuration = duration
-        while (normalizedDuration.isNegative) {
-            normalizedDuration = normalizedDuration.plusDays(1)
-        }
-        while (normalizedDuration.compareTo(Duration.ofDays(1)) > 0) {
-            normalizedDuration = normalizedDuration.minusDays(1)
-        }
-        return normalizedDuration
-    }
-
-    fun Duration.toTimeLeft(): TimeLeft {
+    private fun Duration.toTimeLeft(): TimeLeft {
         val hours = this.toHours().toInt()
         val minutes = this.toMinutes().toInt() % 60
         return TimeLeft(hours = hours, minutes = minutes)
     }
 
-    fun getFirstAlarmTimeMillis(firstAlarmTime: LocalTime): Long {
+    fun getAlarmTimeWithin24HoursMillis(alarmTime: LocalTime): Long {
         val localDate = LocalDate.now()
-        val localTimeDate = LocalDateTime.of(localDate, firstAlarmTime)
+        val localTimeDate = LocalDateTime.of(localDate, alarmTime)
         val zoneId = ZoneId.systemDefault()
         val zonedDateTime = localTimeDate.atZone(zoneId)
         val normalizedZonedDateTime = normalizeAlarmTimeByAddingOrSubtractingDays(zonedDateTime)
         val millis = normalizedZonedDateTime.getMillis()
         return millis
+    }
+
+    fun getLocalTime(timeMillis: Long, zoneId: ZoneId = ZoneId.systemDefault()): LocalTime {
+        return Instant.ofEpochMilli(timeMillis)
+            .atZone(zoneId)
+            .toLocalTime()
     }
 
     private fun ZonedDateTime.getMillis(): Long {
@@ -70,10 +65,12 @@ object TimeFormatter {
 
     private fun normalizeAlarmTimeByAddingOrSubtractingDays(zonedDateTime: ZonedDateTime): ZonedDateTime {
         var normalizedZonedDateTime = zonedDateTime
-        while (normalizedZonedDateTime < ZonedDateTime.now()) { // alarm is always in the future
+        // alarm is always in the future
+        while (normalizedZonedDateTime < ZonedDateTime.now()) {
             normalizedZonedDateTime = normalizedZonedDateTime.plusDays(1)
         }
-        while (normalizedZonedDateTime > ZonedDateTime.now().plusDays(1)) { // alarm must not be more than 24 hours in the future
+        // alarm must not be more than 24 hours in the future
+        while (normalizedZonedDateTime > ZonedDateTime.now().plusDays(1)) {
             normalizedZonedDateTime = normalizedZonedDateTime.minusDays(1)
         }
         return normalizedZonedDateTime

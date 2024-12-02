@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MinutesBetweenAlarmsViewModel(
-        private val scheduleSettingsRepository: IScheduleSettingsRepository,
-        private val alarmScheduler: AlarmScheduler
+    private val scheduleSettingsRepository: IScheduleSettingsRepository,
+    private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
     private val _openMinutesBetweenAlarmsDialog = SingleLiveEvent<Any>()
@@ -28,12 +28,12 @@ class MinutesBetweenAlarmsViewModel(
 
 
     fun onViewCreated() {
+
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getMinutesBetweenAlarms().first { minutesBetweenAlarms ->
-                _minutesBetweenAlarms.postValue(minutesBetweenAlarms)
-                val selectedVariant = allAvailableVariants.indexOf(minutesBetweenAlarms)
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
+                _minutesBetweenAlarms.postValue(alarmSettings.minutesBetweenAlarms)
+                val selectedVariant = allAvailableVariants.indexOf(alarmSettings.minutesBetweenAlarms)
                 selectedVariantIndex.postValue(selectedVariant)
-                return@first true
             }
         }
     }
@@ -53,12 +53,13 @@ class MinutesBetweenAlarmsViewModel(
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
 
         _minutesBetweenAlarms.value = selectedVariant
+
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
                 Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")
-                alarmScheduler.reschedule(newAlarmSettings)
-                scheduleSettingsRepository.saveMinutesBetweenAlarms(selectedVariant)
+                alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                 return@first true
             }
         }

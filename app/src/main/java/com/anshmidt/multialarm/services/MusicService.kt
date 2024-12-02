@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.IBinder
 import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.countdowntimer.ICountDownTimer
+import com.anshmidt.multialarm.data.AlarmSettings
+import com.anshmidt.multialarm.data.TimeFormatter
+import com.anshmidt.multialarm.data.getNextAlarmTimeMillis
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.musicplayer.IMusicPlayer
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
@@ -51,14 +54,17 @@ class MusicService : Service(), KoinComponent {
 
         if (shouldShowNotification) {
             scope.launch(Dispatchers.IO) {
-                scheduleSettingsRepository.getUpcomingAlarmTime().first { upcomingAlarmTime ->
+                scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                    val upcomingAlarmMillis =
+                        alarmSettings.getNextAlarmTimeMillis() ?: return@first true
+                    val upcomingAlarmTime = TimeFormatter.getLocalTime(upcomingAlarmMillis)
                     showNotification(upcomingAlarmTime)
+
                     // Alarm is considered as already rang at the moment when it starts ringing
                     checkNumberOfAlreadyRangAlarms()
                     return@first true
                 }
             }
-
         }
 
         scope.launch(Dispatchers.IO) {
@@ -85,26 +91,27 @@ class MusicService : Service(), KoinComponent {
 
     private fun checkNumberOfAlreadyRangAlarms() {
         scope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getNumberOfAlreadyRangAlarms()
-                .zip(scheduleSettingsRepository.getNumberOfAlarms()) { numberOfAlreadyRangAlarms, numberOfAlarms ->
-                    val newNumberOfAlreadyRangAlarms = numberOfAlreadyRangAlarms + 1
-                    Log.d(TAG, "Saving number of already rang alarms: $newNumberOfAlreadyRangAlarms")
-                    scheduleSettingsRepository.saveNumberOfAlreadyRangAlarms(newNumberOfAlreadyRangAlarms)
+            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                val newNumberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms + 1
+                val newAlarmSettings = alarmSettings.copy(numberOfAlreadyRangAlarms = newNumberOfAlreadyRangAlarms)
+                Log.d(TAG, "Saving number of already rang alarms: $newNumberOfAlreadyRangAlarms")
+                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
 
-                    cancelAlarmsIfAllHaveRung(
-                        numberOfAlreadyRangAlarms = newNumberOfAlreadyRangAlarms,
-                        numberOfAlarms = numberOfAlarms
-                    )
-                }
-                .first()
+                scheduleNextAlarmOrCancel(alarmSettings)
+
+                return@first true
+            }
         }
     }
 
-    private suspend fun cancelAlarmsIfAllHaveRung(numberOfAlreadyRangAlarms: Int, numberOfAlarms: Int) {
-        if (numberOfAlreadyRangAlarms >= numberOfAlarms) {
-            Log.d(TAG, "Canceling alarms because all of them have rung. numberOfAlreadyRangAlarms=$numberOfAlreadyRangAlarms, numberOfAlarms=$numberOfAlarms")
+    private suspend fun scheduleNextAlarmOrCancel(alarmSettings: AlarmSettings) {
+        if (alarmSettings.numberOfAlreadyRangAlarms >= alarmSettings.numberOfAlarms) {
+            Log.d(TAG, "Canceling alarms because all of them have rung. AlarmSettings = $alarmSettings")
             alarmScheduler.cancel()
-            scheduleSettingsRepository.saveAlarmSwitchState(false)
+            val newAlarmSettings = alarmSettings.copy(areOn = false)
+            scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
+        } else {
+            alarmScheduler.scheduleNext(alarmSettings)
         }
     }
 

@@ -33,7 +33,7 @@ class TimeChangeReceiver : BroadcastReceiver(), KoinComponent {
         scope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 Log.d(TAG, "Rescheduling alarm because time changed")
-                alarmScheduler.reschedule(alarmSettings)
+                alarmScheduler.scheduleNext(alarmSettings)
                 return@first true
             }
         }

@@ -1,55 +1,45 @@
 package com.anshmidt.multialarm.data
 
-import org.threeten.bp.LocalTime
+fun AlarmSettings.getAlarmsList(): List<AlarmListEntry> {
+    val alarmsList: MutableList<AlarmListEntry> = mutableListOf()
+    val firstAlarmTimeMillis = this.firstAlarmTimeMillis
+    var alarmTime = TimeFormatter.getLocalTime(timeMillis = firstAlarmTimeMillis)
 
-object AlarmsConverter {
-
-    fun getAlarmsList(
-            firstAlarmTime: LocalTime,
-            minutesBetweenAlarms: Int,
-            numberOfAlarms: Int
-    ): List<Alarm> {
-
-        val alarmsList: MutableList<Alarm> = mutableListOf()
-
-        var alarmTime = firstAlarmTime
-        for (interval in 0..numberOfAlarms - 1) {
-            alarmsList.add(Alarm(
-                    time = alarmTime,
-                    isEnabled = true
-            ))
-            alarmTime = alarmTime.plusMinutes(minutesBetweenAlarms.toLong())
-        }
-
-        return alarmsList
-    }
-
-    fun getAlarmsList(
-            firstAlarmTime: LocalTime,
-            minutesBetweenAlarms: Int,
-            numberOfAlarms: Int,
-            numberOfAlreadyRangAlarms: Int
-    ): List<Alarm> {
-        val alarmsList: MutableList<Alarm> = mutableListOf()
-
-        var alarmTime = firstAlarmTime
-        var isAlarmEnabled: Boolean
-        for (position in 0..numberOfAlarms - 1) {
-            isAlarmEnabled = isAlarmEnabled(
-                    alarmPosition = position,
-                    numberOfAlreadyRangAlarms = numberOfAlreadyRangAlarms
+    for (i in 0..this.numberOfAlarms - 1 ) {
+        alarmsList.add(
+            AlarmListEntry(
+                time = alarmTime,
+                isEnabled = isAlarmEnabled(alarmPosition = i)
             )
-            alarmsList.add(Alarm(
-                    time = alarmTime,
-                    isEnabled = isAlarmEnabled
-            ))
-            alarmTime = alarmTime.plusMinutes(minutesBetweenAlarms.toLong())
-        }
-
-        return alarmsList
+        )
+        alarmTime = alarmTime.plusMinutes(this.minutesBetweenAlarms.toLong())
     }
+    return alarmsList
+}
 
-    fun isAlarmEnabled(alarmPosition: Int, numberOfAlreadyRangAlarms: Int): Boolean {
-        return (alarmPosition >= numberOfAlreadyRangAlarms)
-    }
+/**
+ * Returns time of the next upcoming alarm,
+ * or null if there is no next alarm.
+ */
+fun AlarmSettings.getNextAlarmTimeMillis(): Long? {
+    if (isThereNextAlarm().not()) return null
+    val firstAlarmTimeMillis = this.firstAlarmTimeMillis
+    val minutesSinceFirstAlarm =
+        (this.numberOfAlarms - this.numberOfAlreadyRangAlarms) * this.minutesBetweenAlarms
+    val millisSinceFirstAlarm = minutesSinceFirstAlarm * 60 * 1000
+    val nextAlarmMillis = firstAlarmTimeMillis + millisSinceFirstAlarm
+    return nextAlarmMillis
+}
+
+/**
+ * Returns true if alarms are on and not all alarms have rang
+ */
+fun AlarmSettings.isThereNextAlarm(): Boolean {
+    if (this.areOn.not()) return false
+    return (this.numberOfAlreadyRangAlarms < this.numberOfAlarms)
+}
+
+fun AlarmSettings.isAlarmEnabled(alarmPosition: Int): Boolean {
+    if (this.areOn.not()) return false
+    return (alarmPosition >= this.numberOfAlreadyRangAlarms)
 }

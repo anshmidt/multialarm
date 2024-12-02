@@ -17,7 +17,9 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             return
         }
 
-        // music starts playing when view appears, and stops playing when notification dismissed or clicked, or button clicked on activity
+        // music starts playing when view appears,
+        // and stops playing when notification dismissed or clicked,
+        // or button clicked on activity
         startMusicService(context)
     }
 

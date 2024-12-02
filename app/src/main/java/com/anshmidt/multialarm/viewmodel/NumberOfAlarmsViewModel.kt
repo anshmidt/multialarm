@@ -30,9 +30,9 @@ class NumberOfAlarmsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getNumberOfAlarms().first { numberOfAlarms ->
-                _numberOfAlarms.postValue(numberOfAlarms)
-                val selectedVariant = allAvailableVariants.indexOf(numberOfAlarms)
+            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+                _numberOfAlarms.postValue(alarmSettings.numberOfAlarms)
+                val selectedVariant = allAvailableVariants.indexOf(alarmSettings.numberOfAlarms)
                 selectedVariantIndex.postValue(selectedVariant)
                 return@first true
             }
@@ -58,8 +58,8 @@ class NumberOfAlarmsViewModel(
                 Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
                 Log.d(TAG, "Rescheduling alarm because numberOfAlarms changed by user")
-                alarmScheduler.reschedule(newAlarmSettings)
-                scheduleSettingsRepository.saveNumberOfAlarms(selectedVariant)
+                alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                 return@first true
             }
         }

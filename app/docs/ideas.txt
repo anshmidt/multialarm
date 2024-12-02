@@ -1,0 +1,62 @@
+        /**
+         * Always use org.threeten.bp.LocalTime and not java.time in order to support API < 26
+         */
+
+- Scheduling
+
+I've had a repeating alarm. Now I have to schedule one single alarm, and reschedule when it rings
+(as early as possible).
+
+In viewModels:
+alarmScheduler.scheduleFirst(alarmTime: LocalTime)
+
+In broadcastReceiver or MusicService:
+alarmScheduler.scheduleNext(nextAlarmTime: LocalTime)
+
+I want views to work like that:
+showAlarms(alarmSettings)
+I want alarmScheduler to work like that:
+rescheduleAlarms(alarmSettings)
+
+    AlarmSettings:
+    areOn: Boolean
+    firstAlarmMillis: Long
+    minutesBetweenAlarms: Int
+    numberOfAlarms: Int
+    numberOfAlreadyRangAlarms: Int
+
+
+
+2. Coroutine scope in repository
+
+I should set coroutine scope in repository:
+class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
+
+    suspend fun saveValue(key: String, value: String) {
+        withContext(Dispatchers.IO) { // Switch to IO thread
+            sharedPreferences.edit().putString(key, value).apply()
+        }
+    }
+
+    suspend fun getValue(key: String): String? {
+        return withContext(Dispatchers.IO) { // Switch to IO thread
+            sharedPreferences.getString(key, null)
+        }
+    }
+}
+
+class MyViewModel(private val repository: PreferencesRepository) : ViewModel() {
+
+    fun saveToPreferences(key: String, value: String) {
+        viewModelScope.launch {
+            repository.saveValue(key, value) // No need to specify thread
+        }
+    }
+
+    fun loadFromPreferences(key: String) {
+        viewModelScope.launch {
+            val result = repository.getValue(key)
+            // Handle the result
+        }
+    }
+}

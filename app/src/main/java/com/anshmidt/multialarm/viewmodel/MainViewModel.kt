@@ -11,8 +11,10 @@ import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -42,13 +44,12 @@ class MainViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                if (newSwitchState == alarmSettings.switchState) return@first true
+                if (newSwitchState == alarmSettings.areOn) return@first true
 
-                val newAlarmSettings = alarmSettings.copy(switchState = newSwitchState)
+                val newAlarmSettings = alarmSettings.copy(areOn = newSwitchState)
                 Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
-                alarmScheduler.reschedule(newAlarmSettings)
-
-                scheduleSettingsRepository.saveAlarmSwitchState(newSwitchState)
+                alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                 return@first true
             }
         }
@@ -60,36 +61,26 @@ class MainViewModel(
 
     fun onViewStarted() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSwitchState().collect { switchState ->
-                _alarmSwitchState.postValue(switchState)
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .map { it.areOn }
+                .distinctUntilChanged()
+                .collect { switchState ->
+                    _alarmSwitchState.postValue(switchState)
+                }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository
-                    .getFirstAlarmTime()
-                    .drop(1) // ignore initial value since we're only interested in changes
-                    .collect { onAlarmSettingsChanged() }
+            scheduleSettingsRepository.getAlarmSettings()
+                .drop(1) // ignore initial value since we're only interested in changes
+                .collect { onAlarmSettingsChanged() }
         }
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository
-                    .getNumberOfAlarms()
-                    .drop(1) // ignore initial value since we're only interested in changes
-                    .collect { onAlarmSettingsChanged() }
-        }
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository
-                    .getMinutesBetweenAlarms()
-                    .drop(1) // ignore initial value since we're only interested in changes
-                    .collect { onAlarmSettingsChanged() }
-        }
+
         viewModelScope.launch(Dispatchers.IO) {
             appSettingRepository
-                    .getNightModeSwitchState()
-                    .collect {
-                        _isNightModeOn.postValue(it)
-                    }
-
+                .getNightModeSwitchState()
+                .collect {
+                    _isNightModeOn.postValue(it)
+                }
         }
     }
 

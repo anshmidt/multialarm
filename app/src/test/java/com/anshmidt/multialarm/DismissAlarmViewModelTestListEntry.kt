@@ -11,7 +11,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
-class DismissAlarmViewModelTest {
+class DismissAlarmViewModelTestListEntry {
 
     @Mock
     private lateinit var settingsRepository: IScheduleSettingsRepository

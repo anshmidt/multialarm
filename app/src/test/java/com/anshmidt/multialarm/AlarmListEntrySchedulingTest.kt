@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 
 @RunWith(RobolectricTestRunner::class)
-class AlarmSchedulingTest {
+class AlarmListEntrySchedulingTest {
 
 
     lateinit var alarmScheduler: AlarmScheduler
@@ -30,8 +30,8 @@ class AlarmSchedulingTest {
     private fun getStandardAlarmSettings(): AlarmSettings {
         val firstAlarmTime = LocalTime.now().plusHours(1)
         return AlarmSettings(
-                switchState = true,
-                firstAlarmTime = firstAlarmTime,
+                areOn = true,
+                firstAlarmTimeMillis = firstAlarmTime,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5
         )
@@ -117,8 +117,8 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                switchState = true,
-                firstAlarmTime = LocalTime.now().plusHours(2),
+                areOn = true,
+                firstAlarmTimeMillis = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5
         )
@@ -139,8 +139,8 @@ class AlarmSchedulingTest {
         //given
         val firstAlarmSettings = getStandardAlarmSettings()
         val secondAlarmSettings = AlarmSettings(
-                switchState = true,
-                firstAlarmTime = LocalTime.now().plusHours(2),
+                areOn = true,
+                firstAlarmTimeMillis = LocalTime.now().plusHours(2),
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5
         )
@@ -160,8 +160,8 @@ class AlarmSchedulingTest {
     @Test
     fun alarmNotScheduledIfSwitchOff() {
         val alarmSettings = AlarmSettings(
-                switchState = false,
-                firstAlarmTime = LocalTime.MIDNIGHT,
+                areOn = false,
+                firstAlarmTimeMillis = LocalTime.MIDNIGHT,
                 minutesBetweenAlarms = 5,
                 numberOfAlarms = 5
         )
