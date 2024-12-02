@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.data.AlarmListEntry
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class AlarmsListViewModel(
@@ -20,9 +19,8 @@ class AlarmsListViewModel(
     fun onViewStarted() {
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmsList()
-                .first { alarmsList ->
+                .collect { alarmsList ->
                     _alarms.postValue(alarmsList)
-                    return@first true
                 }
         }
     }
