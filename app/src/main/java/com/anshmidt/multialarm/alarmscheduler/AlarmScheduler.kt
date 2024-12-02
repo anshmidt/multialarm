@@ -87,50 +87,6 @@ class AlarmScheduler(val context: Context) : KoinComponent {
         notificationHelper.createNotificationChannel()
     }
 
-//    private fun schedule(firstAlarmTimeMillis: Long, intervalBetweenAlarmsMillis: Long) {
-//        val alarmIntent = getAlarmIntent()
-//        val alarmType = AlarmManager.RTC_WAKEUP
-//        /**
-//         * setExactAndAllowWhileIdle() limitations:
-//         * - Can only trigger at least 15 minutes apart while the device is in Doze mode.
-//         * If you try to schedule alarms closer together, they will not be triggered during Doze.
-//         * However, when the device is not in Doze mode, there’s no such interval limitation,
-//         * and you can schedule alarms with shorter intervals.
-//         *
-//         * setAlarmClock() limitations:
-//         * - only works with the RTC_WAKEUP timebase
-//         *
-//         * Starting with Android 12, I need SCHEDULE_EXACT_ALARM permission.
-//         */
-//
-//        val calendar = Calendar.getInstance().apply {
-//            timeInMillis = System.currentTimeMillis()
-//            set(Calendar.HOUR_OF_DAY, 12)
-//            set(Calendar.MINUTE, 5)
-//            set(Calendar.SECOND, 0)
-//        }
-//
-//        val alarmClockInfo = AlarmManager.AlarmClockInfo(calendar.timeInMillis, null)
-//
-//        if (canScheduleAlarms()) {
-//            alarmManager.setAlarmClock(
-//                alarmClockInfo,
-//                alarmIntent
-//            )
-//        } else {
-//            // TODO handle error message
-//            throw Exception("Don't have permissions to schedule alarms")
-//        }
-//
-//        alarmManager.setRepeating(
-//            alarmType,
-//            firstAlarmTimeMillis,
-//            intervalBetweenAlarmsMillis,
-//            alarmIntent
-//        )
-//        Log.d(TAG, "Scheduling alarm via setRepeating(firstAlarmTimeMillis=$firstAlarmTimeMillis, intervalBetweenAlarmsMillis=$intervalBetweenAlarmsMillis)")
-//    }
-
     private fun canScheduleAlarms(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             alarmManager.canScheduleExactAlarms()

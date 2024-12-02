@@ -25,7 +25,7 @@ fun AlarmSettings.getNextAlarmTimeMillis(): Long? {
     if (isThereNextAlarm().not()) return null
     val firstAlarmTimeMillis = this.firstAlarmTimeMillis
     val minutesSinceFirstAlarm =
-        (this.numberOfAlarms - this.numberOfAlreadyRangAlarms) * this.minutesBetweenAlarms
+        this.numberOfAlreadyRangAlarms * this.minutesBetweenAlarms
     val millisSinceFirstAlarm = minutesSinceFirstAlarm * 60 * 1000
     val nextAlarmMillis = firstAlarmTimeMillis + millisSinceFirstAlarm
     return nextAlarmMillis
