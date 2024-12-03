@@ -9,7 +9,7 @@ kapt {
 android {
     compileSdkVersion 34
     defaultConfig {
-        applicationId "com.anshmidt.multialarm.mvvm"
+        applicationId "com.anshmidt.multialarm"
         minSdkVersion 23
         targetSdkVersion 31
         multiDexEnabled true
