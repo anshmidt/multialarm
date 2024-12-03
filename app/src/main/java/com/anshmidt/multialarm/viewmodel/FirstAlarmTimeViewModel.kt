@@ -134,7 +134,7 @@ class FirstAlarmTimeViewModel(
 
     fun onFirstAlarmTimeSelectedOnPicker(hour: Int, minute: Int) {
         viewModelScope.launch(Dispatchers.Default) {
-            val selectedMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(
+            val selectedMillis = TimeFormatter.getAlarmMillisWithin24Hours(
                 alarmTime = LocalTime.of(hour, minute)
             )
             firstAlarmMillisSelectedByUserFlow.emit(selectedMillis)

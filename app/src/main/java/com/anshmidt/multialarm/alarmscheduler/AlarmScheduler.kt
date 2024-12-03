@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.anshmidt.multialarm.data.AlarmSettings
+import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.data.getNextAlarmTimeMillis
 import com.anshmidt.multialarm.data.isThereNextAlarm
 import com.anshmidt.multialarm.logging.Log
@@ -33,7 +34,18 @@ class AlarmScheduler(val context: Context) : KoinComponent {
      * Is used when user changes alarm settings
      */
     fun rescheduleAlarms(alarmSettings: AlarmSettings) {
-        val newAlarmSettings = alarmSettings.copy(numberOfAlreadyRangAlarms = 0)
+        // Making sure alarm is within 24h in the future each time user reschedules
+        val newFirstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(
+            alarmSettings.firstAlarmTimeMillis
+        )
+        // Alarms are rescheduled by user, that means no alarms have rang yet
+        val newNumberOfAlreadyRangAlarms = 0
+
+        val newAlarmSettings = alarmSettings.copy(
+            firstAlarmTimeMillis = newFirstAlarmMillis,
+            numberOfAlreadyRangAlarms = newNumberOfAlreadyRangAlarms
+        )
+
         CoroutineScope(SupervisorJob()).launch(Dispatchers.IO) {
             scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
         }
@@ -56,6 +68,12 @@ class AlarmScheduler(val context: Context) : KoinComponent {
         } else {
             cancel()
         }
+    }
+
+    fun cancel() {
+        Log.d(TAG, "Canceling alarms")
+        val pendingIntent = getAlarmIntent()
+        alarmManager.cancel(pendingIntent)
     }
 
     private fun scheduleNextAlarm(alarmSettings: AlarmSettings) {
@@ -104,11 +122,5 @@ class AlarmScheduler(val context: Context) : KoinComponent {
         return Intent(context, AlarmBroadcastReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, requestCode, intent, flag)
         }
-    }
-
-    fun cancel() {
-        Log.d(TAG, "Canceling alarms")
-        val pendingIntent = getAlarmIntent()
-        alarmManager.cancel(pendingIntent)
     }
 }

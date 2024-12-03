@@ -41,7 +41,7 @@ object TimeFormatter {
         return TimeLeft(hours = hours, minutes = minutes)
     }
 
-    fun getAlarmTimeWithin24HoursMillis(alarmTime: LocalTime): Long {
+    fun getAlarmMillisWithin24Hours(alarmTime: LocalTime): Long {
         val localDate = LocalDate.now()
         val localTimeDate = LocalDateTime.of(localDate, alarmTime)
         val zoneId = ZoneId.systemDefault()
@@ -49,6 +49,11 @@ object TimeFormatter {
         val normalizedZonedDateTime = normalizeAlarmTimeByAddingOrSubtractingDays(zonedDateTime)
         val millis = normalizedZonedDateTime.getMillis()
         return millis
+    }
+
+    fun getAlarmMillisWithin24Hours(alarmMillis: Long): Long {
+        val alarmTime = getLocalTime(alarmMillis)
+        return getAlarmMillisWithin24Hours(alarmTime)
     }
 
     fun getLocalTime(timeMillis: Long, zoneId: ZoneId = ZoneId.systemDefault()): LocalTime {

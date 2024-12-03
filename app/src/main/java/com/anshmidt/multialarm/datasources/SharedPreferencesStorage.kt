@@ -129,7 +129,7 @@ class SharedPreferencesStorage(private val context: Context) {
          */
         private fun getDefaultFirstAlarmTimeMillis(): Long {
             val defaultLocalTime = LocalTime.of(6, 0)
-            return TimeFormatter.getAlarmTimeWithin24HoursMillis(defaultLocalTime)
+            return TimeFormatter.getAlarmMillisWithin24Hours(defaultLocalTime)
         }
     }
 }

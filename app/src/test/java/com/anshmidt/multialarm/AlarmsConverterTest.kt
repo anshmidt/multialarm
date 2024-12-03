@@ -16,7 +16,7 @@ class AlarmsConverterTest {
     @Test
     fun getAlarmsList_happyPath() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = true,
@@ -41,7 +41,7 @@ class AlarmsConverterTest {
     @Test
     fun getAlarmsList_allOff() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = false,
@@ -72,7 +72,7 @@ class AlarmsConverterTest {
     @Test
     fun getNextAlarmTimeMillis_happyPath() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = true,
@@ -91,7 +91,7 @@ class AlarmsConverterTest {
     @Test
     fun getNextAlarmTimeMillis_firstAlarm() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = true,
@@ -110,7 +110,7 @@ class AlarmsConverterTest {
     @Test
     fun getNextAlarmTimeMillis_lastAlarm() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = true,
@@ -129,7 +129,7 @@ class AlarmsConverterTest {
     @Test
     fun getNextAlarmTimeMillis_allAlarmsAlreadyRang() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = true,
@@ -146,7 +146,7 @@ class AlarmsConverterTest {
     @Test
     fun getNextAlarmTimeMillis_alarmsOff() {
         val firstAlarmTime = LocalTime.of(6, 0)
-        val firstAlarmMillis = TimeFormatter.getAlarmTimeWithin24HoursMillis(firstAlarmTime)
+        val firstAlarmMillis = TimeFormatter.getAlarmMillisWithin24Hours(firstAlarmTime)
 
         val alarmSettings = AlarmSettings(
             areOn = false,
