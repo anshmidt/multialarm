@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.util.concurrent.TimeUnit
 
@@ -29,8 +30,8 @@ class FirstAlarmTimeViewModel(
         private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
-    private var _firstAlarmTime = MutableLiveData<LocalTime>()
-    val firstAlarmTime: LiveData<LocalTime> = _firstAlarmTime
+    private var _firstAlarmTime = MutableLiveData<LocalDateTime>()
+    val firstAlarmTime: LiveData<LocalDateTime> = _firstAlarmTime
 
     private var _timeLeft = MutableLiveData<TimeLeft>()
     val timeLeft: LiveData<TimeLeft> = _timeLeft
@@ -51,7 +52,7 @@ class FirstAlarmTimeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val firstAlarmTimeMillis = alarmSettings.firstAlarmTimeMillis
-                val firstAlarmTime = TimeFormatter.getLocalTime(timeMillis = firstAlarmTimeMillis)
+                val firstAlarmTime = TimeFormatter.getLocalDateTime(timeMillis = firstAlarmTimeMillis)
                 _firstAlarmTime.postValue(firstAlarmTime)
                 return@first true
             }
@@ -105,7 +106,7 @@ class FirstAlarmTimeViewModel(
 
     fun onOkButtonClickInFirstAlarmDialog() {
         firstAlarmMillisSelectedByUserFlow.value?.let { firstAlarmMillisSelectedByUser ->
-            val firstAlarmTime = TimeFormatter.getLocalTime(timeMillis = firstAlarmMillisSelectedByUser)
+            val firstAlarmTime = TimeFormatter.getLocalDateTime(timeMillis = firstAlarmMillisSelectedByUser)
             _firstAlarmTime.postValue(firstAlarmTime)
 
             viewModelScope.launch(Dispatchers.IO) {

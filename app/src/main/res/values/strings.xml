@@ -19,7 +19,7 @@
     <string name="timepicker_dialog_title">Set time of the first alarm:</string>
     <string name="all_time_left">%1$d hr %2$d min left</string>
     <string name="notification_icon_title">Alarms turned on</string>
-    <string name="main_firstalarm_time">First alarm time: %1$s</string>
+    <string name="main_firstalarm_time">First alarm: %1$s (%2$s)</string>
     <string name="chooseringtone_chooser_title">Select a file</string>
     <string name="empty" />
 

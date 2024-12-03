@@ -62,6 +62,12 @@ object TimeFormatter {
             .toLocalTime()
     }
 
+    fun getLocalDateTime(timeMillis: Long): LocalDateTime {
+        return Instant.ofEpochMilli(timeMillis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
+    }
+
     private fun ZonedDateTime.getMillis(): Long {
         val seconds = this.toEpochSecond()
         val millis = seconds * 1000
