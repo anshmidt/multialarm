@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anshmidt.multialarm.data.AlarmListEntry
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AlarmsListViewModel(
@@ -17,7 +16,7 @@ class AlarmsListViewModel(
     val alarms: LiveData<List<AlarmListEntry>> = _alarms
 
     fun onViewStarted() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmsList()
                 .collect { alarmsList ->
                     _alarms.postValue(alarmsList)

@@ -8,7 +8,6 @@ import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -29,7 +28,7 @@ class MinutesBetweenAlarmsViewModel(
 
     fun onViewCreated() {
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
                 _minutesBetweenAlarms.postValue(alarmSettings.minutesBetweenAlarms)
                 val selectedVariant = allAvailableVariants.indexOf(alarmSettings.minutesBetweenAlarms)
@@ -54,7 +53,7 @@ class MinutesBetweenAlarmsViewModel(
 
         _minutesBetweenAlarms.value = selectedVariant
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
                 Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")

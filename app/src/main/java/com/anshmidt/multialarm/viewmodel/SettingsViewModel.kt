@@ -9,7 +9,6 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IRingtoneSettingRepository
 import com.anshmidt.multialarm.view.helpers.AppThemeSelector
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -42,7 +41,7 @@ class SettingsViewModel(
         _chosenRingtoneName.value = sourceFileName
 
         //copy file to app folder
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ringtoneSettingRepository.clearAllRingtones() // no need to store previously copied files
             val destinationFileUri = ringtoneSettingRepository.copyRingtoneToAppDirectory(sourceFileUri)
             ringtoneSettingRepository.saveRingtoneUri(destinationFileUri)
@@ -50,28 +49,28 @@ class SettingsViewModel(
     }
 
     fun onViewCreated() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ringtoneSettingRepository.getRingtoneFileName().first { ringtoneFileName ->
                 _chosenRingtoneName.postValue(ringtoneFileName)
                 return@first true
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ringtoneSettingRepository.getRingtoneDurationSeconds().first { ringtoneDurationSeconds ->
                 _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
                 return@first true
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
                 _isNightModeOn.postValue(nightModeSwitchState)
                 return@first true
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ringtoneSettingRepository.getMusicVolumePercents().first { musicVolumePercents ->
                 _musicVolumePercents.postValue(musicVolumePercents)
                 return@first true
@@ -80,7 +79,7 @@ class SettingsViewModel(
     }
 
     fun onRingtoneDurationChosen(ringtoneDurationSeconds: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
             ringtoneSettingRepository.saveRingtoneDurationSeconds(ringtoneDurationSeconds)
         }
@@ -93,13 +92,13 @@ class SettingsViewModel(
 
     fun onNightModeSelectedByUser(isNightModeOn: Boolean) {
         appThemeSelector.showTheme(isNightModeOn)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             appSettingRepository.saveNightModeSwitchState(isNightModeOn)
         }
     }
 
     fun onMusicVolumeChosen(musicVolumePercents: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ringtoneSettingRepository.saveMusicVolume(musicVolumePercents)
         }
     }

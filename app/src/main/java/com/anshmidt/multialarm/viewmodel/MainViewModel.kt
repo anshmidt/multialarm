@@ -10,7 +10,6 @@ import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
@@ -42,7 +41,7 @@ class MainViewModel(
     fun onAlarmSwitchChanged(switchView: View, newSwitchState: Boolean) {
         _displayAlarmSwitchChangedMessage.value = newSwitchState
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
                 .distinctUntilChanged { old, new -> old.areOn == new.areOn }
                 .first { alarmSettings ->
@@ -59,7 +58,7 @@ class MainViewModel(
     }
 
     fun onViewStarted() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
                 .map { it.areOn }
                 .distinctUntilChanged()
@@ -68,13 +67,13 @@ class MainViewModel(
                 }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
                 .drop(1) // ignore initial value since we're only interested in changes
                 .collect { onAlarmSettingsChanged() }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             appSettingRepository
                 .getNightModeSwitchState()
                 .collect {

@@ -49,7 +49,7 @@ class FirstAlarmTimeViewModel(
         get() = _openFirstAlarmTimeDialog
 
     fun onViewResumed() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
                 val firstAlarmTimeMillis = alarmSettings.firstAlarmTimeMillis
                 val firstAlarmTime = TimeFormatter.getLocalDateTime(timeMillis = firstAlarmTimeMillis)
@@ -57,7 +57,7 @@ class FirstAlarmTimeViewModel(
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val firstAlarmMillisFlow: Flow<Long> = merge(
                 scheduleSettingsRepository.getAlarmSettings().map { it.firstAlarmTimeMillis },
                 firstAlarmMillisSelectedByUserFlow.filterNotNull()
@@ -74,7 +74,7 @@ class FirstAlarmTimeViewModel(
          * Time left to the first alarm doesn't make sense if it's already off. That's why we hide
          * time left in this case.
          */
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
                 val shouldShowTimeLeftOnMainScreen = shouldShowTimeLeftOnMainScreen(
                     numberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms,
@@ -84,7 +84,7 @@ class FirstAlarmTimeViewModel(
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
                 _isTimeLeftEnabled.postValue(alarmSettings.areOn)
             }
@@ -108,7 +108,7 @@ class FirstAlarmTimeViewModel(
             val firstAlarmTime = TimeFormatter.getLocalDateTime(timeMillis = firstAlarmMillisSelectedByUser)
             _firstAlarmTime.postValue(firstAlarmTime)
 
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                     val newAlarmSettings = alarmSettings.copy(firstAlarmTimeMillis = firstAlarmMillisSelectedByUser)
                     Log.d(TAG, "Rescheduling alarm because first alarm time changed by user")
@@ -122,7 +122,7 @@ class FirstAlarmTimeViewModel(
     fun onCancelButtonClickInFirstAlarmDialog() {
         // Clicking Cancel effectively means that we ignore any value user set, and use a value saved
         // in repository instead.
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
                 .map { it.firstAlarmTimeMillis }
                 .first { firstAlarmTimeFromRepository ->

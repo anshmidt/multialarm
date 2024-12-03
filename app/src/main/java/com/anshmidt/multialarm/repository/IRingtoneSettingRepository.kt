@@ -16,7 +16,7 @@ interface IRingtoneSettingRepository {
 
     fun getRingtoneFileName(): Flow<String?>
 
-    fun clearAllRingtones()
+    suspend fun clearAllRingtones()
 
     fun copyRingtoneToAppDirectory(ringtoneUri: Uri): Uri
 

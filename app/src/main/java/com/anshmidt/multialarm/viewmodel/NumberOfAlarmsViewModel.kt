@@ -8,7 +8,6 @@ import com.anshmidt.multialarm.alarmscheduler.AlarmScheduler
 import com.anshmidt.multialarm.data.SingleLiveEvent
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -29,7 +28,7 @@ class NumberOfAlarmsViewModel(
 
 
     fun onViewCreated() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 _numberOfAlarms.postValue(alarmSettings.numberOfAlarms)
                 val selectedVariant = allAvailableVariants.indexOf(alarmSettings.numberOfAlarms)
@@ -53,7 +52,7 @@ class NumberOfAlarmsViewModel(
         }
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _numberOfAlarms.value = selectedVariant
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
                 Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
