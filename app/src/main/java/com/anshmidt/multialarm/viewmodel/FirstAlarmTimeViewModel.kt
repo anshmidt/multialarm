@@ -113,7 +113,6 @@ class FirstAlarmTimeViewModel(
                     val newAlarmSettings = alarmSettings.copy(firstAlarmTimeMillis = firstAlarmMillisSelectedByUser)
                     Log.d(TAG, "Rescheduling alarm because first alarm time changed by user")
                     alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                    scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                     return@first true
                 }
             }

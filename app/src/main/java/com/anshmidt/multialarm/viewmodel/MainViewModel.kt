@@ -43,15 +43,14 @@ class MainViewModel(
         _displayAlarmSwitchChangedMessage.value = newSwitchState
 
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                if (newSwitchState == alarmSettings.areOn) return@first true
-
-                val newAlarmSettings = alarmSettings.copy(areOn = newSwitchState)
-                Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
-                alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
-                return@first true
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .distinctUntilChanged { old, new -> old.areOn == new.areOn }
+                .first { alarmSettings ->
+                    val newAlarmSettings = alarmSettings.copy(areOn = newSwitchState)
+                    Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
+                    alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                    return@first true
+                }
         }
     }
 

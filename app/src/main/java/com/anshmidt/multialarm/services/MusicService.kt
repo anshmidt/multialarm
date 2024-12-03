@@ -92,13 +92,10 @@ class MusicService : Service(), KoinComponent {
     private fun checkNumberOfAlreadyRangAlarms() {
         scope.launch(Dispatchers.IO) {
             scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                val newNumberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms + 1
-                val newAlarmSettings = alarmSettings.copy(numberOfAlreadyRangAlarms = newNumberOfAlreadyRangAlarms)
-                Log.d(TAG, "Saving number of already rang alarms: $newNumberOfAlreadyRangAlarms")
-                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
-
-                scheduleNextAlarmOrCancel(alarmSettings)
-
+                val newAlarmSettings = alarmSettings.copy(
+                    numberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms + 1
+                )
+                scheduleNextAlarmOrCancel(newAlarmSettings)
                 return@first true
             }
         }
@@ -107,10 +104,12 @@ class MusicService : Service(), KoinComponent {
     private suspend fun scheduleNextAlarmOrCancel(alarmSettings: AlarmSettings) {
         if (alarmSettings.numberOfAlreadyRangAlarms >= alarmSettings.numberOfAlarms) {
             Log.d(TAG, "Canceling alarms because all of them have rung. AlarmSettings = $alarmSettings")
-            alarmScheduler.cancel()
             val newAlarmSettings = alarmSettings.copy(areOn = false)
             scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
+            alarmScheduler.cancel()
         } else {
+            Log.d(TAG, "Saving number of already rang alarms: ${alarmSettings.numberOfAlreadyRangAlarms}")
+            scheduleSettingsRepository.saveAlarmSettings(alarmSettings)
             alarmScheduler.scheduleNext(alarmSettings)
         }
     }

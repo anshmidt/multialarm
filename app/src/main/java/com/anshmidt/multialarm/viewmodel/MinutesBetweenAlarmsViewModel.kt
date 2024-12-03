@@ -59,7 +59,6 @@ class MinutesBetweenAlarmsViewModel(
                 val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
                 Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")
                 alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                 return@first true
             }
         }

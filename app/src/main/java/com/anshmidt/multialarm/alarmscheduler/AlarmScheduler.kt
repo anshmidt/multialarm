@@ -38,8 +38,9 @@ class AlarmScheduler(val context: Context) : KoinComponent {
             scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
         }
 
-        if (alarmSettings.areOn) {
-            scheduleNextAlarm(alarmSettings)
+        if (newAlarmSettings.areOn) {
+            Log.d(TAG, "Rescheduling alarms: $newAlarmSettings")
+            scheduleNextAlarm(newAlarmSettings)
         } else {
             cancel()
         }
@@ -50,6 +51,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
      */
     fun scheduleNext(alarmSettings: AlarmSettings) {
         if (alarmSettings.areOn) {
+            Log.d(TAG, "Scheduling next alarm: $alarmSettings")
             scheduleNextAlarm(alarmSettings)
         } else {
             cancel()
@@ -78,6 +80,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
                 alarmClockInfo,
                 alarmIntent
             )
+            Log.d(TAG, "Alarm scheduled: $timeMillis")
         } else {
             // TODO handle error message
             Log.d(TAG, "scheduleOneAlarm: Don't have permissions to schedule alarms")
@@ -104,6 +107,7 @@ class AlarmScheduler(val context: Context) : KoinComponent {
     }
 
     fun cancel() {
+        Log.d(TAG, "Canceling alarms")
         val pendingIntent = getAlarmIntent()
         alarmManager.cancel(pendingIntent)
     }

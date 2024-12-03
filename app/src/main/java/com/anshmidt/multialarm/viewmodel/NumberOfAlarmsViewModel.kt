@@ -59,7 +59,6 @@ class NumberOfAlarmsViewModel(
                 val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
                 Log.d(TAG, "Rescheduling alarm because numberOfAlarms changed by user")
                 alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                scheduleSettingsRepository.saveAlarmSettings(newAlarmSettings)
                 return@first true
             }
         }
