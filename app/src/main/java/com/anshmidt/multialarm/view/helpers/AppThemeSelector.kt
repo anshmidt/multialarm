@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.anshmidt.multialarm.R
 import com.anshmidt.multialarm.repository.IAppSettingRepository
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class AppThemeSelector(
         private val appSettingRepository: IAppSettingRepository
@@ -23,7 +23,7 @@ class AppThemeSelector(
 
     private fun setBackgroundImage(view: View, isNightModeOn: Boolean) {
         view.background = if (isNightModeOn) {
-            ContextCompat.getDrawable(view.context, R.drawable.img_background_main_night)
+            ContextCompat.getDrawable(view.context, R.drawable.img_background_main_desaturated_2_night)
         } else {
             ContextCompat.getDrawable(view.context, R.drawable.img_background_main)
         }

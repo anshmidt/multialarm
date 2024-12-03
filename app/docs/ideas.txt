@@ -2,29 +2,7 @@
          * Always use org.threeten.bp.LocalTime and not java.time in order to support API < 26
          */
 
-- Scheduling
-
-I've had a repeating alarm. Now I have to schedule one single alarm, and reschedule when it rings
-(as early as possible).
-
-In viewModels:
-alarmScheduler.scheduleFirst(alarmTime: LocalTime)
-
-In broadcastReceiver or MusicService:
-alarmScheduler.scheduleNext(nextAlarmTime: LocalTime)
-
-I want views to work like that:
-showAlarms(alarmSettings)
-I want alarmScheduler to work like that:
-rescheduleAlarms(alarmSettings)
-
-    AlarmSettings:
-    areOn: Boolean
-    firstAlarmMillis: Long
-    minutesBetweenAlarms: Int
-    numberOfAlarms: Int
-    numberOfAlreadyRangAlarms: Int
-
+1. Add to the first alarm time: 06:00 sunday
 
 
 2. Coroutine scope in repository

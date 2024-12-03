@@ -13,7 +13,7 @@
         android:id="@+id/scrollview_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_background_main_night">
+        android:background="@drawable/img_background_main_desaturated_2_night">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_main"

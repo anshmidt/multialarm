@@ -3,8 +3,8 @@
     <!--    Private color palette-->
     <color name="darkRed42">#b62a20</color>
     <color name="darkRed30">#8e0b0b</color>
+    <color name="lightRed">#ff867d</color>
 
-    <color name="blue">#a3c2ff</color>
     <color name="darkBlueTransparent99">#993864bc</color>
     <color name="lightBlueTransparent99">#99dde6f3</color>
 
