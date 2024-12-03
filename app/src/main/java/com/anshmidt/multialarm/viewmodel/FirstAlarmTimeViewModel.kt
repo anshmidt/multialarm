@@ -50,11 +50,10 @@ class FirstAlarmTimeViewModel(
 
     fun onViewResumed() {
         viewModelScope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+            scheduleSettingsRepository.getAlarmSettings().collect { alarmSettings ->
                 val firstAlarmTimeMillis = alarmSettings.firstAlarmTimeMillis
                 val firstAlarmTime = TimeFormatter.getLocalDateTime(timeMillis = firstAlarmTimeMillis)
                 _firstAlarmTime.postValue(firstAlarmTime)
-                return@first true
             }
         }
 
