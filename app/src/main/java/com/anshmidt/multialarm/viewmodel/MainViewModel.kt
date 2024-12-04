@@ -69,6 +69,7 @@ class MainViewModel(
 
         viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
+                .distinctUntilChanged { old, new -> old.areOn != new.areOn } // ignore switch state changes
                 .drop(1) // ignore initial value since we're only interested in changes
                 .collect { onAlarmSettingsChanged() }
         }
