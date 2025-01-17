@@ -9,6 +9,7 @@ import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
 import com.anshmidt.multialarm.data.getNextAlarmTimeMillis
 import com.anshmidt.multialarm.data.isThereNextAlarm
+import com.anshmidt.multialarm.di.DpsContext
 import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.notifications.dismissalarm.NotificationHelper
 import com.anshmidt.multialarm.receivers.AlarmBroadcastReceiver
@@ -20,9 +21,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AlarmScheduler(val context: Context) : KoinComponent {
+class AlarmScheduler(val dpsContext: DpsContext) : KoinComponent {
 
-    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val alarmManager = dpsContext.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private val notificationHelper: NotificationHelper by inject()
     private val scheduleSettingsRepository: IScheduleSettingsRepository by inject()
 
@@ -120,8 +121,8 @@ class AlarmScheduler(val context: Context) : KoinComponent {
     private fun getAlarmIntent(): PendingIntent {
         val requestCode = 0
         val flag = PendingIntent.FLAG_UPDATE_CURRENT
-        return Intent(context, AlarmBroadcastReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, requestCode, intent, flag)
+        return Intent(dpsContext.context, AlarmBroadcastReceiver::class.java).let { intent ->
+            PendingIntent.getBroadcast(dpsContext.context, requestCode, intent, flag)
         }
     }
 }

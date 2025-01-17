@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import com.anshmidt.multialarm.data.AlarmSettings
 import com.anshmidt.multialarm.data.TimeFormatter
+import com.anshmidt.multialarm.di.DpsContext
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.Serializer
 import kotlinx.coroutines.flow.Flow
@@ -14,9 +15,9 @@ import org.threeten.bp.LocalTime
  * (returns default values in Direct Boot when device context is used).
  * The same issue happens with Proto DataStore.
  */
-class SharedPreferencesStorage(private val context: Context) {
+class SharedPreferencesStorage(private val dpsContext: DpsContext) {
 
-    private val flowSharedPreferences = getFlowSharedPreferences(context)
+    private val flowSharedPreferences = getFlowSharedPreferences(dpsContext.context)
 
     private val alarmSettingsSerializer =
         object : Serializer<AlarmSettings> {

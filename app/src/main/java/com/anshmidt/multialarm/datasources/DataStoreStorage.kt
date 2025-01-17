@@ -1,8 +1,8 @@
 package com.anshmidt.multialarm.datasources
 
-import android.content.Context
+import com.anshmidt.multialarm.di.DpsContext
 
-class DataStoreStorage(private val context: Context) {
+class DataStoreStorage(private val dpsContext: DpsContext) {
 
 //    private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCE_NAME)
 //    private val dataStore: DataStore<Preferences> = context._dataStore

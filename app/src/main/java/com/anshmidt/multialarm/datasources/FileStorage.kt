@@ -1,19 +1,19 @@
 package com.anshmidt.multialarm.datasources
 
 import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
+import com.anshmidt.multialarm.di.DpsContext
 import com.anshmidt.multialarm.logging.Log
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
-class FileStorage(private val context: Context) {
+class FileStorage(private val dpsContext: DpsContext) {
 
-    private val fileContext = getFileContext(context)
+    private val fileContext = dpsContext.context
 
     fun getFileName(uri: Uri): String? =
             when(uri.scheme) {
@@ -73,21 +73,18 @@ class FileStorage(private val context: Context) {
 
     fun readLogFile(): List<String> {
         val MAX_NUMBER_OF_LINES_TO_READ = 200 // we're only interested in most recent lines in log
-        val logFile = Log.getLogFile(context)
+        val logFile = Log.getLogFile(dpsContext)
 
-        val lines = logFile.readLines()
+        val lines: List<String> = try {
+            logFile.readLines()
+        } catch (e: FileNotFoundException) {
+            listOf("Log file is empty")
+        }
+
         return if (lines.size > MAX_NUMBER_OF_LINES_TO_READ)
             lines.takeLast(MAX_NUMBER_OF_LINES_TO_READ)
         else
             lines
-    }
-
-    companion object {
-        fun getFileContext(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context.createDeviceProtectedStorageContext()
-        } else {
-            context
-        }
     }
 
 }
