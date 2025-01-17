@@ -23,18 +23,6 @@ object TimeFormatter {
         return timeLeftDuration.toTimeLeft()
     }
 
-//    /**
-//     * The precision of AlarmManager is ±2-3 minutes. That's why sometimes first alarm is 2-3 minutes
-//     * late. In these cases, the expected behavior is to show "0 minutes left" (and not a negative duration).
-//     */
-//    private fun normalizeDurationForDisplaying(duration: Duration): Duration {
-//        return if (duration.isNegative) {
-//            Duration.ZERO
-//        } else {
-//            duration
-//        }
-//    }
-
     private fun Duration.toTimeLeft(): TimeLeft {
         val hours = this.toHours().toInt()
         val minutes = this.toMinutes().toInt() % 60

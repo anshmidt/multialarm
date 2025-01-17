@@ -98,7 +98,8 @@ class AlarmScheduler(val context: Context) : KoinComponent {
                 alarmClockInfo,
                 alarmIntent
             )
-            Log.d(TAG, "Alarm scheduled: $timeMillis")
+            Log.d(TAG, "Alarm scheduled: "+
+                "${TimeFormatter.getLocalDateTime(timeMillis)} ($timeMillis)")
         } else {
             // TODO handle error message
             Log.d(TAG, "scheduleOneAlarm: Don't have permissions to schedule alarms")
