@@ -20,6 +20,7 @@ val appModule = module {
     single<IScheduleSettingsRepository> { ScheduleSettingsRepository(get()) }
     single<IRingtoneSettingRepository> { RingtoneSettingRepository(get(), get()) }
     single<IAppSettingRepository> { AppSettingRepository(get()) }
+    single<LogRepository> { LogRepository(get()) }
     single<IMusicPlayer> { MusicPlayer(androidContext()) }
     single<AppThemeSelector> { AppThemeSelector(get()) }
     single<FileStorage> { FileStorage(androidContext()) }
@@ -35,4 +36,5 @@ val appModule = module {
     viewModel { DismissAlarmViewModel() }
     viewModel { AlarmsListViewModel(get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
+    viewModel { LogViewModel(get()) }
 }

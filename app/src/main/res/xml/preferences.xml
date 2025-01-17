@@ -33,4 +33,10 @@
         android:key="@string/key_night_mode"
         android:title="@string/preferences_night_mode_title">
     </SwitchPreference>
+    <Preference
+        android:key="@string/key_log"
+        android:title="@string/preferences_log_title"
+        android:summary="@string/preferences_log_summary">
+    </Preference>
+
 </androidx.preference.PreferenceScreen>

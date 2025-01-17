@@ -7,6 +7,7 @@ import android.os.Build
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
+import com.anshmidt.multialarm.logging.Log
 import java.io.File
 import java.io.FileOutputStream
 
@@ -72,6 +73,21 @@ class FileStorage(private val context: Context) {
     private fun getFileExtension(uri: Uri): String? {
         val mimeType = fileContext.contentResolver.getType(uri)
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
+    }
+
+    fun readLogFile(): List<String> {
+        val logFile = Log.getLogFile(context)
+        val lines = mutableListOf<String>()
+
+        try {
+            logFile.forEachLine { line ->
+                lines.add(line)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return lines
     }
 
 }

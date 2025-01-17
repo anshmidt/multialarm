@@ -12,6 +12,8 @@
     <string name="preferences_music_volume_title">Music volume</string>
     <string name="preferences_test_alarm_title">Test alarm</string>
     <string name="preferences_test_alarm_summary">Trigger alarm right now</string>
+    <string name="preferences_log_title">Log</string>
+    <string name="preferences_log_summary">Open log file</string>
     <string name="preferences_night_mode_title">Night mode</string>
     <string name="main_alarm_turned_off_toast">All alarms turned off</string>
     <string name="main_alarm_turned_on_toast">All alarms turned on</string>
@@ -29,6 +31,7 @@
 
     <string name="dialog_ok_button_name">OK</string>
     <string name="dialog_cancel_button_name">Cancel</string>
+    <string name="dialog_close_button_name">Close</string>
 
     <string name="temp_number_of_alarms">%1$s alarms</string>
 

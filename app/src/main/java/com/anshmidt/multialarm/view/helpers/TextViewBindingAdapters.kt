@@ -2,6 +2,7 @@ package com.anshmidt.multialarm.view.helpers
 
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.RelativeSizeSpan
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -25,6 +26,17 @@ object TextViewBindingAdapters {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         this.setText(spannable)
+    }
+
+    @BindingAdapter("displayListOfStrings")
+    @JvmStatic
+    fun TextView.displayListOfStrings(listOfStrings: List<String>?) {
+        if (listOfStrings == null) return
+        val spannableStringBuilder = SpannableStringBuilder()
+        for (line in listOfStrings) {
+            spannableStringBuilder.append(line).append("\n\n")
+        }
+        this.text = spannableStringBuilder
     }
 
 

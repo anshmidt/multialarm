@@ -4,16 +4,21 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.anshmidt.multialarm.logging.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.preference.*
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
+import androidx.preference.SwitchPreference
 import com.anshmidt.multialarm.R
+import com.anshmidt.multialarm.logging.Log
 import com.anshmidt.multialarm.services.MusicService
 import com.anshmidt.multialarm.view.activities.DismissAlarmActivity
+import com.anshmidt.multialarm.view.dialogs.LogDialogFragment
 import com.anshmidt.multialarm.viewmodel.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -34,6 +39,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val testAlarmPreference: Preference? by lazy {
         val testAlarmPreferenceKey = getString(R.string.key_test_alarm)
         findPreference(testAlarmPreferenceKey)
+    }
+
+    private val logPreference: Preference? by lazy {
+        findPreference(getString(R.string.key_log))
     }
 
     private val nightModePreference: SwitchPreference? by lazy {
@@ -87,10 +96,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             onNightModeSelected(isNightModeOn)
             return@setOnPreferenceChangeListener true
         }
+
+        logPreference?.setOnPreferenceClickListener {
+            onLogPreferenceClicked()
+            return@setOnPreferenceClickListener true
+        }
     }
 
     private fun onTestAlarmPreferenceClicked() {
         viewModel.onTestAlarmPreferenceClicked()
+    }
+
+    private fun onLogPreferenceClicked() {
+        val dialog = LogDialogFragment()
+        dialog.show(requireActivity().supportFragmentManager, LogDialogFragment.FRAGMENT_TAG)
     }
 
     private fun onNightModeSelected(isNightModeOn: Boolean) {

@@ -26,7 +26,6 @@ class BaseApplication : Application(), KoinComponent {
         AndroidThreeTen.init(this)
         appThemeSelector.checkAndShowTheme()
         Log.initializeLogging(applicationContext)
-        Log.d("Application","Application created")
     }
 
 
