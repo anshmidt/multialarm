@@ -18,9 +18,9 @@ class LogDialogFragment : DialogFragment() {
     }
 
     private val viewModel: LogViewModel by viewModel()
+    private var binding: DialogLogBinding? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
         val binding = DataBindingUtil.inflate<DialogLogBinding>(
             requireActivity().layoutInflater,
             R.layout.dialog_log,
@@ -30,6 +30,7 @@ class LogDialogFragment : DialogFragment() {
 
         initBinding(binding)
         val dialogView = binding.root
+        this.binding = binding
         return buildDialog(dialogView)
     }
 
@@ -41,6 +42,11 @@ class LogDialogFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.onViewCreated()
+        binding?.let {
+            it.scrollviewLogdialog.postDelayed({ // scrollview is automatically scrolled down
+                it.scrollviewLogdialog.fullScroll(View.FOCUS_DOWN)
+            }, 100)
+        }
     }
 
     private fun buildDialog(dialogView: View): AlertDialog {
@@ -53,6 +59,11 @@ class LogDialogFragment : DialogFragment() {
         }
 
         return dialogBuilder.create()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
 }
