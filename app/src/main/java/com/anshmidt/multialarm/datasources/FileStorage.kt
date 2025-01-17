@@ -13,11 +13,7 @@ import java.io.FileOutputStream
 
 class FileStorage(private val context: Context) {
 
-    private val fileContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        context.createDeviceProtectedStorageContext()
-    } else {
-        context
-    }
+    private val fileContext = getFileContext(context)
 
     fun getFileName(uri: Uri): String? =
             when(uri.scheme) {
@@ -84,6 +80,14 @@ class FileStorage(private val context: Context) {
             lines.takeLast(MAX_NUMBER_OF_LINES_TO_READ)
         else
             lines
+    }
+
+    companion object {
+        fun getFileContext(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            context.createDeviceProtectedStorageContext()
+        } else {
+            context
+        }
     }
 
 }
