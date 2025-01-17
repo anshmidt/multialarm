@@ -76,18 +76,14 @@ class FileStorage(private val context: Context) {
     }
 
     fun readLogFile(): List<String> {
+        val MAX_NUMBER_OF_LINES_TO_READ = 200 // we're only interested in most recent lines in log
         val logFile = Log.getLogFile(context)
-        val lines = mutableListOf<String>()
 
-        try {
-            logFile.forEachLine { line ->
-                lines.add(line)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return lines
+        val lines = logFile.readLines()
+        return if (lines.size > MAX_NUMBER_OF_LINES_TO_READ)
+            lines.takeLast(MAX_NUMBER_OF_LINES_TO_READ)
+        else
+            lines
     }
 
 }
