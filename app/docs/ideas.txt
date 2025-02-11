@@ -2,3 +2,6 @@
          * Always use org.threeten.bp.LocalTime and not java.time in order to support API < 26
          */
 
+On Huawei devices (and maybe on Oppo and Xiaomi) user needs to disable auto-launch optimization
+in settings (Settings -> Battery -> Auto Launch) to make sure the system doesn't prevent the alarms
+from triggering.

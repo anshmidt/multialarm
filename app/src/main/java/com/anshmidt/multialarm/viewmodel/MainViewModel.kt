@@ -12,6 +12,7 @@ import com.anshmidt.multialarm.repository.IAppSettingRepository
 import com.anshmidt.multialarm.repository.IScheduleSettingsRepository
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.dropWhile
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -43,12 +44,12 @@ class MainViewModel(
 
         viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
-                .distinctUntilChanged { old, new -> old.areOn == new.areOn }
-                .first { alarmSettings ->
+                .dropWhile { it.areOn == newSwitchState }
+                .first()
+                .let { alarmSettings ->
                     val newAlarmSettings = alarmSettings.copy(areOn = newSwitchState)
                     Log.d(TAG, "Rescheduling alarm because switch state changed. Old settings: $alarmSettings . New alarm settings: $newAlarmSettings")
                     alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                    return@first true
                 }
         }
     }
