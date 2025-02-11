@@ -29,12 +29,13 @@ class NumberOfAlarmsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                _numberOfAlarms.postValue(alarmSettings.numberOfAlarms)
-                val selectedVariant = allAvailableVariants.indexOf(alarmSettings.numberOfAlarms)
-                selectedVariantIndex.postValue(selectedVariant)
-                return@first true
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .first()
+                .let { alarmSettings ->
+                    _numberOfAlarms.postValue(alarmSettings.numberOfAlarms)
+                    val selectedVariant = allAvailableVariants.indexOf(alarmSettings.numberOfAlarms)
+                    selectedVariantIndex.postValue(selectedVariant)
+                }
         }
     }
 
@@ -53,13 +54,14 @@ class NumberOfAlarmsViewModel(
         val selectedVariant = allAvailableVariants[selectedVariantIndex.value!!]
         _numberOfAlarms.value = selectedVariant
         viewModelScope.launch {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
-                val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
-                Log.d(TAG, "Rescheduling alarm because numberOfAlarms changed by user")
-                alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                return@first true
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .first()
+                .let { alarmSettings ->
+                    Log.d(TAG, "Rescheduling alarm because ok button clicked in NumberOfAlarmsDialog")
+                    val newAlarmSettings = alarmSettings.copy(numberOfAlarms = selectedVariant)
+                    Log.d(TAG, "Rescheduling alarm because numberOfAlarms changed by user")
+                    alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                }
         }
     }
 

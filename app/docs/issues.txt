@@ -1,1 +1,2 @@
-1.
+1. What happens if device is rebooted in the exact time when alarm should launch? Does it mean that it
+will not be rescheduled?

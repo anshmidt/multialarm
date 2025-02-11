@@ -54,16 +54,17 @@ class MusicService : Service(), KoinComponent {
 
         if (shouldShowNotification) {
             scope.launch(Dispatchers.IO) {
-                scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                    val upcomingAlarmMillis =
-                        alarmSettings.getNextAlarmTimeMillis() ?: return@first true
-                    val upcomingAlarmTime = TimeFormatter.getLocalTime(upcomingAlarmMillis)
-                    showNotification(upcomingAlarmTime)
+                scheduleSettingsRepository.getAlarmSettings()
+                    .first()
+                    .let { alarmSettings ->
+                        val upcomingAlarmMillis =
+                            alarmSettings.getNextAlarmTimeMillis() ?: return@let
+                        val upcomingAlarmTime = TimeFormatter.getLocalTime(upcomingAlarmMillis)
+                        showNotification(upcomingAlarmTime)
 
-                    // Alarm is considered as already rang at the moment when it starts ringing
-                    checkNumberOfAlreadyRangAlarms()
-                    return@first true
-                }
+                        // Alarm is considered as already rang at the moment when it starts ringing
+                        checkNumberOfAlreadyRangAlarms()
+                    }
             }
         }
 
@@ -75,14 +76,15 @@ class MusicService : Service(), KoinComponent {
         }
 
         CoroutineScope(Job() + Dispatchers.Main).launch {
-            ringtoneSettingRepository.getRingtoneDurationSeconds().first { ringtoneDurationSeconds ->
-                Log.d(TAG, "Started counting down. Ringtone duration: $ringtoneDurationSeconds")
-                startCountDownTimer(
-                        durationSeconds = ringtoneDurationSeconds,
-                        doOnCountDownFinish = { doOnCountDownFinish() }
-                )
-                return@first true
-            }
+            ringtoneSettingRepository.getRingtoneDurationSeconds()
+                .first()
+                .let { ringtoneDurationSeconds ->
+                    Log.d(TAG, "Started counting down. Ringtone duration: $ringtoneDurationSeconds")
+                    startCountDownTimer(
+                            durationSeconds = ringtoneDurationSeconds,
+                            doOnCountDownFinish = { doOnCountDownFinish() }
+                    )
+                }
         }
 
 //        return START_NOT_STICKY
@@ -91,13 +93,14 @@ class MusicService : Service(), KoinComponent {
 
     private fun checkNumberOfAlreadyRangAlarms() {
         scope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                val newAlarmSettings = alarmSettings.copy(
-                    numberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms + 1
-                )
-                scheduleNextAlarmOrCancel(newAlarmSettings)
-                return@first true
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .first()
+                .let { alarmSettings ->
+                    val newAlarmSettings = alarmSettings.copy(
+                        numberOfAlreadyRangAlarms = alarmSettings.numberOfAlreadyRangAlarms + 1
+                    )
+                    scheduleNextAlarmOrCancel(newAlarmSettings)
+                }
         }
     }
 

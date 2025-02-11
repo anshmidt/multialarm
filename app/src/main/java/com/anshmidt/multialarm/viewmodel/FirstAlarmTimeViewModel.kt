@@ -109,12 +109,13 @@ class FirstAlarmTimeViewModel(
             _firstAlarmTime.postValue(firstAlarmTime)
 
             viewModelScope.launch {
-                scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                    val newAlarmSettings = alarmSettings.copy(firstAlarmTimeMillis = firstAlarmMillisSelectedByUser)
-                    Log.d(TAG, "Rescheduling alarm because first alarm time changed by user")
-                    alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                    return@first true
-                }
+                scheduleSettingsRepository.getAlarmSettings()
+                    .first()
+                    .let { alarmSettings ->
+                        val newAlarmSettings = alarmSettings.copy(firstAlarmTimeMillis = firstAlarmMillisSelectedByUser)
+                        Log.d(TAG, "Rescheduling alarm because first alarm time changed by user")
+                        alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                    }
             }
         }
     }
@@ -125,9 +126,9 @@ class FirstAlarmTimeViewModel(
         viewModelScope.launch {
             scheduleSettingsRepository.getAlarmSettings()
                 .map { it.firstAlarmTimeMillis }
-                .first { firstAlarmTimeFromRepository ->
+                .first()
+                .let { firstAlarmTimeFromRepository ->
                     firstAlarmMillisSelectedByUserFlow.emit(firstAlarmTimeFromRepository)
-                    return@first true
                 }
         }
     }

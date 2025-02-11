@@ -30,10 +30,11 @@ class DeviceBootReceiver : BroadcastReceiver(), KoinComponent {
 
     private fun rescheduleAlarm() {
         scope.launch(Dispatchers.IO) {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
+            scheduleSettingsRepository.getAlarmSettings()
+                .first()
+                .let { alarmSettings ->
                 Log.d(TAG, "Rescheduling alarm because device rebooted")
                 alarmScheduler.scheduleNext(alarmSettings)
-                return@first true
             }
         }
     }

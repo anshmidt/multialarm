@@ -14,9 +14,10 @@ class AppThemeSelector(
 
     fun setBackgroundImageBasedOnTheme(view: View) {
         runBlocking {
-            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
+            appSettingRepository.getNightModeSwitchState()
+                .first()
+                .let { nightModeSwitchState ->
                 setBackgroundImage(view, nightModeSwitchState)
-                return@first true
             }
         }
     }
@@ -32,10 +33,11 @@ class AppThemeSelector(
 
     fun checkAndShowTheme() {
         runBlocking {
-            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
-                selectAppTheme(nightModeSwitchState)
-                return@first true
-            }
+            appSettingRepository.getNightModeSwitchState()
+                .first()
+                .let { nightModeSwitchState ->
+                    selectAppTheme(nightModeSwitchState)
+                }
         }
     }
 

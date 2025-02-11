@@ -50,31 +50,35 @@ class SettingsViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch {
-            ringtoneSettingRepository.getRingtoneFileName().first { ringtoneFileName ->
-                _chosenRingtoneName.postValue(ringtoneFileName)
-                return@first true
-            }
+            ringtoneSettingRepository.getRingtoneFileName()
+                .first()
+                .let { ringtoneFileName ->
+                    _chosenRingtoneName.postValue(ringtoneFileName)
+                }
         }
 
         viewModelScope.launch {
-            ringtoneSettingRepository.getRingtoneDurationSeconds().first { ringtoneDurationSeconds ->
-                _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
-                return@first true
-            }
+            ringtoneSettingRepository.getRingtoneDurationSeconds()
+                .first()
+                .let { ringtoneDurationSeconds ->
+                    _ringtoneDurationSeconds.postValue(ringtoneDurationSeconds)
+                }
         }
 
         viewModelScope.launch {
-            appSettingRepository.getNightModeSwitchState().first { nightModeSwitchState ->
-                _isNightModeOn.postValue(nightModeSwitchState)
-                return@first true
-            }
+            appSettingRepository.getNightModeSwitchState()
+                .first()
+                .let { nightModeSwitchState ->
+                    _isNightModeOn.postValue(nightModeSwitchState)
+                }
         }
 
         viewModelScope.launch {
-            ringtoneSettingRepository.getMusicVolumePercents().first { musicVolumePercents ->
-                _musicVolumePercents.postValue(musicVolumePercents)
-                return@first true
-            }
+            ringtoneSettingRepository.getMusicVolumePercents()
+                .first()
+                .let { musicVolumePercents ->
+                    _musicVolumePercents.postValue(musicVolumePercents)
+                }
         }
     }
 

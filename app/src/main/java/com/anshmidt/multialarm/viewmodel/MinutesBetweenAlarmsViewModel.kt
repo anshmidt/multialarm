@@ -54,12 +54,13 @@ class MinutesBetweenAlarmsViewModel(
         _minutesBetweenAlarms.value = selectedVariant
 
         viewModelScope.launch {
-            scheduleSettingsRepository.getAlarmSettings().first { alarmSettings ->
-                val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
-                Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")
-                alarmScheduler.rescheduleAlarms(newAlarmSettings)
-                return@first true
-            }
+            scheduleSettingsRepository.getAlarmSettings()
+                .first()
+                .let { alarmSettings ->
+                    val newAlarmSettings = alarmSettings.copy(minutesBetweenAlarms = selectedVariant)
+                    Log.d(TAG, "Rescheduling alarm because minutesBetweenAlarms changed by user")
+                    alarmScheduler.rescheduleAlarms(newAlarmSettings)
+                }
         }
     }
 
